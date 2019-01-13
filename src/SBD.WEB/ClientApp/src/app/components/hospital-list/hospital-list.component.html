@@ -1,0 +1,29 @@
+<div *ngIf="isLoggedIn">
+  <button mat-raised-button color="primary" (click)="openCreateHospitalModal()">Utwórz nowy szpital</button>
+</div>
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Nazwa szpitala </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a [routerLink]='["/hospital", element.id]'>{{element.name}}</a> 
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef> Adres szpitala</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a [routerLink]='["/hospital", element.id]'>{{element.address}}</a>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="repliesCount">
+      <mat-header-cell *matHeaderCellDef> Ilość Departamentów w szpitalu</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.repliesCount}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="hospitalListing.totalCount"
+                 [pageSize]="pageSize"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

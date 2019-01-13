@@ -1,0 +1,12 @@
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\bin\Debug\netcoreapp2.1\SBD.VISIT.deps.json
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\bin\Debug\netcoreapp2.1\SBD.VISIT.dll
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\bin\Debug\netcoreapp2.1\SBD.VISIT.pdb
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\bin\Debug\netcoreapp2.1\SBD.DATA.dll
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\bin\Debug\netcoreapp2.1\SBD.DATA.pdb
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.csprojAssemblyReference.cache
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.csproj.CoreCompileInputs.cache
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.AssemblyInfoInputs.cache
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.AssemblyInfo.cs
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.csproj.CopyComplete
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.dll
+C:\Users\isiek\OneDrive\Dokumenty\SBD\SBD\src\SBD.VISIT\obj\Debug\netcoreapp2.1\SBD.VISIT.pdb
