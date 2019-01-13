@@ -4396,11 +4396,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.PRESCRIPTION\\SBD.PRESCRIPTION.csproj",
+      "projectUniqueName": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.PRESCRIPTION\\SBD.PRESCRIPTION.csproj",
       "projectName": "SBD.PRESCRIPTION",
-      "projectPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.PRESCRIPTION\\SBD.PRESCRIPTION.csproj",
+      "projectPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.PRESCRIPTION\\SBD.PRESCRIPTION.csproj",
       "packagesPath": "C:\\Users\\isiek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.PRESCRIPTION\\obj\\",
+      "outputPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.PRESCRIPTION\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4419,8 +4419,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.DATA\\SBD.DATA.csproj": {
-              "projectPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.DATA\\SBD.DATA.csproj"
+            "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.DATA\\SBD.DATA.csproj": {
+              "projectPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.DATA\\SBD.DATA.csproj"
             }
           }
         }

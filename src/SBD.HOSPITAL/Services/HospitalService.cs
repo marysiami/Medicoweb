@@ -60,7 +60,7 @@ namespace SBD.HOSPITAL.Services
             await _dataService.SaveDbAsync();
 
             return newDepartament;
-        } 
+        }
 
         public async Task<Doctor> CreateDoctor(Patient patient)
         {
@@ -102,16 +102,26 @@ namespace SBD.HOSPITAL.Services
             return newSpecialization;
         }
 
+        public void DeleteDepartament(Departament departament)
+        {
+            _dataService.GetSet<Departament>().Remove(departament);
+        }
+
+        public void DeleteSpecialization(Specialization specialization)
+        {
+            _dataService.GetSet<Specialization>().Remove(specialization);
+        }
+
         public async Task<Departament> GetDepartamentById(string id)
         {
             var model = await _dataService.GetSet<Departament>()
-                .Include(x=>x.Hospital)
+                .Include(x => x.Hospital)
                 .Include(x => x.DepartamentDoctors)
                 .ThenInclude(x => x.Doctor)
                 .FirstOrDefaultAsync(x => x.Id.ToString() == id);
             var i = model.Hospital;
             return model;
-        } 
+        }
 
         public DoctorDepartamentListing GetDepartamentDoctor(Doctor doctor, int skip = 0, int take = 10)
         {
@@ -124,7 +134,7 @@ namespace SBD.HOSPITAL.Services
                 .Take(take)
                 .ToList()
             };
-            
+
             return result;
         }
 
@@ -143,19 +153,19 @@ namespace SBD.HOSPITAL.Services
                 TotalCount = departament.DepartamentDoctors.Count(),
 
                 Doctors = departament.DepartamentDoctors
-                .Select(x=> x.Doctor)
+                .Select(x => x.Doctor)
                .Skip(skip * take)
                .Take(take)
                .ToList()
-            }; 
+            };
             return result;
 
         }
-        
+
         public async Task<Hospital> GetHospital(string hospitalId)//dziala
         {
             var hospital = await _dataService.GetSet<Hospital>()
-               .Include(x => x.Departaments)               
+               .Include(x => x.Departaments)
                .FirstOrDefaultAsync(x => x.Id.ToString() == hospitalId);
 
             return hospital;
@@ -253,5 +263,19 @@ namespace SBD.HOSPITAL.Services
             return result;
         }
 
+        public void UpdateDepartament(Departament departament)
+        {
+            _dataService.GetSet<Departament>().Update(departament);
+        }
+
+        public void UpdateHospital(Hospital hospital)
+        {
+            _dataService.GetSet<Hospital>().Update(hospital);
+        }
+
+        public void UpdateSpecialization(Specialization specialization)
+        {
+            _dataService.GetSet<Specialization>().Update(specialization);
+        }
     }
 }

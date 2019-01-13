@@ -4525,11 +4525,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.DATA\\SBD.DATA.csproj",
+      "projectUniqueName": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.DATA\\SBD.DATA.csproj",
       "projectName": "SBD.DATA",
-      "projectPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.DATA\\SBD.DATA.csproj",
+      "projectPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.DATA\\SBD.DATA.csproj",
       "packagesPath": "C:\\Users\\isiek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\src\\SBD.DATA\\obj\\",
+      "outputPath": "C:\\Users\\isiek\\OneDrive\\Dokumenty\\SBD\\SBD\\Medicoweb\\src\\SBD.DATA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

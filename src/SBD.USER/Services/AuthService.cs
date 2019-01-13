@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using SBD.COMMON.Exceptions;
-using SBD.DATA.Models;
 using SBD.DATA.Models.Account;
 using SBD.USER.Contracts;
 using SBD.USER.Models;
 using System;
 using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -78,22 +75,22 @@ namespace SBD.USER.Services
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, utcNow.ToString(CultureInfo.InvariantCulture))
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.UniqueName, user.UserName),
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Iat, utcNow.ToString(CultureInfo.InvariantCulture))
             };
 
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Tokens:Key")));
-            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            var signingKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Tokens:Key")));
+            var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(signingKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256);
 
-            var jwt = new JwtSecurityToken(
+            var jwt = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
                 signingCredentials: signingCredentials,
                 claims: claims,
                 notBefore: utcNow,
                 expires: utcNow.AddSeconds(_configuration.GetValue<int>("Tokens:Lifetime"))
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(jwt);
+            return new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler().WriteToken(jwt);
         }
     }
 

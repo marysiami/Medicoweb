@@ -63,6 +63,16 @@ namespace SBD.WEB.Controllers
         }
 
         [Authorize]
+        [HttpPut]
+        public async Task UpdateHospital([FromBody] string id)
+        {
+            var model = await _hospitalService.GetHospital(id);
+            _hospitalService.UpdateHospital(model);
+
+        }
+
+
+        [Authorize]
         [HttpPost]
         public async Task<JsonResult> CreateDepartament([FromBody]CreateDepartamentRequestViewModel request)
         {
@@ -78,7 +88,25 @@ namespace SBD.WEB.Controllers
             return Json(result);
         }
 
-        
+        [Authorize]
+        [HttpDelete]
+        public async Task DeleteDepartament([FromBody] string id)
+        {
+            var model = await _hospitalService.GetDepartamentById(id);
+            _hospitalService.DeleteDepartament(model);
+
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task UpdateDepartament([FromBody] string id)
+        {
+            var model = await _hospitalService.GetDepartamentById(id);
+            _hospitalService.UpdateDepartament(model);
+
+        }
+
+
         [HttpGet]
         public async Task<JsonResult> GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
         {
@@ -97,6 +125,24 @@ namespace SBD.WEB.Controllers
             var result = new SpecialityViewModel(speciality);
 
             return Json(result);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task DeleteSpecialization([FromBody] string id)
+        {
+            var model = await _hospitalService.GetSpecializationByIdAsync(id);
+            _hospitalService.DeleteSpecialization(model);
+
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task UpdateSpecialization([FromBody] string id)
+        {
+            var model = await _hospitalService.GetSpecializationByIdAsync(id);
+            _hospitalService.UpdateSpecialization(model);
+
         }
 
         [Authorize]
