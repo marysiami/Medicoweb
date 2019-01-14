@@ -1,4 +1,5 @@
 ﻿using SBD.DATA.Models;
+using SBD.DATA.Models.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace SBD.WEB.ViewModels
         public string Surname { get; set; }
         public string Pesel { get; set; }
 
-        public PatientViewModel(Patient x)
+        public PatientViewModel(SBDUser x)
         {
             Id = x.Id.ToString();
             Name = x.Name;

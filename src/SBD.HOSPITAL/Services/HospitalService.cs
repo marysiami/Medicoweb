@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SBD.DATA.Contracts;
 using SBD.DATA.Models;
+using SBD.DATA.Models.Account;
 using SBD.HOSPITAL.Contracts;
 using SBD.HOSPITAL.Models;
 using SBD.USER.Contracts;
@@ -14,11 +16,13 @@ namespace SBD.HOSPITAL.Services
     {
         private readonly IDataService _dataService;
         private readonly IUserService _userService;
+        private readonly UserManager<SBDUser> _userManager;
 
-        public HospitalService(IDataService dataService, IUserService userService)
+        public HospitalService(IDataService dataService, IUserService userService, UserManager<SBDUser> userManager)
         {
             _dataService = dataService;
             _userService = userService;
+            _userManager = userManager;
         }
 
         public async Task<Doctor> AddDoctorDepartament(Doctor doctor, Departament departament)
@@ -62,7 +66,7 @@ namespace SBD.HOSPITAL.Services
             return newDepartament;
         }
 
-        public async Task<Doctor> CreateDoctor(Patient patient)
+        public async Task<Doctor> CreateDoctor(SBDUser patient)
         {
             var newDoctor = new Doctor
             {
@@ -71,6 +75,10 @@ namespace SBD.HOSPITAL.Services
                 Pesel = patient.Pesel,
 
             };
+            await _userManager.RemoveFromRoleAsync(patient, "Patient");
+            await _userManager.AddToRoleAsync(patient, "Doctor");
+
+             
             await _dataService.GetSet<Doctor>().AddAsync(newDoctor);
             await _dataService.SaveDbAsync();
 
@@ -90,7 +98,7 @@ namespace SBD.HOSPITAL.Services
             return newHospital;
         }
 
-        public async Task<Specialization> CreateSpecialization(string name)
+        public async Task<Specialization> CreateSpecialization(string name) //działa
         {
             var newSpecialization = new Specialization
             {
@@ -204,15 +212,19 @@ namespace SBD.HOSPITAL.Services
             return result;
         }
 
-        public async Task<Patient> GetPatientById(string id)
+        public async Task<SBDUser> GetPatientById(string id)
         {
-            var model = await _dataService.GetSet<Patient>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = await _dataService.GetSet<SBDUser>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 
         public PatientListing GetPatients()
         {
-            var model = _dataService.GetSet<Patient>().ToList();
+
+            var obj = _dataService.GetSet<SBDUser>().ToList();
+            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
+                
+
             var list = new PatientListing
             {
                 Patients = model,
@@ -231,12 +243,11 @@ namespace SBD.HOSPITAL.Services
                 Name = doctor.Name,
                 Surname = doctor.Surname,
                 Specializations = doctor.SpecializationDoctor
-                .Where(x => x.DoctorId == doctor.Id)
                 .Skip(skip * take)
                 .Take(take)
                 .ToList()
             };
-            //wiecej filtrow?
+         
             return result;
         }
 
@@ -277,5 +288,7 @@ namespace SBD.HOSPITAL.Services
         {
             _dataService.GetSet<Specialization>().Update(specialization);
         }
+
+       
     }
 }

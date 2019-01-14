@@ -52,7 +52,7 @@ namespace SBD.WEB.Controllers
             return Json(result);
         }
 
-        [Authorize]
+        [Authorize ]
         [HttpPost]
         public async Task<JsonResult> CreateHospital([FromBody]CreateHospitalRequestViewModel request)
         {
@@ -72,7 +72,7 @@ namespace SBD.WEB.Controllers
         }
 
 
-        [Authorize]
+        [Authorize ]
         [HttpPost]
         public async Task<JsonResult> CreateDepartament([FromBody]CreateDepartamentRequestViewModel request)
         {

@@ -26,5 +26,7 @@ namespace SBD.USER.Services
             var user = await _userManager.FindByNameAsync(userName);
             return user;
         }
+
+      
     }
 }

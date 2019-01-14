@@ -1,11 +1,11 @@
-﻿using SBD.DATA.Models;
+﻿using SBD.DATA.Models.Account;
 using System.Collections.Generic;
 
 namespace SBD.HOSPITAL.Models
 {
     public class PatientListing
     {
-        public List<Patient> Patients { get; set; }
+        public List<SBDUser> Patients { get; set; }
         public int TotalCount { get; set; }
     }
 }

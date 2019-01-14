@@ -1,4 +1,5 @@
 ﻿using SBD.DATA.Models;
+using SBD.DATA.Models.Account;
 using SBD.HOSPITAL.Models;
 using System.Threading.Tasks;
 
@@ -24,14 +25,13 @@ namespace SBD.HOSPITAL.Contracts
 
         DoctorDepartamentListing GetDepartamentDoctor(Doctor doctor, int skip = 0, int take = 10);
         DoctorSpecListing GetSpecDoctor(Doctor doctor, int skip = 0, int take = 10);
-        Task<Doctor> CreateDoctor(Patient patient);
+        Task<Doctor> CreateDoctor(SBDUser patient);
         Task<Doctor> AddDoctorDepartament(Doctor doctor, Departament departament);
         Task<Doctor> AddDoctorSpecialization(Doctor doctor, Specialization specialization);
         DoctorListing GetDoctorsFromDepartament(Departament departament, int skip = 0, int take = 10);
 
         PatientListing GetPatients();
-
-        Task<Patient> GetPatientById(string id);
+        Task<SBDUser> GetPatientById(string id);
         Task<Doctor> GetDoctorById(string id);
         Task<Departament> GetDepartamentById(string id);
         Task<Specialization> GetSpecializationByIdAsync(string id);

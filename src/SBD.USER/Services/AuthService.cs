@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using SBD.COMMON.Exceptions;
+using SBD.DATA.Contracts;
 using SBD.DATA.Models.Account;
 using SBD.USER.Contracts;
 using SBD.USER.Models;
@@ -20,17 +21,22 @@ namespace SBD.USER.Services
         private readonly UserManager<SBDUser> _userManager;
         private readonly SignInManager<SBDUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IDataService _dataService;
+
         public AuthService( UserManager<SBDUser> userManager,
                             SignInManager<SBDUser> signInManager,
                             IAuthValidationService authValidationService,
-                            IConfiguration configuration)
+                            IConfiguration configuration,
+                            IDataService dataService)
         {
             _authValidationService = authValidationService;
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
+            _dataService = dataService;
 
         }
+
         public async Task <string> Register (RegisterViewModel model)
         {
              _authValidationService.ValidateRegisterViewModel(model);
@@ -43,6 +49,7 @@ namespace SBD.USER.Services
                 Pesel = model.Pesel
                 
             };
+
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
             if (!result.Succeeded)
@@ -50,6 +57,7 @@ namespace SBD.USER.Services
                 throw new RegistrationFailedException(
                    $"An error occured while registering user: {result.Errors.Select(e => e.Description).Join(", ")}");
             }
+            await _userManager.AddToRoleAsync(newUser, "Patient");
             await _signInManager.SignInAsync(newUser, false);
             return GetToken(newUser);
         }
