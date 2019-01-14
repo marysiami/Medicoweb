@@ -6,7 +6,6 @@ using SBD.DATA.Models.Account;
 using SBD.HOSPITAL.Contracts;
 using SBD.HOSPITAL.Models;
 using SBD.USER.Contracts;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

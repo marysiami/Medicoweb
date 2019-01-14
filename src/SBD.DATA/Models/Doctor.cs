@@ -14,5 +14,6 @@ namespace SBD.DATA.Models
         public virtual DoctorTime TimeOfWork { get; set; }        
         public virtual ICollection<DepartamentDoctor> DepartamentDoctors { get; set; }
         public virtual ICollection<SpecializationDoctor> SpecializationDoctor { get; set; }
+        public virtual ICollection<Visit> Visits { get; set; }
     }
 }

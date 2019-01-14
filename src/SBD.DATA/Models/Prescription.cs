@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SBD.DATA.Models.Account;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,8 @@ namespace SBD.DATA.Models
         public Guid Id { get; set; }
         public Guid VisitId { get; set; }
         public Visit Visit { get; set; }
+        public Guid PatientId { get; set; }
+        public SBDUser Patient { get; set; }
         public virtual ICollection<PrescriptionDrug> PrescriptionDrug { get; set; }
     }
 }

@@ -14,8 +14,7 @@ namespace SBD.DATA
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<SpecializationDoctor> SpecializationDoctors { get; set; }
         public DbSet<Drug> Drugs { get; set; }
-        public DbSet<Hospital> Hospitals { get; set; }
-        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Hospital> Hospitals { get; set; }       
         public DbSet<Pharmacy> Pharmacies { get; set; }
         public DbSet<PharmacyDrug> PharmacyDrugs { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
@@ -62,7 +61,7 @@ namespace SBD.DATA
             modelBuilder.Entity<Doctor>()
                 .HasOne(a => a.TimeOfWork)
                 .WithOne(b => b.Doctor)
-                .HasForeignKey<DoctorTime>(b => b.DoctorId);
+                .HasForeignKey<DoctorTime>(b => b.DoctorId);            
 
             modelBuilder.Entity<DepartamentDoctor>().HasKey(bc => new { bc.DepartamentId, bc.DoctorId });
             modelBuilder.Entity<DepartamentDoctor>()

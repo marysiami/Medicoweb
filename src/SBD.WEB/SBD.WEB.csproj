@@ -31,8 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SBD.COMMON\SBD.COMMON.csproj" />
     <ProjectReference Include="..\SBD.HOSPITAL\SBD.HOSPITAL.csproj" />
-    <ProjectReference Include="..\SBD.PRESCRIPTION\SBD.PRESCRIPTION.csproj" />
     <ProjectReference Include="..\SBD.USER\SBD.USER.csproj" />
+    <ProjectReference Include="..\SBD.VISIT\SBD.VISIT.csproj" />
   </ItemGroup>
 
   <ItemGroup>

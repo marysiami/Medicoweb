@@ -12,8 +12,9 @@ using SBD.DATA;
 using SBD.DATA.Models;
 using SBD.DATA.Models.Account;
 using SBD.HOSPITAL;
-using SBD.PRESCRIPTION;
+
 using SBD.USER;
+using SBD.VISIT;
 using System;
 using System.Text;
 
@@ -105,12 +106,11 @@ namespace SBD.WEB
         }
         private void RegisterOmdleModules(IServiceCollection services)
         {
-            // Register all projects DI
-            // RegisterDataModule - Omdle.Data, RegisterAccountModule - Omdle.Account etc
+            // Register all projects DI            
             services.RegisterDataModule();
             services.RegisterAccountModule();
             services.RegisterHospitalModule();
-            services.PrescriptionModule();
+            services.RegisterVisitModule();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

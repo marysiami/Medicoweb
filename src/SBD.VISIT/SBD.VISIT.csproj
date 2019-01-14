@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SBD.COMMON\SBD.COMMON.csproj" />
     <ProjectReference Include="..\SBD.DATA\SBD.DATA.csproj" />
+    <ProjectReference Include="..\SBD.HOSPITAL\SBD.HOSPITAL.csproj" />
+    <ProjectReference Include="..\SBD.USER\SBD.USER.csproj" />
   </ItemGroup>
 
 </Project>

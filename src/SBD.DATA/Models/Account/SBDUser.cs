@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace SBD.DATA.Models.Account
 {
@@ -8,7 +9,9 @@ namespace SBD.DATA.Models.Account
        
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Pesel { get; set; }             
-      
+        public string Pesel { get; set; }
+        public virtual ICollection<Prescription> Prescriptions { get; set; }
+        public virtual ICollection<Visit> Visits { get; set; }
+
     }
 }
