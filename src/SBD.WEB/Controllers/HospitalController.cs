@@ -28,7 +28,7 @@ namespace SBD.WEB.Controllers
         [HttpGet]
         public async Task<JsonResult> GetHospitals([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
         {
-            var model = await _hospitalService.GetHospitalByName(page, threadsPerPage);
+            var model = await _hospitalService.GetHospitalsByName(page, threadsPerPage);
 
             var result = new HospitalListingViewModel(model);
 
@@ -54,12 +54,22 @@ namespace SBD.WEB.Controllers
 
         [Authorize ]
         [HttpPost]
-        public async Task<JsonResult> CreateHospital([FromBody]CreateHospitalRequestViewModel request)
+        public async Task<JsonResult> CreateHospital([FromBody]CreateHospitalRequestViewModel request)//dziala
         {
-            var hospital = await _hospitalService.CreateHospital(request.Name, request.Address);
-            var result = new HospitalViewModel(hospital);
+            var test = await _hospitalService.GetHospitalByName(request.Name);
+            if (test == null)
+            {
+                throw new InvalidCreateHospitalException();//gdy szpital o takiej samej nazwie istnieje
 
-            return Json(result);
+            }
+            else
+            {
+
+                var hospital = await _hospitalService.CreateHospital(request.Name, request.Address);
+                var result = new HospitalViewModel(hospital);
+
+                return Json(result);
+            }
         }
 
         [Authorize]
@@ -74,18 +84,27 @@ namespace SBD.WEB.Controllers
 
         [Authorize ]
         [HttpPost]
-        public async Task<JsonResult> CreateDepartament([FromBody]CreateDepartamentRequestViewModel request)
+        public async Task<JsonResult> CreateDepartament([FromBody]CreateDepartamentRequestViewModel request) //dziala
         {
-            var hospital = await _hospitalService.GetHospital(request.HospitalId);
-            if (hospital == null)
+            var test =  await _hospitalService.GetDepartamentByName(request.Name);
+            if (test == null)
             {
-                throw new InvalidPostThreadIdException();
+                throw new InvalidCreateDepartamentException();//gdy departament o takiej samej nazwie istnieje
+
             }
+            else
+            {
+                var hospital = await _hospitalService.GetHospital(request.HospitalId);
+                if (hospital == null)
+                {
+                    throw new InvalidPostThreadIdException();
+                }
 
-            var departament = await _hospitalService.CreateDepartamentAsync(request.Name, hospital);
-            var result = new DepartamentViewModel(departament);
+                var departament = await _hospitalService.CreateDepartamentAsync(request.Name, hospital);
+                var result = new DepartamentViewModel(departament);
 
-            return Json(result);
+                return Json(result);
+            }
         }
 
         [Authorize]
@@ -108,7 +127,7 @@ namespace SBD.WEB.Controllers
 
 
         [HttpGet]
-        public async Task<JsonResult> GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10)//dziala
         {
             var model = await _hospitalService.GetSpecializationsAsync(page, threadsPerPage);
 
@@ -120,11 +139,19 @@ namespace SBD.WEB.Controllers
         [Authorize]
         [HttpPost]
         public async Task<JsonResult> CreateSpecialization([FromBody]CreateSpecialityRequestViewModel request)
-        {
-            var speciality = await _hospitalService.CreateSpecialization(request.Name);
-            var result = new SpecialityViewModel(speciality);
+        { 
+            var test =  await _hospitalService.GetSpecializationByName(request.Name);
+            if (test != null)
+            {
+                throw new InvalidCreateSpecializationException();//gdy specjalizacja o takiej samej nazwie istnieje
+            }
+            else
+            {
+                var speciality = await _hospitalService.CreateSpecialization(request.Name);
+                var result = new SpecialityViewModel(speciality);
 
-            return Json(result);
+                return Json(result);
+            }            
         }
 
         [Authorize]
@@ -147,7 +174,7 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpPost] 
-        public async Task<JsonResult> CreateDoctor([FromQuery]string patientId)
+        public async Task<JsonResult> CreateDoctor([FromQuery]string patientId) //powinno byc ok
         {
             var patient = await _hospitalService.GetPatientById(patientId);
 
@@ -217,14 +244,14 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpGet]
-        public JsonResult GetPatients()
+        public JsonResult GetPatients() //działa
         {
             var model =  _hospitalService.GetPatients();
 
             var result = new PatientsListingViewModel(model);
 
             return Json(result);
-            //przetestwac
+          
         }
  
       

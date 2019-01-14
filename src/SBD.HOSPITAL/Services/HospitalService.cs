@@ -179,7 +179,7 @@ namespace SBD.HOSPITAL.Services
             return hospital;
         }
 
-        public async Task<HospitalListing> GetHospitalByName(int skip = 0, int take = 10)
+        public async Task<HospitalListing> GetHospitalsByName(int skip = 0, int take = 10)
         {
             var result = new HospitalListing();
 
@@ -218,12 +218,10 @@ namespace SBD.HOSPITAL.Services
             return model;
         }
 
-        public PatientListing GetPatients()
+        public PatientListing GetPatients() //działa
         {
-
             var obj = _dataService.GetSet<SBDUser>().ToList();
-            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
-                
+            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();               
 
             var list = new PatientListing
             {
@@ -289,6 +287,22 @@ namespace SBD.HOSPITAL.Services
             _dataService.GetSet<Specialization>().Update(specialization);
         }
 
-       
+        public async Task<Hospital> GetHospitalByName(string name)
+        {
+            var model = await _dataService.GetSet<Hospital>().FirstOrDefaultAsync(x => x.Name == name);            
+            return model;
+        }
+
+        public async Task<Departament> GetDepartamentByName(string name)
+        {
+            var model = await _dataService.GetSet<Departament>().FirstOrDefaultAsync(x => x.Name == name);
+            return model;
+        }
+
+        public async  Task<Specialization> GetSpecializationByName(string name)
+        {
+            var model = await _dataService.GetSet<Specialization>().FirstOrDefaultAsync(x => x.Name == name);
+            return model;
+        }
     }
 }
