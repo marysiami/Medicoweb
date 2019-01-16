@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SBD.COMMON.Exceptions;
-using SBD.DATA.Models;
 using SBD.HOSPITAL.Contracts;
 using SBD.USER.Contracts;
 using SBD.WEB.ViewModels;
 using SBD.WEB.ViewModels.Request;
-using System;
 using System.Threading.Tasks;
 
 namespace SBD.WEB.Controllers
@@ -174,9 +172,9 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpPost] 
-        public async Task<JsonResult> CreateDoctor([FromQuery]string patientId) //powinno byc ok
+        public async Task<JsonResult> CreateDoctor([FromBody]CreateDoctorRequestViewModel request) //powinno byc ok
         {
-            var patient = await _hospitalService.GetPatientById(patientId);
+            var patient = await _hospitalService.GetPatientById(request.PatientId);
 
             if (patient == null)
             {
@@ -192,7 +190,7 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetDoctors([FromQuery]string departamentId, [FromQuery] int page, [FromQuery] int postsPerPage = 10)
+        public async Task<JsonResult> GetDoctors([FromBody]string departamentId, [FromQuery] int page, [FromQuery] int postsPerPage = 10)
         {
             var departament = await _hospitalService.GetDepartamentById(departamentId);
 
@@ -208,20 +206,7 @@ namespace SBD.WEB.Controllers
             return Json(model);
         }
 
-        [Authorize]
-        [HttpPost]
-        public async Task <JsonResult> AddDoctorDepartament ([FromQuery]string doctorId, [FromQuery]string departamentId)
-        {
-            var doctor = await _hospitalService.GetDoctorById(doctorId);
-            if (doctor == null)
-            {
-                throw new InvalidGetDoctorByIdException();
-            }
-            var departmanet = await _hospitalService.GetDepartamentById(departamentId);
-            var doctorWithDep = await _hospitalService.AddDoctorDepartament(doctor, departmanet);
-
-            return Json(doctorWithDep);//CO zwrócic?
-        }
+       
 
         [Authorize]
         [HttpGet]
@@ -254,6 +239,66 @@ namespace SBD.WEB.Controllers
           
         }
  
-      
+        [Authorize]
+        [HttpGet]
+        public async Task <JsonResult> GetSpecializationFromDoctor ([FromQuery]string doctorId, [FromQuery] int page, [FromQuery] int postsPerPage = 10)
+        {
+            var doctor = await _hospitalService.GetDoctorById(doctorId);
+            if (doctor == null)
+            {
+                throw new InvalidGetDoctorByIdException();
+            }
+
+            var model = _hospitalService.GetSpecDoctor(doctor, page, postsPerPage);
+            var result = new SpecializationsFromDepartamentListingViewModel(model); 
+
+            return Json(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetDepartamentsFromDoctor([FromQuery]string doctorId, [FromQuery] int page, [FromQuery] int postsPerPage = 10)
+        {
+            var doctor = await _hospitalService.GetDoctorById(doctorId);
+            if (doctor == null)
+            {
+                throw new InvalidGetDoctorByIdException();
+            }
+
+            var model = _hospitalService.GetDepartamentDoctor(doctor, page, postsPerPage);            
+            var result = new DepartamentsFromDoctorLisingViewModel(model); 
+
+            return Json(result);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task AddDoctorSpecialization([FromBody]string doctorId, [FromBody]string specializationId)
+        {
+            var doctor = await _hospitalService.GetDoctorById(doctorId);
+            if (doctor == null)
+            {
+                throw new InvalidGetDoctorByIdException();
+            }
+            var specialization = await _hospitalService.GetSpecializationByIdAsync(specializationId);
+            var doctorWithSpec = await _hospitalService.AddDoctorSpecialization(doctor, specialization);           
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task AddDoctorDepartament([FromBody]string doctorId, [FromBody]string departamentId)
+        {
+            var doctor = await _hospitalService.GetDoctorById(doctorId);
+            if (doctor == null)
+            {
+                throw new InvalidGetDoctorByIdException();
+            }
+            var departmanet = await _hospitalService.GetDepartamentById(departamentId);
+            var doctorWithDep = await _hospitalService.AddDoctorDepartament(doctor, departmanet);
+
+    
+        }
+
     }
 }

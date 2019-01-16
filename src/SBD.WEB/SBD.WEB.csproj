@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Compile Remove="ClientApp\src\app\models\doctor-fromDep-listing.cs" />
+    <Compile Remove="ClientApp\src\app\models\Request\DepFromDoctorListing.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\components\doctor\create-doctorDepartament-modal\" />
     <Folder Include="ClientApp\src\app\services\" />
   </ItemGroup>
 

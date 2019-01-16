@@ -13,5 +13,6 @@ namespace SBD.WEB.ViewModels
             TotalCount = model.TotalCount;
             Specialization = model.Specialization.Select(x => new SpecialityViewModel(x)).ToList();
         }
+      
     }
 }

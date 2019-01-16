@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { PatientListing } from '../../models/patient-listing.model';
 import { Patient } from '../../models/patient.model';
 import { HospitalService } from '../../services/hospital.service';
@@ -15,14 +16,15 @@ import { AuthService } from './../../services/auth.service';
 export class PatientListComponent {
   patientListing: PatientListing = new PatientListing (0, []);
   isLoggedIn: boolean;
-  displayedColumns: string[] = ['name', 'surname', 'pesel'];
+  displayedColumns: string[] = ['name', 'surname', 'pesel', 'button'];
   pageSize = 10;
   dataSource = new MatTableDataSource<Patient>();
 
   constructor(
     private authService: AuthService,
     private hospitalService: HospitalService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,10 +39,12 @@ export class PatientListComponent {
         this.dataSource = new MatTableDataSource(result.patients);
       });
   }
+  CreateDoctor(patientId) {
+    this.hospitalService.createDoctor(patientId);
+    //this.router.navigateByUrl('/doctor/'+patientId);
+  }
 
   pageChanged(pageEvent) {
     this.getPatients(pageEvent.pageIndex, this.pageSize);
   }
-  //obok kazdego pacjent dodac button-> make me doctor
-  //makeDoctor()
 }

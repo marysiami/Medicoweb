@@ -1,0 +1,19 @@
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Nazwa specjalizacji </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a> {{element.name}}</a>
+      </mat-cell>
+    </ng-container>
+    <ng-container>
+      <button mat-raised-button color="primary" (click)="addToDoctor(element.id)">Dodaj</button>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="specializationListing.totalCount"
+                 [pageSize]="pageSize"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

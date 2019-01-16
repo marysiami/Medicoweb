@@ -2,17 +2,21 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { DepartamentListing } from '../models/departament-listing.model';
+import { DepartamentsFromDoctorListing } from '../models/departaments-fromDoctor-listing.model';
 import { DoctorFromDepListing } from '../models/doctor-fromDep-listing';
 import { DoctorListing } from '../models/doctor-listing.model';
 import { HospitalListing } from '../models/hospital-listing.model';
 import { Hospital } from '../models/hospital.model';
 import { PatientListing } from '../models/patient-listing.model';
+import { AddDepToDoctorRequest } from '../models/Request/AddDepToDoctorRequest';
+import { AddSpecToDoctorRequest } from '../models/Request/AddSpecToDoctorRequest';
 import { CreateDepartamentRequest } from '../models/Request/create-departament-request.model';
+import { CreateDoctorRequest } from '../models/Request/create-doctor-request.model';
 import { CreateHospitalRequest } from '../models/request/create-hospital-request.model';
 import { CreateSpecialityRequest } from '../models/Request/create-speciality-request.model';
-import { BaseService } from './base.service';
 import { SpecializationListing } from '../models/specialization-listing.model';
-import { Doctor } from '../models/doctor.model';
+import { SpecializationsFromDoctorListing } from '../models/specializations-fromDoctor-listing.model';
+import { BaseService } from './base.service';
 
 
 
@@ -84,11 +88,10 @@ export class HospitalService extends BaseService {
   }
 
   createDoctor(patientId: string) {
-    let url = this.baseUrl + 'Hospital/CreateDoctor';
-    let params = new HttpParams()
-      .set("patientId", patientId);
+    let url = this.baseUrl + "Hospital/CreateDoctor";
+    let body = new CreateDoctorRequest(patientId);    
 
-    return this.http.post(url, { headers: this.headers });
+    return this.http.post(url,body, {headers: this.headers });
   }
 
   getSpecialzations(page, postsPerPage = 10) {
@@ -126,6 +129,41 @@ export class HospitalService extends BaseService {
     let url = this.baseUrl + 'Hospital/GetPatients';
 
     return this.http.get<PatientListing>(url, { headers: this.headers }); 
+  }
+
+  getDepartamentsFromDoctor(doctorId, page, postsPerPage = 10) {
+    let url = this.baseUrl + 'Hospital/GetDepartamentsFromDoctor';
+    let params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString())
+      .set("doctorId", doctorId);
+
+    return this.http.get<DepartamentsFromDoctorListing>(url, { params: params, headers: this.headers }); 
+  }
+
+  getSpecializationsFromDoctor(doctorId, page, postsPerPage = 10) {
+    let url = this.baseUrl + 'Hospital/GetSpecializationFromDoctor';
+    let params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString())
+      .set("doctorId", doctorId);
+
+    return this.http.get<SpecializationsFromDoctorListing>(url, { params: params, headers: this.headers }); 
+  }
+
+  addDepartamentToDoctor(departamentId: string, doctorId: string) {
+
+    let url = this.baseUrl + 'Hospital/AddDoctorSpecialization';
+    let body = new AddDepToDoctorRequest(doctorId, departamentId);        
+
+    return this.http.post(url, body, { headers: this.headers });
+  }
+
+  addSpecializationToDoctor(doctorId: string, specializationId: string) {
+    let url = this.baseUrl + 'Hospital/AddDoctorDepartament';
+    let body = new AddSpecToDoctorRequest(doctorId, specializationId)
+
+    return this.http.post(url, body, { headers: this.headers });
   }
 
  

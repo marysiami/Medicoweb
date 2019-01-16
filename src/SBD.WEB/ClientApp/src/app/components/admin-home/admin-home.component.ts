@@ -1,29 +1,32 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
-import { PatientListing } from '../../models/patient-listing.model';
-import { Patient } from '../../models/patient.model';
-import { HospitalService } from '../../services/hospital.service';
 import { AuthService } from './../../services/auth.service';
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
 
+
 })
 export class AdminHomeComponent {
   
   isLoggedIn: boolean;
+
   constructor(
-    private authService: AuthService    
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn()    
   }
-  
+
+  openHospital() {
+    this.router.navigateByUrl('/hospitals');
+  }
+  openSpecialization() {
+    this.router.navigateByUrl('/specialization');
+  }
   
     
 }

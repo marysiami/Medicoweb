@@ -25,6 +25,8 @@ import { SpecializationComponent } from './components/specialization/specializat
 import { CreateSpecializationModalComponent } from './components/specialization/create-specialization -modal/create-specialization-modal.component';
 import { Patient } from './models/patient.model';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { CreateDoctorDepartamentnModalComponent } from './components/doctor/create-doctorDepartament-modal/create-doctorDep-modal.component';
+import { CreateDoctorSpecializationModalComponent } from './components/doctor/create-doctorSpeciality-modal/create-doctorSpec-modal.component';
 
 
 
@@ -46,6 +48,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
     PatientListComponent,
     DoctorListComponent,
     CreateSpecializationModalComponent,
+    CreateDoctorSpecializationModalComponent,
+    CreateDoctorDepartamentnModalComponent,
     AdminHomeComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -59,7 +63,9 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
       { path: "hospital/:id", component: HospitalComponent },
       { path: "departament/:id", component: DepartamentComponent },
       { path: "specialization", component: SpecializationComponent },
-      { path: "specialization/:id", component: SpecializationComponent }, 
+      { path: "specialization/:id", component: SpecializationComponent },
+      { path: "depdoctor/:id", component: CreateDoctorDepartamentnModalComponent },
+      { path: "specdoctor/:id", component: CreateDoctorSpecializationModalComponent },
       
       { path: "patients", component: PatientListComponent },
       { path: "doctors", component: DoctorListComponent },

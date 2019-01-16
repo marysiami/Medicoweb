@@ -1,5 +1,5 @@
 <div *ngIf="isLoggedIn">
-  <h2>Panel Admina</h2>
-  <a [routerLink]='["/hospitals"]'> Szpital</a>
-  <a [routerLink]='["/specialization"]'> Specjalizacja</a> 
- </div>
+  <h2>Panel Admina</h2> 
+  <button mat-raised-button color="primary" (click)="openHospital()">Szpital</button>  
+  <button mat-raised-button color="primary" (click)="openSpecialization()">Specjalizacja</button>
+</div>

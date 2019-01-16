@@ -26,27 +26,26 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
     this.registerForm = this.formBuilder.group({
-
       username: [
         '',
-        [Validators.required]
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]
       ],
-     
+
       name: [
-              '',
-        [Validators.required]
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]
       ],
       surname: [
         '',
-        [Validators.required]
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]
       ],
       pesel: [
         '',
-        [Validators.required]
+        [Validators.required, Validators.minLength(9), Validators.maxLength(9)]
       ],
       password: [
         '',
-        [Validators.required]
+        [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@.$!%*?&]{6,20}$/)]
       ],
   
     });
