@@ -268,13 +268,13 @@ namespace SBD.DATA.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("PatientId");
+                    b.Property<Guid?>("SBDUserId");
 
                     b.Property<Guid>("VisitId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("SBDUserId");
 
                     b.HasIndex("VisitId");
 
@@ -498,10 +498,9 @@ namespace SBD.DATA.Migrations
 
             modelBuilder.Entity("SBD.DATA.Models.Prescription", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser", "Patient")
+                    b.HasOne("SBD.DATA.Models.Account.SBDUser")
                         .WithMany("Prescriptions")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SBDUserId");
 
                     b.HasOne("SBD.DATA.Models.Visit", "Visit")
                         .WithMany("Prescription")

@@ -8,9 +8,7 @@ namespace SBD.DATA.Models
     {
         public Guid Id { get; set; }
         public Guid VisitId { get; set; }
-        public Visit Visit { get; set; }
-        public Guid PatientId { get; set; }
-        public SBDUser Patient { get; set; }
+        public Visit Visit { get; set; }       
         public virtual ICollection<PrescriptionDrug> PrescriptionDrug { get; set; }
     }
 }

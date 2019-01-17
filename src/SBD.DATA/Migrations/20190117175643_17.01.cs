@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SBD.DATA.Migrations
 {
-    public partial class _1301 : Migration
+    public partial class _1701 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,8 +43,7 @@ namespace SBD.DATA.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
-                    Pesel = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false)
+                    Pesel = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,8 +70,7 @@ namespace SBD.DATA.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Company = table.Column<string>(nullable: true),
-                    IsPrescriptionNeeded = table.Column<bool>(nullable: false)
+                    Company = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -345,11 +343,18 @@ namespace SBD.DATA.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    VisitId = table.Column<Guid>(nullable: false)
+                    VisitId = table.Column<Guid>(nullable: false),
+                    SBDUserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prescriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Prescriptions_AspNetUsers_SBDUserId",
+                        column: x => x.SBDUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Prescriptions_Visits_VisitId",
                         column: x => x.VisitId,
@@ -508,6 +513,11 @@ namespace SBD.DATA.Migrations
                 name: "IX_PrescriptionDrugs_DrugId",
                 table: "PrescriptionDrugs",
                 column: "DrugId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prescriptions_SBDUserId",
+                table: "Prescriptions",
+                column: "SBDUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_VisitId",

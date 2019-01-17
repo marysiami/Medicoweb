@@ -10,8 +10,8 @@ using SBD.DATA;
 namespace SBD.DATA.Migrations
 {
     [DbContext(typeof(SBDDbContext))]
-    [Migration("20190114143123_14.01")]
-    partial class _1401
+    [Migration("20190117175643_17.01")]
+    partial class _1701
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,9 +114,6 @@ namespace SBD.DATA.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -162,8 +159,6 @@ namespace SBD.DATA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("SBDUser");
                 });
 
             modelBuilder.Entity("SBD.DATA.Models.Departament", b =>
@@ -219,8 +214,6 @@ namespace SBD.DATA.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Company");
-
-                    b.Property<bool>("IsPrescriptionNeeded");
 
                     b.Property<string>("Name");
 
@@ -426,16 +419,6 @@ namespace SBD.DATA.Migrations
                     b.ToTable("Visits");
                 });
 
-            modelBuilder.Entity("SBD.DATA.Models.Patient", b =>
-                {
-                    b.HasBaseType("SBD.DATA.Models.Account.SBDUser");
-
-
-                    b.ToTable("Patient");
-
-                    b.HasDiscriminator().HasValue("Patient");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("SBD.DATA.Models.SBDRole")
@@ -576,8 +559,8 @@ namespace SBD.DATA.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SBD.DATA.Models.Patient", "Patient")
-                        .WithMany()
+                    b.HasOne("SBD.DATA.Models.Account.SBDUser", "Patient")
+                        .WithMany("Visits")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -102,6 +102,7 @@ namespace SBD.DATA
                 .HasOne(bc => bc.Doctor)
                 .WithMany(c => c.SpecializationDoctor)
                 .HasForeignKey(bc => bc.DoctorId);
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -27,6 +27,9 @@ export class AdminHomeComponent {
   openSpecialization() {
     this.router.navigateByUrl('/specialization');
   }
+  openDrugs() {
+    this.router.navigateByUrl('/drugs')
+  }
   
     
 }

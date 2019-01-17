@@ -6,8 +6,6 @@ using SBD.WEB.ViewModels;
 using SBD.WEB.ViewModels.Request;
 using System.Threading.Tasks;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SBD.WEB.Controllers
 {
     public class VisitController : SBDBaseController
@@ -23,7 +21,7 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<JsonResult> CreateVisit([FromQuery] CreateVisitRequestViewModel request)
+        public async Task<JsonResult> CreateVisit([FromBody] CreateVisitRequestViewModel request)
         {
             var doctor = await  _hospitalService.GetDoctorById(request.DoctorId);
             var patient = await  _hospitalService.GetPatientById(request.SBDUserId);
@@ -67,7 +65,7 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<JsonResult> CreateDrug([FromQuery] CreateDrugRequestViewModel request)
+        public async Task<JsonResult> CreateDrug([FromBody] CreateDrugRequestViewModel request)
         {
            var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
            var result = new DrugViewModel(model);
@@ -77,10 +75,11 @@ namespace SBD.WEB.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<JsonResult> CreatePrescription([FromQuery] CreateDrugRequestViewModel request)
+        public async Task<JsonResult> CreatePrescription([FromBody] CreatePrescriptionRequestViewModel request)
         {
-            var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
-            var result = new DrugViewModel(model);
+            var visit = await _visitService.GetVisitById(request.VisitId);
+            var model = await _visitService.CreatePrescriptionAsync(visit);
+            var result = new PrescriptionViewModel(model);
 
             return Json(result);
         }
@@ -106,5 +105,14 @@ namespace SBD.WEB.Controllers
 
             return Json(result);
         }
+        [Authorize]
+        [HttpGet]
+        public JsonResult GetDrugs( [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        {
+            var model =  _visitService.GetDrugs(page, threadsPerPage);
+            var result = new DrugListViewModel(model);
+            return Json(result);
+        }
+
     }
 }

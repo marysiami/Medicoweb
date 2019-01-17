@@ -13,8 +13,8 @@ namespace SBD.WEB.ViewModels
 
         public PrescriptionViewModel(Prescription model)
         {
-            PatientName = model.Patient.Name;
-            PatientSurname = model.Patient.Surname;
+            PatientName = model.Visit.Patient.Name;
+            PatientSurname = model.Visit.Patient.Surname;
             DoctorName = model.Visit.Doctor.Name;
             DoctorSurname = model.Visit.Doctor.Surname;
         }

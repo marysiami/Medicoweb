@@ -10,6 +10,7 @@ namespace SBD.WEB.ViewModels.Request
         public String PatientName { get; set; }
         public string PatientSurname { get; set; }
         public String PDoctortName { get; set; }
-        public string DoctorSurname { get; set; }       
+        public string DoctorSurname { get; set; }      
+        public string VisitId { get; set; }
     }
 }

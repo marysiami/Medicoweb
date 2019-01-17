@@ -17,6 +17,8 @@ import { CreateSpecialityRequest } from '../models/Request/create-speciality-req
 import { SpecializationListing } from '../models/specialization-listing.model';
 import { SpecializationsFromDoctorListing } from '../models/specializations-fromDoctor-listing.model';
 import { BaseService } from './base.service';
+import { DrugListing } from '../models/drug-listing.model';
+import { CreateDrugRequest } from '../models/Request/create-drug-request.model';
 
 
 
@@ -200,7 +202,22 @@ export class HospitalService extends BaseService {
 
     return this.http.post(url, body, { headers: this.headers });
   }
+  //kontruktor VISIT
+  getDrugs(page, postsPerPage = 10) {
 
- 
+    let url = this.baseUrl + 'Visit/GetDrugs';
+    let params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString());
+
+    return this.http.get<DrugListing>(url, { params: params, headers: this.headers });
+  }
+
+  createDrug(name: string, company: string) {
+    let url = this.baseUrl + "Visit/CreateDrug";
+    let body = new CreateDrugRequest(name, company);
+
+    return this.http.post(url, body, { headers: this.headers });
+  }
 
 }

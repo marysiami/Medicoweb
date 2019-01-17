@@ -63,9 +63,6 @@ namespace SBD.VISIT.Services
             {
                 Visit = visit,
                 VisitId = visit.Id,
-                Patient = visit.Patient,
-                PatientId = visit.PatientId,
-
             };
             await _dataService.GetSet<Prescription>().AddAsync(model);
             await _dataService.SaveDbAsync();

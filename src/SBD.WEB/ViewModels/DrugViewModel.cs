@@ -1,6 +1,6 @@
 ﻿using SBD.DATA.Models;
 
-namespace SBD.WEB.ViewModels.Request
+namespace SBD.WEB.ViewModels
 {
     public class DrugViewModel
     {
