@@ -10,6 +10,7 @@ namespace SBD.HOSPITAL.Contracts
         Task<Departament> CreateDepartamentAsync(string name, Hospital hospital);
         Task<Hospital> CreateHospital(string name, string address);
         Task<HospitalListing> GetHospitalsByName(int skip = 0, int take = 10);
+        Task<HospitalListing> GetoHospitalsByAddressAsync(int skip = 0, int take = 10);
         DepartamentListing GetHospitalDepartamenst(Hospital hospital, int skip = 0, int take = 10);
         Task<Hospital> GetHospital(string hospitalId);
         Task<Hospital> GetHospitalByName(string name);
@@ -24,6 +25,7 @@ namespace SBD.HOSPITAL.Contracts
 
         Task<Specialization> CreateSpecialization(string name);
         Task<SpecializationListing> GetSpecializationsAsync(int skip = 0, int take = 10);
+        Task<SpecializationListing> GetSpecializationsByName(int skip = 0, int take = 10);
         Task<Specialization> GetSpecializationByName(string name);
 
         DoctorDepartamentListing GetDepartamentDoctor(Doctor doctor, int skip = 0, int take = 10);
@@ -34,6 +36,9 @@ namespace SBD.HOSPITAL.Contracts
         DoctorListing GetDoctorsFromDepartament(Departament departament, int skip = 0, int take = 10);
 
         PatientListing GetPatients();
+        PatientListing GetPatientsByName();
+        PatientListing GetPatientBySurname();
+        PatientListing GetPatientByPesel();
         Task<SBDUser> GetPatientById(string id);
         Task<Doctor> GetDoctorById(string id);
         Task<Departament> GetDepartamentById(string id);

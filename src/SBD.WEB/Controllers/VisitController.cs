@@ -64,5 +64,47 @@ namespace SBD.WEB.Controllers
         }
 
         //do anulacji vizyty
+
+        [Authorize]
+        [HttpPost]
+        public async Task<JsonResult> CreateDrug([FromQuery] CreateDrugRequestViewModel request)
+        {
+           var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
+           var result = new DrugViewModel(model);
+
+            return Json(result);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<JsonResult> CreatePrescription([FromQuery] CreateDrugRequestViewModel request)
+        {
+            var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
+            var result = new DrugViewModel(model);
+
+            return Json(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetPatientPrescriptions([FromBody] string patientId, [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        {
+            var model = await _visitService.GetPatientPrescriptions(patientId, page, threadsPerPage);
+            var result = new PrescriptionListingViewModel(model);
+
+            return Json(result);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<JsonResult> AddDrugToPrescription([FromQuery] AddDrugToPrescriptionRequestViewModel request)
+        {
+            var prescription = await _visitService.GetPrescriptionById(request.PrescriptionId);
+            var drug = await _visitService.GetVDrugById(request.DrugId);
+            var model = await _visitService.AddDrugToPrescriptionAsync(prescription,drug,request.QuantityDrug);
+            var result = new DrugsFromPrescriptionViewModel(model); //czy działa?
+
+            return Json(result);
+        }
     }
 }

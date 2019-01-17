@@ -29,11 +29,21 @@ export class HospitalService extends BaseService {
   
   getHospitals(page, postsPerPage = 10) {
     //w controller ok
-    let url = this.baseUrl + 'Hospital/getHospitals';
+    let url = this.baseUrl + 'Hospital/GetHospitalsByName';
     let params = new HttpParams()
       .set("page", page)
       .set("postsPerPage", postsPerPage.toString());
         
+    return this.http.get<HospitalListing>(url, { params: params, headers: this.headers });
+  }
+
+  getHospitalsByAddress(page, postsPerPage = 10) {
+    //w controller ok
+    let url = this.baseUrl + 'Hospital/GetHospitalsByAddress';
+    let params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString());
+
     return this.http.get<HospitalListing>(url, { params: params, headers: this.headers });
   }
   
@@ -78,6 +88,7 @@ export class HospitalService extends BaseService {
 
     return this.http.post(url, body, { headers: this.headers });
   }
+ 
 
   createSpecialzation(name: string) {
     
@@ -101,6 +112,15 @@ export class HospitalService extends BaseService {
       .set("postsPerPage", postsPerPage.toString());
 
     return this.http.get<SpecializationListing>(url, { params: params, headers: this.headers }); 
+  }
+
+  getSpecialzationsByName(page, postsPerPage = 10) {
+    let url = this.baseUrl + 'Hospital/GetSpecializationsByName';
+    let params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString());
+
+    return this.http.get<SpecializationListing>(url, { params: params, headers: this.headers });
   }
 
   getDoctorsFromDep(departamentId, page, postsPerPage = 10) {
@@ -129,6 +149,21 @@ export class HospitalService extends BaseService {
     let url = this.baseUrl + 'Hospital/GetPatients';
 
     return this.http.get<PatientListing>(url, { headers: this.headers }); 
+  }
+  getPatientsByName() {
+    let url = this.baseUrl + 'Hospital/GetPatientsByName';
+
+    return this.http.get<PatientListing>(url, { headers: this.headers });
+  }
+  getPatientsBySurname() {
+    let url = this.baseUrl + 'Hospital/GetPatientsBySurname';
+
+    return this.http.get<PatientListing>(url, { headers: this.headers });
+  }
+  getPatientsByPesel() {
+    let url = this.baseUrl + 'Hospital/GetPatientsByPesel';
+
+    return this.http.get<PatientListing>(url, { headers: this.headers });
   }
 
   getDepartamentsFromDoctor(doctorId, page, postsPerPage = 10) {

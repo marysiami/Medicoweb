@@ -26,7 +26,54 @@ namespace SBD.VISIT.Services
             _hospitalService = hospitalService;            
         }
 
-       
+        public async Task <PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug, int drugQuantity)
+        {
+            var model = new PrescriptionDrug
+            {
+                DrugId = drug.Id,
+                Drug = drug,
+                PrescriptionId = prescription.Id,
+                Prescription = prescription,
+                DrugQuantity = drugQuantity
+                
+            };
+            await _dataService.GetSet<PrescriptionDrug>().AddAsync(model);
+            await _dataService.SaveDbAsync();
+
+            return model;
+        }
+
+        public async Task<Drug> CreateDrugAsync(string name, string company)
+        {
+            var model = new Drug
+            {
+                Name = name,
+                Company = company
+            };
+            await _dataService.GetSet<Drug>().AddAsync(model);
+            await _dataService.SaveDbAsync();
+
+            return model;
+
+        }
+
+        public async Task<Prescription> CreatePrescriptionAsync(Visit visit)
+        {
+            var model = new Prescription
+            {
+                Visit = visit,
+                VisitId = visit.Id,
+                Patient = visit.Patient,
+                PatientId = visit.PatientId,
+
+            };
+            await _dataService.GetSet<Prescription>().AddAsync(model);
+            await _dataService.SaveDbAsync();
+
+            return model;
+
+        }
+
         public async Task<Visit> CreateVisit(SBDUser patient, Doctor doctor, VisitTime visitTime)
         {
             var model = new Visit
@@ -62,7 +109,7 @@ namespace SBD.VISIT.Services
             await _dataService.SaveDbAsync();
 
             return newVisitTime;
-        }
+        }      
 
         public async Task<VisitListing> GetDoctorVisits (string doctorId, int skip = 0, int take = 10)
         {
@@ -72,6 +119,39 @@ namespace SBD.VISIT.Services
                 TotalCount = doctor.Visits.Count,
                 Visits = doctor.Visits.ToList()
             };
+            return model;
+        }
+
+        public DrugListing GetDrugs(int skip = 0, int take = 10)
+        {
+            var model = new DrugListing
+            {
+                TotalCount = _dataService.GetSet<Drug>().Count(),
+                Drugs =  _dataService.GetSet<Drug>().Skip(skip * take)
+                                                    .Take(take)
+                                                    .ToList()
+            };
+
+            return model;
+        }
+
+        public async Task<PrescriptionListing> GetPatientPrescriptions(string patientId, int skip = 0, int take = 10)
+        {
+            var patient = await _hospitalService.GetPatientById(patientId);
+            var model = new PrescriptionListing
+            {
+                TotalCount = patient.Prescriptions.Count,
+                Prescriptions = patient.Prescriptions
+                .Skip(skip * take)
+                .Take(take)
+                .ToList()
+            };
+            return model;
+        }
+
+        public Task<Prescription> GetPrescriptionById(string id)
+        {
+            var model = _dataService.GetSet<Prescription>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 
@@ -85,7 +165,13 @@ namespace SBD.VISIT.Services
                 .Skip(skip * take)
                 .Take(take)
                 .ToList()
-        };           
+            };           
+            return model;
+        }
+
+        public Task<Drug> GetVDrugById(string id)
+        {
+            var model = _dataService.GetSet<Drug>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 
@@ -93,7 +179,7 @@ namespace SBD.VISIT.Services
         {           
             var model = _dataService.GetSet<Visit>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
-        }
+        }      
 
         public void UpdateVisit(Visit visit)
         {

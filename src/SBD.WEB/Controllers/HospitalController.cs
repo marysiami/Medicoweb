@@ -24,9 +24,19 @@ namespace SBD.WEB.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetHospitals([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetHospitalsByName([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
         {
             var model = await _hospitalService.GetHospitalsByName(page, threadsPerPage);
+
+            var result = new HospitalListingViewModel(model);
+
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetHospitalsByAddress([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        {
+            var model = await _hospitalService.GetoHospitalsByAddressAsync(page, threadsPerPage);
 
             var result = new HospitalListingViewModel(model);
 
@@ -55,7 +65,7 @@ namespace SBD.WEB.Controllers
         public async Task<JsonResult> CreateHospital([FromBody]CreateHospitalRequestViewModel request)//dziala
         {
             var test = await _hospitalService.GetHospitalByName(request.Name);
-            if (test == null)
+            if (test != null)
             {
                 throw new InvalidCreateHospitalException();//gdy szpital o takiej samej nazwie istnieje
 
@@ -128,6 +138,15 @@ namespace SBD.WEB.Controllers
         public async Task<JsonResult> GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10)//dziala
         {
             var model = await _hospitalService.GetSpecializationsAsync(page, threadsPerPage);
+
+            var result = new SpecialityListingViewModel(model);
+
+            return Json(result);
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetSpecializationsByName([FromQuery] int page, [FromQuery] int threadsPerPage = 10)//dziala
+        {
+            var model = await _hospitalService.GetSpecializationsByName(page, threadsPerPage);
 
             var result = new SpecialityListingViewModel(model);
 
@@ -238,7 +257,41 @@ namespace SBD.WEB.Controllers
             return Json(result);
           
         }
- 
+        [Authorize]
+        [HttpGet]
+        public JsonResult GetPatientsByName() 
+        {
+            var model = _hospitalService.GetPatientsByName();
+
+            var result = new PatientsListingViewModel(model);
+
+            return Json(result);
+
+        }
+        [Authorize]
+        [HttpGet]
+        public JsonResult GetPatientsBySurname() 
+        {
+            var model = _hospitalService.GetPatientBySurname();
+
+            var result = new PatientsListingViewModel(model);
+
+            return Json(result);
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        public JsonResult GetPatientsByPesel()
+        {
+            var model = _hospitalService.GetPatientByPesel();
+
+            var result = new PatientsListingViewModel(model);
+
+            return Json(result);
+
+        }
+
         [Authorize]
         [HttpGet]
         public async Task <JsonResult> GetSpecializationFromDoctor ([FromQuery]string doctorId, [FromQuery] int page, [FromQuery] int postsPerPage = 10)

@@ -303,5 +303,80 @@ namespace SBD.HOSPITAL.Services
             var model = await _dataService.GetSet<Specialization>().FirstOrDefaultAsync(x => x.Name == name);
             return model;
         }
+
+        public async Task<HospitalListing> GetoHospitalsByAddressAsync(int skip = 0, int take = 10)
+        {
+            var result = new HospitalListing();
+
+            var query = _dataService.GetSet<Hospital>()
+                .OrderByDescending(x => x.Address);
+
+            result.TotalCount = query.Count();
+            result.Hospitals = await query
+                .Include(x => x.Departaments)
+                .Skip(skip * take)
+                .Take(take)
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<SpecializationListing> GetSpecializationsByName(int skip = 0, int take = 10)
+        {
+            var result = new SpecializationListing();
+
+            var query = _dataService.GetSet<Specialization>()
+                .OrderByDescending(x => x.Name);
+
+            result.TotalCount = query.Count();
+            result.Specialization = await query
+                .Skip(skip * take)
+                .Take(take)
+                .ToListAsync();
+
+            return result;
+        }
+
+        public PatientListing GetPatientsByName()
+        {
+            var obj = _dataService.GetSet<SBDUser>().OrderByDescending(x => x.Name).ToList();
+            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
+
+            var list = new PatientListing
+            {
+                Patients = model,
+                TotalCount = model.Count()
+            };
+
+            return list;
+        }
+
+        public PatientListing GetPatientBySurname()
+        {
+            var obj = _dataService.GetSet<SBDUser>().OrderByDescending(x => x.Surname).ToList();
+            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
+
+            var list = new PatientListing
+            {
+                Patients = model,
+                TotalCount = model.Count()
+            };
+
+            return list;
+        }
+
+        public PatientListing GetPatientByPesel()
+        {
+            var obj = _dataService.GetSet<SBDUser>().OrderByDescending(x => x.Pesel).ToList();
+            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
+
+            var list = new PatientListing
+            {
+                Patients = model,
+                TotalCount = model.Count()
+            };
+
+            return list;
+        }
     }
 }

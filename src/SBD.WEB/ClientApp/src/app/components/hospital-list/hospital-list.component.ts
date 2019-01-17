@@ -48,6 +48,13 @@ export class HospitalListComponent  {
         this.dataSource = new MatTableDataSource(result.hospitals);
       });
   }
+  /*getHospitalsByAddress(pageNumber = 0, postsPerPage = 10) {
+    this.hospitalService.getHospitalsByAddress(pageNumber, postsPerPage)
+      .subscribe(result => {
+        this.hospitalListing = result;
+        this.dataSource = new MatTableDataSource(result.hospitals);
+      });
+  }*/
 
   pageChanged(pageEvent) {
     this.getHospitals(pageEvent.pageIndex, this.pageSize);

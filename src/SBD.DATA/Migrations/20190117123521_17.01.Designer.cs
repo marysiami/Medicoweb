@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD.DATA;
 
 namespace SBD.DATA.Migrations
 {
     [DbContext(typeof(SBDDbContext))]
-    partial class SBDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190117123521_17.01")]
+    partial class _1701
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
