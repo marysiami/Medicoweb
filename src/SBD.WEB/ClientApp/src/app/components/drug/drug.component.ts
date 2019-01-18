@@ -1,10 +1,11 @@
-import { MatTableDataSource, MatDialog } from "@angular/material";
+import { MatTableDataSource, MatDialog, MatDialogConfig, MatSort } from "@angular/material";
 import { AuthService } from "../../services/auth.service";
 import { HospitalService } from "../../services/hospital.service";
-import { Component } from "@angular/core";
+import { Component, ViewChild, AfterViewInit } from "@angular/core";
 import { DrugListing } from "../../models/drug-listing.model";
 import { Drug } from "../../models/drug.model";
 import { CreateDrugModalComponent } from "./create-drug-modal/create-drug-modal.component";
+import { EditDrugModalComponent } from "./edit-drug-modal/edit-drug-modal.component";
 
 
 @Component({
@@ -13,11 +14,11 @@ import { CreateDrugModalComponent } from "./create-drug-modal/create-drug-modal.
 })
 
 export class DrugComponent {
-
+  @ViewChild(MatSort) sort: MatSort;
   drugListing: DrugListing = new DrugListing(0, []);
 
   isLoggedIn: boolean;
-  displayedColumns: string[] = ['name','company'];
+  displayedColumns: string[] = ['name', 'company','button'];
   pageSize = 10;
   dataSource = new MatTableDataSource<Drug>();
 
@@ -26,12 +27,17 @@ export class DrugComponent {
   constructor(
     private authService: AuthService,
     private hospitalService: HospitalService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+   // private dialogConfig: MatDialogConfig
   ) { }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
-    this.getDrugs();
+    this.getDrugs();   
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   openCreateDrugModal() {
@@ -42,17 +48,38 @@ export class DrugComponent {
           width: '400px',
         })
         .afterClosed()
-        .subscribe(result => this.getDrugs(0, this.pageSize));
+        .subscribe(result => {
+          if (result === 'ok') {
+            this.getDrugs(0, this.pageSize);
+          }
+        } );
   }
 
   getDrugs(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getDrugs(pageNumber, postsPerPage).subscribe(result => {
       this.drugListing = result;      
-      this.dataSource = new MatTableDataSource(result.drugs);
-
+      this.dataSource.data = result.drugs;
     })
   }
+
   pageChanged(pageEvent) {
     this.getDrugs(pageEvent.pageIndex, this.pageSize);
   }
+
+  deleteDrug(drugId) {
+    this.hospitalService.deleteDrug(drugId).subscribe(result => this.getDrugs(0, this.pageSize)); 
+  }
+
+  openEditDrugModal(drugId) {
+    const dialogRef =
+      this.dialog
+        .open(EditDrugModalComponent, {
+          height: 'auto',
+          width: '400px',
+          data: drugId
+        })
+        .afterClosed()
+        .subscribe(result => this.getDrugs(0, this.pageSize));
+  }
 }
+

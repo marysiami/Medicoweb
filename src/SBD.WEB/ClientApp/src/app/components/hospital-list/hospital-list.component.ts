@@ -55,6 +55,7 @@ export class HospitalListComponent  {
         this.dataSource = new MatTableDataSource(result.hospitals);
       });
   }*/
+ 
 
   pageChanged(pageEvent) {
     this.getHospitals(pageEvent.pageIndex, this.pageSize);

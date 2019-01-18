@@ -9,6 +9,13 @@
         <a [routerLink]='["/specialization", element.id]'>{{element.name}}</a>
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="buttonEdit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="deleteSpecialization(element.id)">usuń</button>
+        <button mat-raised-button color="primary" (click)="editSpecialization(element.id)">edytuj</button>
+      </mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

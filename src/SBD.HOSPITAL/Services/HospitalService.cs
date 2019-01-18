@@ -77,7 +77,7 @@ namespace SBD.HOSPITAL.Services
             await _userManager.RemoveFromRoleAsync(patient, "Patient");
             await _userManager.AddToRoleAsync(patient, "Doctor");
 
-             
+
             await _dataService.GetSet<Doctor>().AddAsync(newDoctor);
             await _dataService.SaveDbAsync();
 
@@ -220,7 +220,7 @@ namespace SBD.HOSPITAL.Services
         public PatientListing GetPatients() //działa
         {
             var obj = _dataService.GetSet<SBDUser>().ToList();
-            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();               
+            var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
 
             var list = new PatientListing
             {
@@ -244,7 +244,7 @@ namespace SBD.HOSPITAL.Services
                 .Take(take)
                 .ToList()
             };
-         
+
             return result;
         }
 
@@ -271,24 +271,17 @@ namespace SBD.HOSPITAL.Services
             return result;
         }
 
-        public void UpdateDepartament(Departament departament)
+        public async Task UpdateSpecialization(string id, string name)
         {
-            _dataService.GetSet<Departament>().Update(departament);
-        }
+            var model = await GetSpecializationByIdAsync(id);
+            model.Name = name;
 
-        public void UpdateHospital(Hospital hospital)
-        {
-            _dataService.GetSet<Hospital>().Update(hospital);
-        }
-
-        public void UpdateSpecialization(Specialization specialization)
-        {
-            _dataService.GetSet<Specialization>().Update(specialization);
+            _dataService.GetSet<Specialization>().Update(model);
         }
 
         public async Task<Hospital> GetHospitalByName(string name)
         {
-            var model = await _dataService.GetSet<Hospital>().FirstOrDefaultAsync(x => x.Name == name);            
+            var model = await _dataService.GetSet<Hospital>().FirstOrDefaultAsync(x => x.Name == name);
             return model;
         }
 
@@ -298,7 +291,7 @@ namespace SBD.HOSPITAL.Services
             return model;
         }
 
-        public async  Task<Specialization> GetSpecializationByName(string name)
+        public async Task<Specialization> GetSpecializationByName(string name)
         {
             var model = await _dataService.GetSet<Specialization>().FirstOrDefaultAsync(x => x.Name == name);
             return model;
@@ -378,5 +371,21 @@ namespace SBD.HOSPITAL.Services
 
             return list;
         }
+
+        public async Task UpdateDepartament(string id, string name)
+        {
+            var model = await GetDepartamentById(id);
+            model.Name = name;
+            _dataService.GetSet<Departament>().Update(model);
+        }
+
+        public async Task UpdateHospital(string id, string name, string address)
+        {
+            var model = await GetHospital(id);
+            model.Name = name;
+            model.Address = address;
+            _dataService.GetSet<Hospital>().Update(model);
+        }
+
     }
 }

@@ -37,7 +37,7 @@ namespace SBD.WEB.Controllers
         [HttpGet]
         public async Task<JsonResult> GetPatientVisits ([FromBody] string patientId, [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
         {
-            var model = await _visitService.GetPtientVisits(patientId, page, threadsPerPage);
+            var model = await _visitService.GetPatientVisits(patientId, page, threadsPerPage);
             var result = new VisitListingViewModel(model);
 
             return Json(result);
@@ -53,15 +53,7 @@ namespace SBD.WEB.Controllers
             return Json(result);
         }
 
-        [Authorize]
-        [HttpPut]
-        public async Task UpdateVisitAsync ([FromBody] string id)
-        {
-            var model = await _visitService.GetVisitById(id);
-            _visitService.UpdateVisit(model);
-        }
-
-        //do anulacji vizyty
+             //do anulacji vizyty
 
         [Authorize]
         [HttpPost]
@@ -71,6 +63,13 @@ namespace SBD.WEB.Controllers
            var result = new DrugViewModel(model);
 
             return Json(result);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task DeleteDrug([FromQuery] string id)
+        {
+           await _visitService.DeleteDrug(id);           
         }
 
         [Authorize]
@@ -99,7 +98,7 @@ namespace SBD.WEB.Controllers
         public async Task<JsonResult> AddDrugToPrescription([FromQuery] AddDrugToPrescriptionRequestViewModel request)
         {
             var prescription = await _visitService.GetPrescriptionById(request.PrescriptionId);
-            var drug = await _visitService.GetVDrugById(request.DrugId);
+            var drug = await _visitService.GetDrugById(request.DrugId);
             var model = await _visitService.AddDrugToPrescriptionAsync(prescription,drug,request.QuantityDrug);
             var result = new DrugsFromPrescriptionViewModel(model); //czy działa?
 
@@ -112,6 +111,12 @@ namespace SBD.WEB.Controllers
             var model =  _visitService.GetDrugs(page, threadsPerPage);
             var result = new DrugListViewModel(model);
             return Json(result);
+        }
+
+        [HttpPut]
+        public async Task UpdateDrug([FromBody] UpdateDrugRequestViewModel request)
+        {
+            await _visitService.UpdateDrug(request.Id, request.Name, request.Company);
         }
 
     }

@@ -40,7 +40,8 @@ export class PatientListComponent {
       });
   }
   CreateDoctor(patientId) {
-    this.hospitalService.createDoctor(patientId);
+    debugger;
+    this.hospitalService.createDoctor(patientId).subscribe(result => console.log(result));
     //this.router.navigateByUrl('/doctor/'+patientId);
   }
 

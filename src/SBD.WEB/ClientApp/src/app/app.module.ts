@@ -32,7 +32,9 @@ import { MaterialModule } from './material.module';
 import { AuthService } from "./services/auth.service";
 import { HospitalService } from "./services/hospital.service";
 import { JwtUtil } from "./utils/jwt.util";
-
+import { EditDrugModalComponent } from './components/drug/edit-drug-modal/edit-drug-modal.component';
+import { EditSpecializationModalComponent } from './components/specialization/edit-specialization-modal/edit-specialization-modal.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 
@@ -59,9 +61,10 @@ import { JwtUtil } from "./utils/jwt.util";
     PatientHomeComponent,
     DrugComponent,
     CreateDrugModalComponent,
-    VisitComponent,
     PatientVisitComponent,
-    PatientPrescriptionComponent
+    PatientPrescriptionComponent,
+    EditDrugModalComponent,
+    EditSpecializationModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -81,10 +84,10 @@ import { JwtUtil } from "./utils/jwt.util";
       { path: "patients", component: PatientListComponent },
       { path: "doctors", component: DoctorListComponent },
       { path: "doctor/:id", component: DoctorComponent },
-      { path: "drugs", component: DrugComponent },
-      { path: "newVisit", component: VisitComponent },
-      { path: "visits/:id", component: PatientVisitComponent },
-      { path: "/prescriptions/:id", component: PatientPrescriptionComponent}
+      { path: "drugs", component: DrugComponent }
+     // { path: "newVisit", component: VisitComponent },
+      //{ path: "visits/:id", component: PatientVisitComponent },
+      //{ path: "/prescriptions/:id", component: PatientPrescriptionComponent}
     ]),
     HttpClientModule,
     HttpModule,
@@ -95,14 +98,18 @@ import { JwtUtil } from "./utils/jwt.util";
   providers: [
     AuthService,
     JwtUtil,
-    HospitalService
+    HospitalService,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     CreateHospitalModalComponent,
     CreateDepartamentModalComponent,
     CreateSpecializationModalComponent,
-    CreateDrugModalComponent
+    CreateDrugModalComponent,
+    EditDrugModalComponent,
+    EditSpecializationModalComponent
   ]
 })
 export class AppModule {

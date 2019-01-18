@@ -6,6 +6,7 @@ import { HospitalService } from '../../services/hospital.service';
 import { AuthService } from './../../services/auth.service';
 import { Specialization } from '../../models/specialization.model';
 import { CreateSpecializationModalComponent } from './create-specialization -modal/create-specialization-modal.component';
+import { EditSpecializationModalComponent } from './edit-specialization-modal/edit-specialization-modal.component';
 
 @Component({
   selector: 'app-specialization',
@@ -18,7 +19,7 @@ export class SpecializationComponent  {
   specializationListing: SpecializationListing = new SpecializationListing(0, []);
 
   isLoggedIn: boolean;
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name','buttonEdit'];
   pageSize = 10;
   dataSource = new MatTableDataSource<Specialization>();
 
@@ -53,6 +54,22 @@ export class SpecializationComponent  {
       this.dataSource = new MatTableDataSource(result.specialization);
 
     })
+  }
+  deleteSpecialization(id) {
+    this.hospitalService.deleteSpecialization(id);
+    this.getSpecialization();
+  }
+  editSpecialization(specializationId){
+    /*this.dialogConfig.data = {
+      drugId: drugId,
+      height: 'auto',
+      width: '400px',
+    };*/
+    const dialogRef =
+      this.dialog
+        .open(EditSpecializationModalComponent)//, this.dialogConfig)
+        .afterClosed()
+        .subscribe(result => this.getSpecialization(0, this.pageSize));
   }
   pageChanged(pageEvent) {
     this.getSpecialization(pageEvent.pageIndex, this.pageSize);

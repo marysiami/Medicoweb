@@ -23,10 +23,10 @@ namespace SBD.VISIT.Services
         {
             _dataService = dataService;
             _userService = userService;
-            _hospitalService = hospitalService;            
+            _hospitalService = hospitalService;
         }
 
-        public async Task <PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug, int drugQuantity)
+        public async Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug, int drugQuantity)
         {
             var model = new PrescriptionDrug
             {
@@ -35,7 +35,7 @@ namespace SBD.VISIT.Services
                 PrescriptionId = prescription.Id,
                 Prescription = prescription,
                 DrugQuantity = drugQuantity
-                
+
             };
             await _dataService.GetSet<PrescriptionDrug>().AddAsync(model);
             await _dataService.SaveDbAsync();
@@ -93,7 +93,7 @@ namespace SBD.VISIT.Services
             {
                 StartTime = start,
                 EndTime = start.Add(TimeSpan.FromMinutes(30)), //jedna wizyta trwa 30 minut           
-                
+
             };
             /* Przykład TimeSpan
             TimeSpan duration = new TimeSpan(1, 12, 23, 62);
@@ -106,9 +106,9 @@ namespace SBD.VISIT.Services
             await _dataService.SaveDbAsync();
 
             return newVisitTime;
-        }      
+        }
 
-        public async Task<VisitListing> GetDoctorVisits (string doctorId, int skip = 0, int take = 10)
+        public async Task<VisitListing> GetDoctorVisits(string doctorId, int skip = 0, int take = 10)
         {
             var doctor = await _hospitalService.GetDoctorById(doctorId);
             var model = new VisitListing
@@ -124,7 +124,7 @@ namespace SBD.VISIT.Services
             var model = new DrugListing
             {
                 TotalCount = _dataService.GetSet<Drug>().Count(),
-                Drugs =  _dataService.GetSet<Drug>().Skip(skip * take)
+                Drugs = _dataService.GetSet<Drug>().Skip(skip * take)
                                                     .Take(take)
                                                     .ToList()
             };
@@ -152,35 +152,51 @@ namespace SBD.VISIT.Services
             return model;
         }
 
-        public async Task <VisitListing> GetPtientVisits(string patientId, int skip = 0, int take = 10)
+        public async Task<VisitListing> GetPatientVisits(string patientId, int skip = 0, int take = 10)
         {
             var patient = await _hospitalService.GetPatientById(patientId);
             var model = new VisitListing
             {
                 TotalCount = patient.Visits.Count,
-                Visits =  patient.Visits
+                Visits = patient.Visits
                 .Skip(skip * take)
                 .Take(take)
                 .ToList()
-            };           
+            };
             return model;
         }
 
-        public Task<Drug> GetVDrugById(string id)
+
+        public Task<Visit> GetVisitById(string id)
         {
-            var model = _dataService.GetSet<Drug>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
-            return model;
-        }
-
-        public Task <Visit> GetVisitById(string id)
-        {           
             var model = _dataService.GetSet<Visit>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
-        }      
+        }
 
-        public void UpdateVisit(Visit visit)
+        public async Task UpdateDrug(string id, string name, string company)
         {
-             _dataService.GetSet<Visit>().Update(visit);            
+            var model = await GetDrugById(id);
+            model.Name = name;
+            model.Company = company;
+
+            _dataService.GetSet<Drug>().Update(model);
+
+            await _dataService.SaveDbAsync();
+        }
+
+        public async Task DeleteDrug(string id)
+        {
+            var model = await GetDrugById(id);
+
+            _dataService.GetSet<Drug>().Remove(model);
+
+            await _dataService.SaveDbAsync();
+        }
+        
+        public async Task<Drug> GetDrugById(string id)
+        {
+            var model = await _dataService.GetSet<Drug>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            return model;
         }
     }
 }

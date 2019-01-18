@@ -17,9 +17,9 @@ namespace SBD.HOSPITAL.Contracts
         Task<Departament> GetDepartamentByName(string name);
 
         void DeleteDepartament(Departament departament);
-        void UpdateDepartament(Departament departament);
-        void UpdateHospital(Hospital hospital);
-        void UpdateSpecialization(Specialization specialization);
+        Task UpdateDepartament(string id, string name);
+        Task UpdateHospital(string id, string name, string address);
+        Task UpdateSpecialization(string id,string name);
         void DeleteSpecialization(Specialization specialization);
 
 

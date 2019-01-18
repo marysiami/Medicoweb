@@ -60,7 +60,7 @@ namespace SBD.WEB.Controllers
             return Json(result);
         }
 
-        [Authorize ]
+       // [Authorize (Roles = "Admin")]
         [HttpPost]
         public async Task<JsonResult> CreateHospital([FromBody]CreateHospitalRequestViewModel request)//dziala
         {
@@ -80,17 +80,14 @@ namespace SBD.WEB.Controllers
             }
         }
 
-        [Authorize]
+      // [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task UpdateHospital([FromBody] string id)
-        {
-            var model = await _hospitalService.GetHospital(id);
-            _hospitalService.UpdateHospital(model);
-
+        public async Task UpdateHospital([FromBody] UpdateHospitalRequestViewModel request)
+        {           
+           await  _hospitalService.UpdateHospital(request.Id,request.Name,request.Address);
         }
-
-
-        [Authorize ]
+        
+       // [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<JsonResult> CreateDepartament([FromBody]CreateDepartamentRequestViewModel request) //dziala
         {
@@ -115,7 +112,7 @@ namespace SBD.WEB.Controllers
             }
         }
 
-        [Authorize]
+       // [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task DeleteDepartament([FromBody] string id)
         {
@@ -124,16 +121,13 @@ namespace SBD.WEB.Controllers
 
         }
 
-        [Authorize]
+        // [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task UpdateDepartament([FromBody] string id)
+        public async Task UpdateDepartament([FromBody] UpdateDepartamentRequestViewModel request)
         {
-            var model = await _hospitalService.GetDepartamentById(id);
-            _hospitalService.UpdateDepartament(model);
-
-        }
-
-
+             await _hospitalService.UpdateDepartament(request.Id,request.Name);
+        }        
+        
         [HttpGet]
         public async Task<JsonResult> GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10)//dziala
         {
@@ -143,6 +137,7 @@ namespace SBD.WEB.Controllers
 
             return Json(result);
         }
+
         [HttpGet]
         public async Task<JsonResult> GetSpecializationsByName([FromQuery] int page, [FromQuery] int threadsPerPage = 10)//dziala
         {
@@ -153,7 +148,7 @@ namespace SBD.WEB.Controllers
             return Json(result);
         }
 
-        [Authorize]
+       // [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<JsonResult> CreateSpecialization([FromBody]CreateSpecialityRequestViewModel request)
         { 
@@ -171,7 +166,7 @@ namespace SBD.WEB.Controllers
             }            
         }
 
-        [Authorize]
+      //  [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task DeleteSpecialization([FromBody] string id)
         {
@@ -180,16 +175,14 @@ namespace SBD.WEB.Controllers
 
         }
 
-        [Authorize]
+        // [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task UpdateSpecialization([FromBody] string id)
+        public async Task UpdateSpecialization([FromBody] UpdateSpecializationRequestViewModel request)
         {
-            var model = await _hospitalService.GetSpecializationByIdAsync(id);
-            _hospitalService.UpdateSpecialization(model);
-
+            await _hospitalService.UpdateSpecialization(request.Id, request.Name);
         }
 
-        [Authorize]
+        //  [Authorize(Roles = "Admin")]
         [HttpPost] 
         public async Task<JsonResult> CreateDoctor([FromBody]CreateDoctorRequestViewModel request) //powinno byc ok
         {
@@ -225,8 +218,6 @@ namespace SBD.WEB.Controllers
             return Json(model);
         }
 
-       
-
         [Authorize]
         [HttpGet]
         public async Task<JsonResult> GetDoctorsFromDep([FromQuery]string departamentId, [FromQuery] int page, [FromQuery] int postsPerPage = 10)  //powinno działać-> jak będą lekarze przetestowac 
@@ -254,9 +245,9 @@ namespace SBD.WEB.Controllers
 
             var result = new PatientsListingViewModel(model);
 
-            return Json(result);
-          
+            return Json(result);          
         }
+
         [Authorize]
         [HttpGet]
         public JsonResult GetPatientsByName() 
@@ -268,6 +259,7 @@ namespace SBD.WEB.Controllers
             return Json(result);
 
         }
+
         [Authorize]
         [HttpGet]
         public JsonResult GetPatientsBySurname() 
@@ -277,7 +269,6 @@ namespace SBD.WEB.Controllers
             var result = new PatientsListingViewModel(model);
 
             return Json(result);
-
         }
 
         [Authorize]
@@ -289,7 +280,6 @@ namespace SBD.WEB.Controllers
             var result = new PatientsListingViewModel(model);
 
             return Json(result);
-
         }
 
         [Authorize]
@@ -349,7 +339,6 @@ namespace SBD.WEB.Controllers
             }
             var departmanet = await _hospitalService.GetDepartamentById(departamentId);
             var doctorWithDep = await _hospitalService.AddDoctorDepartament(doctor, departmanet);
-
     
         }
 

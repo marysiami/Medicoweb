@@ -3,17 +3,24 @@
 </div>
 <h2>Baza danych leków</h2>
 <div class="full-width container">
-  <mat-table #table [dataSource]="dataSource">
+  <mat-table #table  [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Nazwa leku </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa leku </mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{element.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="company">
-      <mat-header-cell *matHeaderCellDef> Firma </mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef mat-sort-header> Firma </mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{element.company}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="button">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="deleteDrug(element.id)">usuń</button>
+        <button mat-raised-button color="primary" (click)="openEditDrugModal(element.id)">edytuj</button>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

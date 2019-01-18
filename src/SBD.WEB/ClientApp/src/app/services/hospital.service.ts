@@ -19,6 +19,9 @@ import { SpecializationsFromDoctorListing } from '../models/specializations-from
 import { BaseService } from './base.service';
 import { DrugListing } from '../models/drug-listing.model';
 import { CreateDrugRequest } from '../models/Request/create-drug-request.model';
+import { UpdateHospitalRequest } from '../models/Request/UpdateHospitalRequest';
+import { Drug } from '../models/drug.model';
+import { Specialization } from '../models/specialization.model';
 
 
 
@@ -56,8 +59,8 @@ export class HospitalService extends BaseService {
       .set("id", id);
     
     return this.http.get<Hospital>(url, { params: params, headers: this.headers });
-  } 
-
+  }
+  
   createHospital(name: string, address: string) {
    
     let url = this.baseUrl + "hospital/CreateHospital";
@@ -66,11 +69,18 @@ export class HospitalService extends BaseService {
     return this.http.post(url, body, { headers: this.headers });
     }
 
- /* updateHospital(hospital) {      
-      let url = this.baseUrl + "Hospital/updateHospital";
-      return this.http.put(url, JSON.stringify(hospital), { headers: this.headers });       
-      }*/
-  
+ /*updateHospital(hospitalId:string, name: string, address: string) {
+
+    let url = this.baseUrl + "Hospital/UpdateHospital";
+    let body = new UpdateHospitalRequest(hospitalId, name, address);
+
+    return this.http.put(url, body, { headers: this.headers });
+  }
+  deleteHospital(hospitalId) {
+    let url = this.baseUrl + "Hospital/";
+   
+    return this.http.put(url, body, { headers: this.headers });
+  }*/
   getDepartaments(hospitalId, page, postsPerPage = 10) {
  
     let url = this.baseUrl + 'Hospital/GetDepartamentsFromHospital';
@@ -100,11 +110,26 @@ export class HospitalService extends BaseService {
     return this.http.post(url, body, { headers: this.headers });
   }
 
+  deleteSpecialization(specializationId: string) { 
+    let url = this.baseUrl + "Hospital/DeleteSpecialization";
+    let params = new HttpParams()
+      .set("id", specializationId);
+
+    return this.http.delete(url, { params: params, headers: this.headers });
+  }
+
+  updateSpecialization(specializationId: string, name: string) {
+    let url = this.baseUrl + "Hospital/UpdateSpecialization";
+    let body = new Specialization(specializationId, name);
+
+    return this.http.put(url, body, { headers: this.headers });
+  }
+
   createDoctor(patientId: string) {
     let url = this.baseUrl + "Hospital/CreateDoctor";
     let body = new CreateDoctorRequest(patientId);    
 
-    return this.http.post(url,body, {headers: this.headers });
+    return this.http.post(url, body, {headers: this.headers });
   }
 
   getSpecialzations(page, postsPerPage = 10) {
@@ -218,6 +243,22 @@ export class HospitalService extends BaseService {
     let body = new CreateDrugRequest(name, company);
 
     return this.http.post(url, body, { headers: this.headers });
+  }
+
+  deleteDrug(drugId: string) {
+    let url = this.baseUrl + "visit/DeleteDrug";
+    let params = new HttpParams()
+      .set("id", drugId);
+
+    return this.http.delete(url, { params: params, headers: this.headers });
+  }
+
+  updateDrug(drugId: string, drugName: string, drugCompany: string) {
+    let url = this.baseUrl + "visit/UpdateDrug";
+    debugger;
+    let body = new Drug(drugId, drugName, drugCompany);
+
+    return this.http.put(url, body, { headers: this.headers });
   }
 
 }
