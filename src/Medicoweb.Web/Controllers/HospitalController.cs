@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Medicoweb.Account.Contracts;
+using Medicoweb.Common.Attributes;
 using Medicoweb.Common.Exceptions;
 using Medicoweb.Hospital.Contracts;
 using Medicoweb.Web.ViewModels;
@@ -13,7 +14,6 @@ namespace Medicoweb.Web.Controllers
     {
         private readonly IHospitalService _hospitalService;
         private readonly IUserService _userService;
-
 
         public HospitalController(
             IHospitalService hospitalService,
@@ -80,6 +80,7 @@ namespace Medicoweb.Web.Controllers
 
         // [Authorize(Roles = "Admin")]
         [HttpPost]
+        [LogicIssue("Nie da sie utworzyc nowego departamentu - zly warunek")]
         public async Task<JsonResult> CreateDepartament([FromBody] CreateDepartamentRequestViewModel request) //dziala
         {
             var test = await _hospitalService.GetDepartamentByName(request.Name);

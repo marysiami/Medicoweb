@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Medicoweb.Common.Attributes;
 using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
 using Medicoweb.Hospital.Models;
 
 namespace Medicoweb.Hospital.Contracts
 {
+    [BadDesign("Serwis udostępnia funkcjonalności nie tylko do wizyt", "Utworzyc oddzielne serwisy dla oddzialow i specjalizacji")]
     public interface IHospitalService
     {
         Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital hospital);

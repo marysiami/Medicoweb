@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Medicoweb.Common.Attributes;
 using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
 using Medicoweb.Data.Models.Schedule;
@@ -7,6 +8,7 @@ using Medicoweb.Visit.Models;
 
 namespace Medicoweb.Visit.Contracts
 {
+    [BadDesign("Serwis udostępnia funkcjonalności nie tylko do wizyt", "Dodać nowy projekt dla Apteki/Lekow i w nim Utworzyc oddzielne serwisy dla lekow i dla recept")]
     public interface IVisitService
     {
         Task<Data.Models.Visit> CreateVisit(MedicowebUser patient, Doctor doctor, VisitTime visitTime);
