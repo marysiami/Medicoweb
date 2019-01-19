@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Medicoweb.Data.Models.Drug;
+using System;
 using System.Collections.Generic;
 
-namespace Medicoweb.Data.Models
+namespace Medicoweb.Data.Models.Visit
 {
     public class Prescription
     {

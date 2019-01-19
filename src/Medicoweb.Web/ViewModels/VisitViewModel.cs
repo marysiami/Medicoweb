@@ -4,7 +4,7 @@ namespace Medicoweb.Web.ViewModels
 {
     public class VisitViewModel
     {
-        public VisitViewModel(Data.Models.Visit visit)
+        public VisitViewModel(Data.Models.Visit.Visit visit)
         {
             Id = visit.Id.ToString();
             DoctorName = visit.Doctor.Name;

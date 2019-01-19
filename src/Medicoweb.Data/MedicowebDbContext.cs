@@ -1,9 +1,11 @@
-﻿using System;
-using Medicoweb.Data.Models;
-using Medicoweb.Data.Models.Account;
+﻿using Medicoweb.Data.Models.Account;
+using Medicoweb.Data.Models.Drug;
+using Medicoweb.Data.Models.Hospital;
 using Medicoweb.Data.Models.Schedule;
+using Medicoweb.Data.Models.Visit;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Medicoweb.Data
 {

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Medicoweb.Common\Medicoweb.Common.csproj" />
+    <ProjectReference Include="..\Medicoweb.Drug\Medicoweb.Drug.csproj" />
     <ProjectReference Include="..\Medicoweb.Hospital\Medicoweb.Hospital.csproj" />
     <ProjectReference Include="..\Medicoweb.Account\Medicoweb.Account.csproj" />
     <ProjectReference Include="..\Medicoweb.Visit\Medicoweb.Visit.csproj" />

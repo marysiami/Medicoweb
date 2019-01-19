@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Medicoweb.Data.Models.Account;
+using Medicoweb.Data.Models.Hospital;
 using Medicoweb.Data.Models.Schedule;
 
-namespace Medicoweb.Data.Models
+namespace Medicoweb.Data.Models.Visit
 {
     public class Visit
     {

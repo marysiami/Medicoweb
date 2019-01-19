@@ -1,5 +1,5 @@
-﻿using System;
-using Medicoweb.Data.Models;
+﻿using Medicoweb.Data.Models.Drug;
+using System;
 
 namespace Medicoweb.Web.ViewModels
 {

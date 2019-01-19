@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { Component, ViewChild } from "@angular/core";
+import { MatDialog, MatSort } from "@angular/material";
 import { MatTableDataSource } from "@angular/material/table";
 import { SpecializationListing } from "../../models/specialization-listing.model";
 import { HospitalService } from "../../services/hospital.service";
@@ -16,10 +16,11 @@ import { EditSpecializationModalComponent } from "./edit-specialization-modal/ed
 })
 export class SpecializationComponent {
 
+  @ViewChild(MatSort)
+  sort: MatSort;
   specializationListing = new SpecializationListing(0, []);
-
   isLoggedIn: boolean;
-  displayedColumns: string[] = ["name", "buttonEdit"];
+  displayedColumns: string[] = ["name", "button"];
   pageSize = 10;
   dataSource = new MatTableDataSource<Specialization>();
 
@@ -36,6 +37,9 @@ export class SpecializationComponent {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.getSpecialization();
   }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
 
   openCreateSpecialzationModal() {
     const dialogRef =
@@ -46,34 +50,41 @@ export class SpecializationComponent {
             width: "400px",
           })
         .afterClosed()
-        .subscribe(result => this.getSpecialization(0, this.pageSize));
+        .subscribe(result => {
+          if (result === "ok") {
+            this.getSpecialization(0, this.pageSize);
+          }
+        });
   }
+
 
   getSpecialization(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getSpecialzations(pageNumber, postsPerPage).subscribe(result => {
       this.specializationListing = result;
-      console.log(result);
-      this.dataSource = new MatTableDataSource(result.specialization);
-
+      this.dataSource.data = result.specialization;
     });
   }
 
-  deleteSpecialization(id) {
-    this.hospitalService.deleteSpecialization(id);
-    this.getSpecialization();
+  deleteSpecialization(specializationId) {    
+    this.hospitalService.deleteSpecialization(specializationId)
+      .subscribe(result => this.getSpecialization(0, this.pageSize));
   }
 
   editSpecialization(specializationId) {
-    /*this.dialogConfig.data = {
-      drugId: drugId,
-      height: 'auto',
-      width: '400px',
-    };*/
     const dialogRef =
       this.dialog
-        .open(EditSpecializationModalComponent) //, this.dialogConfig)
+        .open(EditSpecializationModalComponent,
+          {
+            height: "auto",
+            width: "400px",
+            data: specializationId
+          })
         .afterClosed()
-        .subscribe(result => this.getSpecialization(0, this.pageSize));
+        .subscribe(result => {
+          if (result === "ok") {
+            this.getSpecialization(0, this.pageSize);
+          }
+        });
   }
 
   pageChanged(pageEvent) {

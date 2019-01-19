@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Medicoweb.Data.Models;
 
-namespace Medicoweb.Visit.Models
+namespace Medicoweb.Drug.Models
 {
     public class DrugListing
     {
-        public List<Drug> Drugs { get; set; }
+        public List<Medicoweb.Data.Models.Drug.Drug> Drugs { get; set; }
         public int TotalCount { get; set; }
     }
 }

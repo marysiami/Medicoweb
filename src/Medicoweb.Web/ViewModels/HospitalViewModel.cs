@@ -4,7 +4,7 @@ namespace Medicoweb.Web.ViewModels
 {
     public class HospitalViewModel
     {
-        public HospitalViewModel(Data.Models.Hospital x)
+        public HospitalViewModel(Data.Models.Hospital.Hospital x)
         {
             Id = x.Id.ToString();
             Name = x.Name;

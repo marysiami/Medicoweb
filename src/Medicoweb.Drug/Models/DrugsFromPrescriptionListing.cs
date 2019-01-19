@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Medicoweb.Data.Models;
+﻿using Medicoweb.Data.Models.Drug;
+using System.Collections.Generic;
 
-namespace Medicoweb.Visit.Models
+namespace Medicoweb.Drug.Models
 {
     public class DrugsFromPrescriptionListing
     {

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Medicoweb.Drug.Models;
+using System.Collections.Generic;
 using System.Linq;
-using Medicoweb.Visit.Models;
 
 namespace Medicoweb.Web.ViewModels
 {

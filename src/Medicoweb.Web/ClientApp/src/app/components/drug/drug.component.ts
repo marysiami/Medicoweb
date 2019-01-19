@@ -13,6 +13,7 @@ import { EditDrugModalComponent } from "./edit-drug-modal/edit-drug-modal.compon
   templateUrl: "./drug.component.html",
 })
 export class DrugComponent {
+
   @ViewChild(MatSort)
   sort: MatSort;
   drugListing = new DrugListing(0, []);
@@ -27,8 +28,7 @@ export class DrugComponent {
   constructor(
     private authService: AuthService,
     private hospitalService: HospitalService,
-    private dialog: MatDialog,
-    // private dialogConfig: MatDialogConfig
+    private dialog: MatDialog,   
   ) {
   }
 
@@ -82,6 +82,10 @@ export class DrugComponent {
             data: drugId
           })
         .afterClosed()
-        .subscribe(result => this.getDrugs(0, this.pageSize));
+        .subscribe(result => {
+          if (result === "ok") {
+            this.getDrugs(0, this.pageSize);
+          }
+        });
   }
 }

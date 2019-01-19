@@ -12,11 +12,13 @@ namespace Medicoweb.Web.Controllers
     {
         private readonly IHospitalService _hospitalService;
         private readonly IVisitService _visitService;
+        private readonly IPrescriptionService _prescriptionService;
 
-        public VisitController(IVisitService visitService, IHospitalService hospitalService)
+        public VisitController(IVisitService visitService, IHospitalService hospitalService, IPrescriptionService prescriptionService)
         {
             _visitService = visitService;
             _hospitalService = hospitalService;
+            _prescriptionService = prescriptionService;
         }
 
         [Authorize]
@@ -57,29 +59,13 @@ namespace Medicoweb.Web.Controllers
 
         //do anulacji vizyty
 
-        [Authorize]
-        [HttpPost]
-        public async Task<JsonResult> CreateDrug([FromBody] CreateDrugRequestViewModel request)
-        {
-            var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
-            var result = new DrugViewModel(model);
-
-            return Json(result);
-        }
-
-        [Authorize]
-        [HttpDelete]
-        public async Task DeleteDrug([FromQuery] string id)
-        {
-            await _visitService.DeleteDrug(id);
-        }
 
         [Authorize]
         [HttpPost]
         public async Task<JsonResult> CreatePrescription([FromBody] CreatePrescriptionRequestViewModel request)
         {
             var visit = await _visitService.GetVisitById(request.VisitId);
-            var model = await _visitService.CreatePrescriptionAsync(visit);
+            var model = await _prescriptionService.CreatePrescriptionAsync(visit);
             var result = new PrescriptionViewModel(model);
 
             return Json(result);
@@ -90,37 +76,10 @@ namespace Medicoweb.Web.Controllers
         public async Task<JsonResult> GetPatientPrescriptions([FromBody] string patientId, [FromQuery] int page,
             [FromQuery] int threadsPerPage = 10)
         {
-            var model = await _visitService.GetPatientPrescriptions(patientId, page, threadsPerPage);
+            var model = await _prescriptionService.GetPatientPrescriptions(patientId, page, threadsPerPage);
             var result = new PrescriptionListingViewModel(model);
 
             return Json(result);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<JsonResult> AddDrugToPrescription([FromQuery] AddDrugToPrescriptionRequestViewModel request)
-        {
-            var prescription = await _visitService.GetPrescriptionById(request.PrescriptionId);
-            var drug = await _visitService.GetDrugById(request.DrugId);
-            var model = await _visitService.AddDrugToPrescriptionAsync(prescription, drug, request.QuantityDrug);
-            var result = new DrugsFromPrescriptionViewModel(model); //czy działa?
-
-            return Json(result);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public JsonResult GetDrugs([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
-        {
-            var model = _visitService.GetDrugs(page, threadsPerPage);
-            var result = new DrugListViewModel(model);
-            return Json(result);
-        }
-
-        [HttpPut]
-        public async Task UpdateDrug([FromBody] UpdateDrugRequestViewModel request)
-        {
-            await _visitService.UpdateDrug(request.Id, request.Name, request.Company);
-        }
+        }  
     }
 }

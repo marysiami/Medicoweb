@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Medicoweb.Data.Models.Schedule;
+using System;
 using System.Collections.Generic;
-using Medicoweb.Data.Models.Schedule;
 
-namespace Medicoweb.Data.Models
+namespace Medicoweb.Data.Models.Hospital
 {
     public class Doctor
     {
@@ -13,6 +13,6 @@ namespace Medicoweb.Data.Models
         public virtual DoctorTime TimeOfWork { get; set; }
         public virtual ICollection<DepartamentDoctor> DepartamentDoctors { get; set; }
         public virtual ICollection<SpecializationDoctor> SpecializationDoctor { get; set; }
-        public virtual ICollection<Visit> Visits { get; set; }
+        public virtual ICollection<Visit.Visit> Visits { get; set; }
     }
 }

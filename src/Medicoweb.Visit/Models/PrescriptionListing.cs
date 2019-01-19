@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Medicoweb.Data.Models;
+﻿using Medicoweb.Data.Models.Visit;
+using System.Collections.Generic;
 
 namespace Medicoweb.Visit.Models
 {

@@ -4,6 +4,7 @@ using Medicoweb.Account.Contracts;
 using Medicoweb.Data.Contracts;
 using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
+using Medicoweb.Data.Models.Hospital;
 using Medicoweb.Hospital.Contracts;
 using Medicoweb.Hospital.Models;
 using Microsoft.AspNetCore.Identity;
@@ -52,7 +53,7 @@ namespace Medicoweb.Hospital.Services
             return doctor; // zwrocic viewmodel?
         }
 
-        public async Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital hospital) //działa
+        public async Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital.Hospital hospital) //działa
         {
             var newDepartament = new Departament
             {
@@ -83,14 +84,14 @@ namespace Medicoweb.Hospital.Services
             return newDoctor;
         }
 
-        public async Task<Data.Models.Hospital> CreateHospital(string name, string address) //działa
+        public async Task<Data.Models.Hospital.Hospital> CreateHospital(string name, string address) //działa
         {
-            var newHospital = new Data.Models.Hospital
+            var newHospital = new Data.Models.Hospital.Hospital
             {
                 Name = name,
                 Address = address
             };
-            await _dataService.GetSet<Data.Models.Hospital>().AddAsync(newHospital);
+            await _dataService.GetSet<Data.Models.Hospital.Hospital>().AddAsync(newHospital);
             await _dataService.SaveDbAsync();
 
             return newHospital;
@@ -113,9 +114,10 @@ namespace Medicoweb.Hospital.Services
             _dataService.GetSet<Departament>().Remove(departament);
         }
 
-        public void DeleteSpecialization(Specialization specialization)
+        public async void DeleteSpecialization(Specialization specialization)
         {
             _dataService.GetSet<Specialization>().Remove(specialization);
+            await _dataService.SaveDbAsync();
         }
 
         public async Task<Departament> GetDepartamentById(string id)
@@ -167,9 +169,9 @@ namespace Medicoweb.Hospital.Services
             return result;
         }
 
-        public async Task<Data.Models.Hospital> GetHospital(string hospitalId) //dziala
+        public async Task<Data.Models.Hospital.Hospital> GetHospital(string hospitalId) //dziala
         {
-            var hospital = await _dataService.GetSet<Data.Models.Hospital>()
+            var hospital = await _dataService.GetSet<Data.Models.Hospital.Hospital>()
                 .Include(x => x.Departaments)
                 .FirstOrDefaultAsync(x => x.Id.ToString() == hospitalId);
 
@@ -180,7 +182,7 @@ namespace Medicoweb.Hospital.Services
         {
             var result = new HospitalListing();
 
-            var query = _dataService.GetSet<Data.Models.Hospital>()
+            var query = _dataService.GetSet<Data.Models.Hospital.Hospital>()
                 .OrderByDescending(x => x.Name);
 
             result.TotalCount = query.Count();
@@ -194,7 +196,7 @@ namespace Medicoweb.Hospital.Services
         }
 
         public DepartamentListing
-            GetHospitalDepartamenst(Data.Models.Hospital hospital, int skip = 0, int take = 10) //dziala
+            GetHospitalDepartamenst(Data.Models.Hospital.Hospital hospital, int skip = 0, int take = 10) //dziala
         {
             var result = new DepartamentListing
             {
@@ -274,11 +276,12 @@ namespace Medicoweb.Hospital.Services
             model.Name = name;
 
             _dataService.GetSet<Specialization>().Update(model);
+            await _dataService.SaveDbAsync();
         }
 
-        public async Task<Data.Models.Hospital> GetHospitalByName(string name)
+        public async Task<Data.Models.Hospital.Hospital> GetHospitalByName(string name)
         {
-            var model = await _dataService.GetSet<Data.Models.Hospital>().FirstOrDefaultAsync(x => x.Name == name);
+            var model = await _dataService.GetSet<Data.Models.Hospital.Hospital>().FirstOrDefaultAsync(x => x.Name == name);
             return model;
         }
 
@@ -298,7 +301,7 @@ namespace Medicoweb.Hospital.Services
         {
             var result = new HospitalListing();
 
-            var query = _dataService.GetSet<Data.Models.Hospital>()
+            var query = _dataService.GetSet<Data.Models.Hospital.Hospital>()
                 .OrderByDescending(x => x.Address);
 
             result.TotalCount = query.Count();
@@ -374,6 +377,7 @@ namespace Medicoweb.Hospital.Services
             var model = await GetDepartamentById(id);
             model.Name = name;
             _dataService.GetSet<Departament>().Update(model);
+            await _dataService.SaveDbAsync();
         }
 
         public async Task UpdateHospital(string id, string name, string address)
@@ -381,7 +385,8 @@ namespace Medicoweb.Hospital.Services
             var model = await GetHospital(id);
             model.Name = name;
             model.Address = address;
-            _dataService.GetSet<Data.Models.Hospital>().Update(model);
+            _dataService.GetSet<Data.Models.Hospital.Hospital>().Update(model);
+            await _dataService.SaveDbAsync();
         }
     }
 }

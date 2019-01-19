@@ -3,6 +3,7 @@ using System.Text;
 using Medicoweb.Account;
 using Medicoweb.Data;
 using Medicoweb.Data.Models.Account;
+using Medicoweb.Drug;
 using Medicoweb.Hospital;
 using Medicoweb.Visit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -107,6 +108,7 @@ namespace Medicoweb.Web
             services.RegisterAccountModule();
             services.RegisterHospitalModule();
             services.RegisterVisitModule();
+            services.RegisterDrugModule();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

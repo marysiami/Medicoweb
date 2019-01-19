@@ -7,7 +7,7 @@ namespace Medicoweb.Data.Models.Schedule
         public Guid Id { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-        public Visit Visit { get; set; }
+        public Visit.Visit Visit { get; set; }
         public Guid VisitId { get; set; }
     }
 }

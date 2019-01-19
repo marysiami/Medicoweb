@@ -1,19 +1,20 @@
 ﻿using System.Threading.Tasks;
 using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
+using Medicoweb.Data.Models.Hospital;
 using Medicoweb.Hospital.Models;
 
 namespace Medicoweb.Hospital.Contracts
 {
     public interface IHospitalService
     {
-        Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital hospital);
-        Task<Data.Models.Hospital> CreateHospital(string name, string address);
+        Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital.Hospital hospital);
+        Task<Data.Models.Hospital.Hospital> CreateHospital(string name, string address);
         Task<HospitalListing> GetHospitalsByName(int skip = 0, int take = 10);
         Task<HospitalListing> GetoHospitalsByAddressAsync(int skip = 0, int take = 10);
-        DepartamentListing GetHospitalDepartamenst(Data.Models.Hospital hospital, int skip = 0, int take = 10);
-        Task<Data.Models.Hospital> GetHospital(string hospitalId);
-        Task<Data.Models.Hospital> GetHospitalByName(string name);
+        DepartamentListing GetHospitalDepartamenst(Data.Models.Hospital.Hospital hospital, int skip = 0, int take = 10);
+        Task<Data.Models.Hospital.Hospital> GetHospital(string hospitalId);
+        Task<Data.Models.Hospital.Hospital> GetHospitalByName(string name);
         Task<Departament> GetDepartamentByName(string name);
 
         void DeleteDepartament(Departament departament);

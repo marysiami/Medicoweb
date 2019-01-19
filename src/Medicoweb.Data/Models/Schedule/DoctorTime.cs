@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Medicoweb.Data.Models.Hospital;
+using System;
 
 namespace Medicoweb.Data.Models.Schedule
 {

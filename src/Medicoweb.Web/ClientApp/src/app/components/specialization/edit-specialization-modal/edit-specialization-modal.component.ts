@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, Inject, Optional } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MatDialogRef } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { HospitalService } from "../../../services/hospital.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-edit-specialization-modal",
@@ -10,9 +11,11 @@ import { HospitalService } from "../../../services/hospital.service";
 export class EditSpecializationModalComponent {
   newPostForm: FormGroup;
   message: string;
-  specializationId: string;
+
 
   constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
+    private route: ActivatedRoute,
     public dialogRef: MatDialogRef<EditSpecializationModalComponent>,
     private hospitalService: HospitalService,
     private formBuilder: FormBuilder) {
@@ -26,7 +29,7 @@ export class EditSpecializationModalComponent {
 
   submit() {
     this.hospitalService
-      .updateSpecialization(this.specializationId, this.newPostForm.controls.name.value)
+      .updateSpecialization(this.data, this.newPostForm.controls.name.value)
       .subscribe(result => {
           this.dialogRef.close("ok");
         },

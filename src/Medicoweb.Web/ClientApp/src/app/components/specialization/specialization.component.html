@@ -1,15 +1,16 @@
 <div *ngIf="isLoggedIn">
   <button mat-raised-button color="primary" (click)="openCreateSpecialzationModal()">Utwórz nową specjalizację</button>
 </div>
+<h2>Baza danych specjalizacji</h2>
 <div class="full-width container">
-  <mat-table #table [dataSource]="dataSource">
+  <mat-table #table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Nazwa specjalizacji </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Nazwa specjalizacji </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <a [routerLink]='["/specialization", element.id]'>{{element.name}}</a>
+        {{element.name}}
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="buttonEdit">
+    <ng-container matColumnDef="button">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button mat-raised-button color="primary" (click)="deleteSpecialization(element.id)">usuń</button>

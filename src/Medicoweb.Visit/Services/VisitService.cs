@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Medicoweb.Account.Contracts;
+﻿using Medicoweb.Account.Contracts;
 using Medicoweb.Data.Contracts;
-using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
+using Medicoweb.Data.Models.Hospital;
 using Medicoweb.Data.Models.Schedule;
 using Medicoweb.Hospital.Contracts;
 using Medicoweb.Visit.Contracts;
 using Medicoweb.Visit.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Medicoweb.Visit.Services
 {
@@ -25,53 +25,10 @@ namespace Medicoweb.Visit.Services
             _userService = userService;
             _hospitalService = hospitalService;
         }
-
-        public async Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug,
-            int drugQuantity)
+        
+        public async Task<Data.Models.Visit.Visit> CreateVisit(MedicowebUser patient, Doctor doctor, VisitTime visitTime)
         {
-            var model = new PrescriptionDrug
-            {
-                DrugId = drug.Id,
-                Drug = drug,
-                PrescriptionId = prescription.Id,
-                Prescription = prescription,
-                DrugQuantity = drugQuantity
-            };
-            await _dataService.GetSet<PrescriptionDrug>().AddAsync(model);
-            await _dataService.SaveDbAsync();
-
-            return model;
-        }
-
-        public async Task<Drug> CreateDrugAsync(string name, string company)
-        {
-            var model = new Drug
-            {
-                Name = name,
-                Company = company
-            };
-            await _dataService.GetSet<Drug>().AddAsync(model);
-            await _dataService.SaveDbAsync();
-
-            return model;
-        }
-
-        public async Task<Prescription> CreatePrescriptionAsync(Data.Models.Visit visit)
-        {
-            var model = new Prescription
-            {
-                Visit = visit,
-                VisitId = visit.Id
-            };
-            await _dataService.GetSet<Prescription>().AddAsync(model);
-            await _dataService.SaveDbAsync();
-
-            return model;
-        }
-
-        public async Task<Data.Models.Visit> CreateVisit(MedicowebUser patient, Doctor doctor, VisitTime visitTime)
-        {
-            var model = new Data.Models.Visit
+            var model = new Data.Models.Visit.Visit
             {
                 Patient = patient,
                 Doctor = doctor,
@@ -79,7 +36,7 @@ namespace Medicoweb.Visit.Services
                 IsCancelled = false
             };
 
-            await _dataService.GetSet<Data.Models.Visit>().AddAsync(model);
+            await _dataService.GetSet<Data.Models.Visit.Visit>().AddAsync(model);
             await _dataService.SaveDbAsync();
 
             return model;
@@ -116,18 +73,6 @@ namespace Medicoweb.Visit.Services
             return model;
         }
 
-        public DrugListing GetDrugs(int skip = 0, int take = 10)
-        {
-            var model = new DrugListing
-            {
-                TotalCount = _dataService.GetSet<Drug>().Count(),
-                Drugs = _dataService.GetSet<Drug>().Skip(skip * take)
-                    .Take(take)
-                    .ToList()
-            };
-
-            return model;
-        }
 
         public async Task<PrescriptionListing> GetPatientPrescriptions(string patientId, int skip = 0, int take = 10)
         {
@@ -143,11 +88,6 @@ namespace Medicoweb.Visit.Services
             return model;
         }
 
-        public Task<Prescription> GetPrescriptionById(string id)
-        {
-            var model = _dataService.GetSet<Prescription>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
-            return model;
-        }
 
         public async Task<VisitListing> GetPatientVisits(string patientId, int skip = 0, int take = 10)
         {
@@ -164,36 +104,11 @@ namespace Medicoweb.Visit.Services
         }
 
 
-        public Task<Data.Models.Visit> GetVisitById(string id)
+        public Task<Data.Models.Visit.Visit> GetVisitById(string id)
         {
-            var model = _dataService.GetSet<Data.Models.Visit>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = _dataService.GetSet<Data.Models.Visit.Visit>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 
-        public async Task UpdateDrug(string id, string name, string company)
-        {
-            var model = await GetDrugById(id);
-            model.Name = name;
-            model.Company = company;
-
-            _dataService.GetSet<Drug>().Update(model);
-
-            await _dataService.SaveDbAsync();
-        }
-
-        public async Task DeleteDrug(string id)
-        {
-            var model = await GetDrugById(id);
-
-            _dataService.GetSet<Drug>().Remove(model);
-
-            await _dataService.SaveDbAsync();
-        }
-
-        public async Task<Drug> GetDrugById(string id)
-        {
-            var model = await _dataService.GetSet<Drug>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
-            return model;
-        }
     }
 }

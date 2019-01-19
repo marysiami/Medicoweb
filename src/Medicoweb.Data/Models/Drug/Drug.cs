@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Medicoweb.Data.Models
+namespace Medicoweb.Data.Models.Drug
 {
     public class Drug
     {

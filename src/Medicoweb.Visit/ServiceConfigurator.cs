@@ -9,6 +9,7 @@ namespace Medicoweb.Visit
         public static void RegisterVisitModule(this IServiceCollection services)
         {
             services.AddScoped<IVisitService, VisitService>();
+            services.AddScoped<IPrescriptionService, PresriptionService>();
         }
     }
 }

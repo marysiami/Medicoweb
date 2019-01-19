@@ -108,6 +108,7 @@ export class HospitalService extends BaseService {
   }
 
   deleteSpecialization(specializationId: string) {
+   
     const url = this.baseUrl + "Hospital/DeleteSpecialization";
     const params = new HttpParams()
       .set("id", specializationId);

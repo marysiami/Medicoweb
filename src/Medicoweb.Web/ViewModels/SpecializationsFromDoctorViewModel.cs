@@ -1,4 +1,4 @@
-﻿using Medicoweb.Data.Models;
+﻿using Medicoweb.Data.Models.Hospital;
 
 namespace Medicoweb.Web.ViewModels
 {

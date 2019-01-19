@@ -4,7 +4,7 @@ namespace Medicoweb.Web.ViewModels
 {
     public class DrugViewModel
     {
-        public DrugViewModel(Drug model)
+        public DrugViewModel(Data.Models.Drug.Drug model)
         {
             Company = model.Company;
             Name = model.Name;

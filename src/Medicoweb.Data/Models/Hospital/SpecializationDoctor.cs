@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Medicoweb.Data.Models
+namespace Medicoweb.Data.Models.Hospital
 {
     public class SpecializationDoctor
     {

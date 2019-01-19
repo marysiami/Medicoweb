@@ -49,7 +49,7 @@ namespace Medicoweb.Web.Controllers
         {
             var hospital = await _hospitalService.GetHospital(hospitalId);
 
-            if (hospital == null) throw new InvalidDepartmanetIdException();
+            if (hospital != null) throw new InvalidDepartmanetIdException();
 
             var model = _hospitalService.GetHospitalDepartamenst(hospital, page, postsPerPage);
 
@@ -150,7 +150,7 @@ namespace Medicoweb.Web.Controllers
 
         //  [Authorize(Roles = "Admin")]
         [HttpDelete]
-        public async Task DeleteSpecialization([FromBody] string id)
+        public async Task DeleteSpecialization([FromQuery] string id)
         {
             var model = await _hospitalService.GetSpecializationByIdAsync(id);
             _hospitalService.DeleteSpecialization(model);
