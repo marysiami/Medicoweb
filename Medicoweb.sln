@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicoweb.Hospital", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicoweb.Visit", "src\Medicoweb.Visit\Medicoweb.Visit.csproj", "{525CD529-80BA-489A-AE56-8E7CABDC78EC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeHelp", "CodeHelp", "{1A23C79A-013D-4838-89D8-87DBF70CAE98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Medicoweb.Account.Contracts;
+using Medicoweb.Common.Attributes;
 using Medicoweb.Data.Contracts;
 using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Medicoweb.Visit.Services
 {
+    [BadDesign("Odwołanie do innego projektu z tej samej warstwy", "Przeprojektowac tak, zeby ten serwis nie korzystal z IHospitalService")]
     public class VisitService : IVisitService
     {
         private readonly IDataService _dataService;
@@ -37,6 +39,7 @@ namespace Medicoweb.Visit.Services
                 Prescription = prescription,
                 DrugQuantity = drugQuantity
             };
+
             await _dataService.GetSet<PrescriptionDrug>().AddAsync(model);
             await _dataService.SaveDbAsync();
 
@@ -50,6 +53,7 @@ namespace Medicoweb.Visit.Services
                 Name = name,
                 Company = company
             };
+
             await _dataService.GetSet<Drug>().AddAsync(model);
             await _dataService.SaveDbAsync();
 
@@ -63,6 +67,7 @@ namespace Medicoweb.Visit.Services
                 Visit = visit,
                 VisitId = visit.Id
             };
+
             await _dataService.GetSet<Prescription>().AddAsync(model);
             await _dataService.SaveDbAsync();
 
@@ -108,11 +113,13 @@ namespace Medicoweb.Visit.Services
         public async Task<VisitListing> GetDoctorVisits(string doctorId, int skip = 0, int take = 10)
         {
             var doctor = await _hospitalService.GetDoctorById(doctorId);
+
             var model = new VisitListing
             {
                 TotalCount = doctor.Visits.Count,
                 Visits = doctor.Visits.ToList()
             };
+
             return model;
         }
 
@@ -140,6 +147,7 @@ namespace Medicoweb.Visit.Services
                     .Take(take)
                     .ToList()
             };
+
             return model;
         }
 
@@ -160,6 +168,7 @@ namespace Medicoweb.Visit.Services
                     .Take(take)
                     .ToList()
             };
+
             return model;
         }
 
@@ -193,6 +202,7 @@ namespace Medicoweb.Visit.Services
         public async Task<Drug> GetDrugById(string id)
         {
             var model = await _dataService.GetSet<Drug>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+
             return model;
         }
     }

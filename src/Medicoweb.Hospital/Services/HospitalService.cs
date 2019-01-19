@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Medicoweb.Account.Contracts;
+using Medicoweb.Common.Attributes;
 using Medicoweb.Data.Contracts;
 using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Medicoweb.Hospital.Services
 {
+    [BadDesign("Odwołanie do innego projektu z tej samej warstwy", "Usunac odwolanie do IUserService")]
     public class HospitalService : IHospitalService
     {
         private readonly IDataService _dataService;
