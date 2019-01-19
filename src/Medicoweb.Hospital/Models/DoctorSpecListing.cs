@@ -8,6 +8,5 @@ namespace Medicoweb.Hospital.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public ICollection<SpecializationDoctor> Specializations { get; set; }
-
     }
 }

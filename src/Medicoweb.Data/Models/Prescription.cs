@@ -7,7 +7,7 @@ namespace Medicoweb.Data.Models
     {
         public Guid Id { get; set; }
         public Guid VisitId { get; set; }
-        public Visit Visit { get; set; }       
+        public Visit Visit { get; set; }
         public virtual ICollection<PrescriptionDrug> PrescriptionDrug { get; set; }
     }
 }

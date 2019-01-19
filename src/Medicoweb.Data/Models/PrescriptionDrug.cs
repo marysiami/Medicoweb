@@ -10,6 +10,5 @@ namespace Medicoweb.Data.Models
         public Guid DrugId { get; set; }
         public Drug Drug { get; set; }
         public int DrugQuantity { get; set; }
-
     }
 }

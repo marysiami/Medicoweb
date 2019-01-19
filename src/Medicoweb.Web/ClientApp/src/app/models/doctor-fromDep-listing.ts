@@ -4,5 +4,6 @@ export class DoctorFromDepListing {
   constructor(
     public departamentName: string,
     public totalCount: number,
-    public doctors: Doctor[]) { }
+    public doctors: Doctor[]) {
+  }
 }

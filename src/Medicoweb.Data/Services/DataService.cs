@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Medicoweb.Data.Services
 {
-
     public class DataService : IDataService
     {
         private readonly MedicowebDbContext _dbContext;
@@ -25,4 +24,3 @@ namespace Medicoweb.Data.Services
         }
     }
 }
-

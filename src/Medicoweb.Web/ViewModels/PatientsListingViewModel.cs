@@ -6,12 +6,13 @@ namespace Medicoweb.Web.ViewModels
 {
     public class PatientsListingViewModel
     {
-        public int TotalCount { get; set; }
-        public List<PatientViewModel> Patients { get; set; }
         public PatientsListingViewModel(PatientListing model)
         {
             TotalCount = model.TotalCount;
             Patients = model.Patients.Select(x => new PatientViewModel(x)).ToList();
         }
+
+        public int TotalCount { get; set; }
+        public List<PatientViewModel> Patients { get; set; }
     }
 }

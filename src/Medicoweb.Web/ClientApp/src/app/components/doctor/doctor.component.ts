@@ -1,30 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Departament } from '../../models/departament.model';
-import { DepartamentsFromDoctorListing } from '../../models/departaments-fromDoctor-listing.model';
-import { Specialization } from '../../models/specialization.model';
-import { SpecializationsFromDoctorListing } from '../../models/specializations-fromDoctor-listing.model';
-import { AuthService } from '../../services/auth.service';
-import { HospitalService } from '../../services/hospital.service';
-import { CreateDoctorDepartamentnModalComponent } from './create-doctorDepartament-modal/create-doctorDep-modal.component';
-import { CreateDoctorSpecializationModalComponent } from './create-doctorSpeciality-modal/create-doctorSpec-modal.component';
+import { Component, OnInit } from "@angular/core";
+import { MatDialog, MatTableDataSource } from "@angular/material";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Departament } from "../../models/departament.model";
+import { DepartamentsFromDoctorListing } from "../../models/departaments-fromDoctor-listing.model";
+import { Specialization } from "../../models/specialization.model";
+import { SpecializationsFromDoctorListing } from "../../models/specializations-fromDoctor-listing.model";
+import { AuthService } from "../../services/auth.service";
+import { HospitalService } from "../../services/hospital.service";
 
 @Component({
-  selector: 'app-doctor',
-  templateUrl: './doctor.component.html',
-  styleUrls: ['./doctor.component.css']
+  selector: "app-doctor",
+  templateUrl: "./doctor.component.html",
+  styleUrls: ["./doctor.component.css"]
 })
 export class DoctorComponent implements OnInit {
 
-  departamentListing: DepartamentsFromDoctorListing = new DepartamentsFromDoctorListing("","",0, []);
-  specializationListing: SpecializationsFromDoctorListing = new SpecializationsFromDoctorListing("","",0, []);
+  departamentListing = new DepartamentsFromDoctorListing("", "", 0, []);
+  specializationListing = new SpecializationsFromDoctorListing("", "", 0, []);
   isLoggedIn: boolean;
-  displayedColumnsDep: string[] = ['departament'];
-  displayedColumnsSpec: string[] = ['specialization'];
+  displayedColumnsDep: string[] = ["departament"];
+  displayedColumnsSpec: string[] = ["specialization"];
   pageSize = 10;
-  doctorId : string;
- 
+  doctorId: string;
+
 
   dataSourceDep = new MatTableDataSource<Departament>();
   dataSourceSpec = new MatTableDataSource<Specialization>();
@@ -34,13 +32,14 @@ export class DoctorComponent implements OnInit {
     private hospitalService: HospitalService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
     //this.getDepartamentFromDoctor();
     //this.getSpecializationsFromDoctor();
-    this.doctorId = this.route.snapshot.paramMap.get('id');
+    this.doctorId = this.route.snapshot.paramMap.get("id");
   }
   /*
   getDepartamentFromDoctor(pageNumber = 0, postsPerPage = 10) {
@@ -66,5 +65,3 @@ export class DoctorComponent implements OnInit {
   }*/
 
 }
-
-

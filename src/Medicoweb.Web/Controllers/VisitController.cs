@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medicoweb.Web.Controllers
 {
-    public class VisitController : SBDBaseController
+    public class VisitController : MedicowebBaseController
     {
-        private readonly IVisitService _visitService;
         private readonly IHospitalService _hospitalService;
+        private readonly IVisitService _visitService;
 
         public VisitController(IVisitService visitService, IHospitalService hospitalService)
         {
@@ -23,10 +23,10 @@ namespace Medicoweb.Web.Controllers
         [HttpPost]
         public async Task<JsonResult> CreateVisit([FromBody] CreateVisitRequestViewModel request)
         {
-            var doctor = await  _hospitalService.GetDoctorById(request.DoctorId);
-            var patient = await  _hospitalService.GetPatientById(request.SBDUserId);
-            var visitTime =  await _visitService.CreateVisitTime(request.VisitStart);
-            var visit = await _visitService.CreateVisit(patient,doctor,visitTime);
+            var doctor = await _hospitalService.GetDoctorById(request.DoctorId);
+            var patient = await _hospitalService.GetPatientById(request.SBDUserId);
+            var visitTime = await _visitService.CreateVisitTime(request.VisitStart);
+            var visit = await _visitService.CreateVisit(patient, doctor, visitTime);
 
             var result = new VisitViewModel(visit);
 
@@ -35,7 +35,8 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetPatientVisits ([FromBody] string patientId, [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetPatientVisits([FromBody] string patientId, [FromQuery] int page,
+            [FromQuery] int threadsPerPage = 10)
         {
             var model = await _visitService.GetPatientVisits(patientId, page, threadsPerPage);
             var result = new VisitListingViewModel(model);
@@ -45,7 +46,8 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetDoctorVisits([FromBody] string doctorId, [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetDoctorVisits([FromBody] string doctorId, [FromQuery] int page,
+            [FromQuery] int threadsPerPage = 10)
         {
             var model = await _visitService.GetDoctorVisits(doctorId, page, threadsPerPage);
             var result = new VisitListingViewModel(model);
@@ -53,14 +55,14 @@ namespace Medicoweb.Web.Controllers
             return Json(result);
         }
 
-             //do anulacji vizyty
+        //do anulacji vizyty
 
         [Authorize]
         [HttpPost]
         public async Task<JsonResult> CreateDrug([FromBody] CreateDrugRequestViewModel request)
         {
-           var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
-           var result = new DrugViewModel(model);
+            var model = await _visitService.CreateDrugAsync(request.Name, request.Company);
+            var result = new DrugViewModel(model);
 
             return Json(result);
         }
@@ -69,7 +71,7 @@ namespace Medicoweb.Web.Controllers
         [HttpDelete]
         public async Task DeleteDrug([FromQuery] string id)
         {
-           await _visitService.DeleteDrug(id);           
+            await _visitService.DeleteDrug(id);
         }
 
         [Authorize]
@@ -85,7 +87,8 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetPatientPrescriptions([FromBody] string patientId, [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetPatientPrescriptions([FromBody] string patientId, [FromQuery] int page,
+            [FromQuery] int threadsPerPage = 10)
         {
             var model = await _visitService.GetPatientPrescriptions(patientId, page, threadsPerPage);
             var result = new PrescriptionListingViewModel(model);
@@ -99,16 +102,17 @@ namespace Medicoweb.Web.Controllers
         {
             var prescription = await _visitService.GetPrescriptionById(request.PrescriptionId);
             var drug = await _visitService.GetDrugById(request.DrugId);
-            var model = await _visitService.AddDrugToPrescriptionAsync(prescription,drug,request.QuantityDrug);
+            var model = await _visitService.AddDrugToPrescriptionAsync(prescription, drug, request.QuantityDrug);
             var result = new DrugsFromPrescriptionViewModel(model); //czy działa?
 
             return Json(result);
         }
+
         [Authorize]
         [HttpGet]
-        public JsonResult GetDrugs( [FromQuery] int page, [FromQuery] int threadsPerPage = 10)
+        public JsonResult GetDrugs([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
         {
-            var model =  _visitService.GetDrugs(page, threadsPerPage);
+            var model = _visitService.GetDrugs(page, threadsPerPage);
             var result = new DrugListViewModel(model);
             return Json(result);
         }
@@ -118,6 +122,5 @@ namespace Medicoweb.Web.Controllers
         {
             await _visitService.UpdateDrug(request.Id, request.Name, request.Company);
         }
-
     }
 }

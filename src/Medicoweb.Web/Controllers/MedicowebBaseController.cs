@@ -4,9 +4,8 @@
 
 namespace Medicoweb.Web.Controllers
 {
-   [Route("api/[controller]/[action]")]
-    public class SBDBaseController : Controller
+    [Route("api/[controller]/[action]")]
+    public class MedicowebBaseController : Controller
     {
     }
-   
 }

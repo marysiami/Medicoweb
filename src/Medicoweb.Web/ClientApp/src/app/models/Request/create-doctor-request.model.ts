@@ -1,5 +1,6 @@
 
 export class CreateDoctorRequest {
   constructor(
-    public patientId: string) { }
+    public patientId: string) {
+  }
 }

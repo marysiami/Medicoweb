@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Medicoweb.Common.Exceptions
 {
-   
     public class InvalidDepartmanetIdException : Exception
     {
         public InvalidDepartmanetIdException()

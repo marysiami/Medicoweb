@@ -32,8 +32,8 @@ namespace Medicoweb.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<MedicowebDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                   o => o.MigrationsAssembly("Medicoweb.Data")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    o => o.MigrationsAssembly("Medicoweb.Data")));
 
             ConfigureIdentity(services);
 
@@ -41,23 +41,21 @@ namespace Medicoweb.Web
 
             services.AddCors(options => options
                 .AddPolicy("CorsPolicy",
-            builder =>
-            {
-                builder.AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowAnyOrigin()
-                    .AllowCredentials();
-            }));
+                    builder =>
+                    {
+                        builder.AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowAnyOrigin()
+                            .AllowCredentials();
+                    }));
 
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
             RegisterOmdleModules(services);
         }
+
         private static void ConfigureIdentity(IServiceCollection services)
         {
-            services.AddIdentity<SBDUser, SBDRole>()
+            services.AddIdentity<MedicowebUser, MedicowebRole>()
                 .AddEntityFrameworkStores<MedicowebDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -75,7 +73,6 @@ namespace Medicoweb.Web
 
                 options.User.AllowedUserNameCharacters =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-
             });
         }
 
@@ -102,6 +99,7 @@ namespace Medicoweb.Web
                     };
                 });
         }
+
         private void RegisterOmdleModules(IServiceCollection services)
         {
             // Register all projects DI            
@@ -133,8 +131,8 @@ namespace Medicoweb.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    "default",
+                    "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
@@ -144,18 +142,15 @@ namespace Medicoweb.Web
 
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+                if (env.IsDevelopment()) spa.UseAngularCliServer("start");
             });
-
         }
+
         private void UpdateDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices
-                     .GetRequiredService<IServiceScopeFactory>()
-                     .CreateScope())
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
             {
                 using (var context = serviceScope.ServiceProvider.GetService<MedicowebDbContext>())
                 {

@@ -16,8 +16,8 @@ namespace Medicoweb.Visit.Services
     public class VisitService : IVisitService
     {
         private readonly IDataService _dataService;
-        private readonly IUserService _userService;
         private readonly IHospitalService _hospitalService;
+        private readonly IUserService _userService;
 
         public VisitService(IDataService dataService, IUserService userService, IHospitalService hospitalService)
         {
@@ -26,7 +26,8 @@ namespace Medicoweb.Visit.Services
             _hospitalService = hospitalService;
         }
 
-        public async Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug, int drugQuantity)
+        public async Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug,
+            int drugQuantity)
         {
             var model = new PrescriptionDrug
             {
@@ -35,7 +36,6 @@ namespace Medicoweb.Visit.Services
                 PrescriptionId = prescription.Id,
                 Prescription = prescription,
                 DrugQuantity = drugQuantity
-
             };
             await _dataService.GetSet<PrescriptionDrug>().AddAsync(model);
             await _dataService.SaveDbAsync();
@@ -54,7 +54,6 @@ namespace Medicoweb.Visit.Services
             await _dataService.SaveDbAsync();
 
             return model;
-
         }
 
         public async Task<Prescription> CreatePrescriptionAsync(Data.Models.Visit visit)
@@ -62,16 +61,15 @@ namespace Medicoweb.Visit.Services
             var model = new Prescription
             {
                 Visit = visit,
-                VisitId = visit.Id,
+                VisitId = visit.Id
             };
             await _dataService.GetSet<Prescription>().AddAsync(model);
             await _dataService.SaveDbAsync();
 
             return model;
-
         }
 
-        public async Task<Data.Models.Visit> CreateVisit(SBDUser patient, Doctor doctor, VisitTime visitTime)
+        public async Task<Data.Models.Visit> CreateVisit(MedicowebUser patient, Doctor doctor, VisitTime visitTime)
         {
             var model = new Data.Models.Visit
             {
@@ -92,8 +90,7 @@ namespace Medicoweb.Visit.Services
             var newVisitTime = new VisitTime
             {
                 StartTime = start,
-                EndTime = start.Add(TimeSpan.FromMinutes(30)), //jedna wizyta trwa 30 minut           
-
+                EndTime = start.Add(TimeSpan.FromMinutes(30)) //jedna wizyta trwa 30 minut           
             };
             /* Przykład TimeSpan
             TimeSpan duration = new TimeSpan(1, 12, 23, 62);
@@ -125,8 +122,8 @@ namespace Medicoweb.Visit.Services
             {
                 TotalCount = _dataService.GetSet<Drug>().Count(),
                 Drugs = _dataService.GetSet<Drug>().Skip(skip * take)
-                                                    .Take(take)
-                                                    .ToList()
+                    .Take(take)
+                    .ToList()
             };
 
             return model;
@@ -139,9 +136,9 @@ namespace Medicoweb.Visit.Services
             {
                 TotalCount = patient.Prescriptions.Count,
                 Prescriptions = patient.Prescriptions
-                .Skip(skip * take)
-                .Take(take)
-                .ToList()
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
             };
             return model;
         }
@@ -159,9 +156,9 @@ namespace Medicoweb.Visit.Services
             {
                 TotalCount = patient.Visits.Count,
                 Visits = patient.Visits
-                .Skip(skip * take)
-                .Take(take)
-                .ToList()
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
             };
             return model;
         }
@@ -192,7 +189,7 @@ namespace Medicoweb.Visit.Services
 
             await _dataService.SaveDbAsync();
         }
-        
+
         public async Task<Drug> GetDrugById(string id)
         {
             var model = await _dataService.GetSet<Drug>().FirstOrDefaultAsync(x => x.Id.ToString() == id);

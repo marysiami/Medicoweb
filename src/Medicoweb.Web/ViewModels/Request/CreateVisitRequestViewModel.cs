@@ -9,6 +9,5 @@ namespace Medicoweb.Web.ViewModels.Request
         public string DoctorId { get; set; }
         public string SBDUserId { get; set; }
         public TimeSpan VisitStart { get; set; }
-
     }
 }

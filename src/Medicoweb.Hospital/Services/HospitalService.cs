@@ -14,10 +14,10 @@ namespace Medicoweb.Hospital.Services
     public class HospitalService : IHospitalService
     {
         private readonly IDataService _dataService;
+        private readonly UserManager<MedicowebUser> _userManager;
         private readonly IUserService _userService;
-        private readonly UserManager<SBDUser> _userManager;
 
-        public HospitalService(IDataService dataService, IUserService userService, UserManager<SBDUser> userManager)
+        public HospitalService(IDataService dataService, IUserService userService, UserManager<MedicowebUser> userManager)
         {
             _dataService = dataService;
             _userService = userService;
@@ -31,7 +31,7 @@ namespace Medicoweb.Hospital.Services
                 Doctor = doctor,
                 Departament = departament,
                 DoctorId = doctor.Id,
-                DepartamentId = departament.Id,
+                DepartamentId = departament.Id
             };
             await _dataService.GetSet<DepartamentDoctor>().AddAsync(DoctorDepartament);
 
@@ -45,11 +45,11 @@ namespace Medicoweb.Hospital.Services
                 Doctor = doctor,
                 Specialization = specialization,
                 DoctorId = doctor.Id,
-                SpecializationId = specialization.Id,
+                SpecializationId = specialization.Id
             };
             await _dataService.GetSet<SpecializationDoctor>().AddAsync(SpecDoc);
 
-            return doctor;// zwrocic viewmodel?
+            return doctor; // zwrocic viewmodel?
         }
 
         public async Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital hospital) //działa
@@ -65,14 +65,13 @@ namespace Medicoweb.Hospital.Services
             return newDepartament;
         }
 
-        public async Task<Doctor> CreateDoctor(SBDUser patient)
+        public async Task<Doctor> CreateDoctor(MedicowebUser patient)
         {
             var newDoctor = new Doctor
             {
                 Name = patient.Name,
                 Surname = patient.Surname,
-                Pesel = patient.Pesel,
-
+                Pesel = patient.Pesel
             };
             await _userManager.RemoveFromRoleAsync(patient, "Patient");
             await _userManager.AddToRoleAsync(patient, "Doctor");
@@ -101,7 +100,7 @@ namespace Medicoweb.Hospital.Services
         {
             var newSpecialization = new Specialization
             {
-                Name = name,
+                Name = name
             };
             await _dataService.GetSet<Specialization>().AddAsync(newSpecialization);
             await _dataService.SaveDbAsync();
@@ -137,9 +136,9 @@ namespace Medicoweb.Hospital.Services
                 Name = doctor.Name,
                 Surname = doctor.Surname,
                 Departaments = doctor.DepartamentDoctors
-                .Skip(skip * take)
-                .Take(take)
-                .ToList()
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
             };
 
             return result;
@@ -160,20 +159,19 @@ namespace Medicoweb.Hospital.Services
                 TotalCount = departament.DepartamentDoctors.Count(),
 
                 Doctors = departament.DepartamentDoctors
-                .Select(x => x.Doctor)
-               .Skip(skip * take)
-               .Take(take)
-               .ToList()
+                    .Select(x => x.Doctor)
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
             };
             return result;
-
         }
 
-        public async Task<Data.Models.Hospital> GetHospital(string hospitalId)//dziala
+        public async Task<Data.Models.Hospital> GetHospital(string hospitalId) //dziala
         {
             var hospital = await _dataService.GetSet<Data.Models.Hospital>()
-               .Include(x => x.Departaments)
-               .FirstOrDefaultAsync(x => x.Id.ToString() == hospitalId);
+                .Include(x => x.Departaments)
+                .FirstOrDefaultAsync(x => x.Id.ToString() == hospitalId);
 
             return hospital;
         }
@@ -195,31 +193,32 @@ namespace Medicoweb.Hospital.Services
             return result;
         }
 
-        public DepartamentListing GetHospitalDepartamenst(Data.Models.Hospital hospital, int skip = 0, int take = 10) //dziala
+        public DepartamentListing
+            GetHospitalDepartamenst(Data.Models.Hospital hospital, int skip = 0, int take = 10) //dziala
         {
             var result = new DepartamentListing
             {
                 HospitalName = hospital.Name,
                 TotalCount = hospital.Departaments.Count(),
                 Departaments = hospital.Departaments
-                .OrderBy(x => x.Name)
-                .Skip(skip * take)
-                .Take(take)
-                .ToList()
+                    .OrderBy(x => x.Name)
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
             };
 
             return result;
         }
 
-        public async Task<SBDUser> GetPatientById(string id)
+        public async Task<MedicowebUser> GetPatientById(string id)
         {
-            var model = await _dataService.GetSet<SBDUser>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = await _dataService.GetSet<MedicowebUser>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 
         public PatientListing GetPatients() //działa
         {
-            var obj = _dataService.GetSet<SBDUser>().ToList();
+            var obj = _dataService.GetSet<MedicowebUser>().ToList();
             var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
 
             var list = new PatientListing
@@ -229,8 +228,6 @@ namespace Medicoweb.Hospital.Services
             };
 
             return list;
-
-
         }
 
         public DoctorSpecListing GetSpecDoctor(Doctor doctor, int skip = 0, int take = 10)
@@ -240,9 +237,9 @@ namespace Medicoweb.Hospital.Services
                 Name = doctor.Name,
                 Surname = doctor.Surname,
                 Specializations = doctor.SpecializationDoctor
-                .Skip(skip * take)
-                .Take(take)
-                .ToList()
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
             };
 
             return result;
@@ -332,7 +329,7 @@ namespace Medicoweb.Hospital.Services
 
         public PatientListing GetPatientsByName()
         {
-            var obj = _dataService.GetSet<SBDUser>().OrderByDescending(x => x.Name).ToList();
+            var obj = _dataService.GetSet<MedicowebUser>().OrderByDescending(x => x.Name).ToList();
             var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
 
             var list = new PatientListing
@@ -346,7 +343,7 @@ namespace Medicoweb.Hospital.Services
 
         public PatientListing GetPatientBySurname()
         {
-            var obj = _dataService.GetSet<SBDUser>().OrderByDescending(x => x.Surname).ToList();
+            var obj = _dataService.GetSet<MedicowebUser>().OrderByDescending(x => x.Surname).ToList();
             var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
 
             var list = new PatientListing
@@ -360,7 +357,7 @@ namespace Medicoweb.Hospital.Services
 
         public PatientListing GetPatientByPesel()
         {
-            var obj = _dataService.GetSet<SBDUser>().OrderByDescending(x => x.Pesel).ToList();
+            var obj = _dataService.GetSet<MedicowebUser>().OrderByDescending(x => x.Pesel).ToList();
             var model = obj.Where(x => _userManager.IsInRoleAsync(x, "Patient").Result).ToList();
 
             var list = new PatientListing
@@ -386,6 +383,5 @@ namespace Medicoweb.Hospital.Services
             model.Address = address;
             _dataService.GetSet<Data.Models.Hospital>().Update(model);
         }
-
     }
 }

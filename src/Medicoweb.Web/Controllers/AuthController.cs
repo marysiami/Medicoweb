@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medicoweb.Web.Controllers
 {
-    public class AuthController : SBDBaseController
+    public class AuthController : MedicowebBaseController
     {
-
         private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService)
@@ -29,7 +28,7 @@ namespace Medicoweb.Web.Controllers
             }
             catch (RegistrationFailedException ex)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
         }
@@ -44,7 +43,7 @@ namespace Medicoweb.Web.Controllers
             }
             catch (SignInFailedException ex)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
         }

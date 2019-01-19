@@ -5,7 +5,7 @@ namespace Medicoweb.Hospital.Models
 {
     public class PatientListing
     {
-        public List<SBDUser> Patients { get; set; }
+        public List<MedicowebUser> Patients { get; set; }
         public int TotalCount { get; set; }
     }
 }

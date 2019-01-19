@@ -19,7 +19,7 @@ namespace Medicoweb.Hospital.Contracts
         void DeleteDepartament(Departament departament);
         Task UpdateDepartament(string id, string name);
         Task UpdateHospital(string id, string name, string address);
-        Task UpdateSpecialization(string id,string name);
+        Task UpdateSpecialization(string id, string name);
         void DeleteSpecialization(Specialization specialization);
 
 
@@ -30,7 +30,7 @@ namespace Medicoweb.Hospital.Contracts
 
         DoctorDepartamentListing GetDepartamentDoctor(Doctor doctor, int skip = 0, int take = 10);
         DoctorSpecListing GetSpecDoctor(Doctor doctor, int skip = 0, int take = 10);
-        Task<Doctor> CreateDoctor(SBDUser patient);
+        Task<Doctor> CreateDoctor(MedicowebUser patient);
         Task<Doctor> AddDoctorDepartament(Doctor doctor, Departament departament);
         Task<Doctor> AddDoctorSpecialization(Doctor doctor, Specialization specialization);
         DoctorListing GetDoctorsFromDepartament(Departament departament, int skip = 0, int take = 10);
@@ -39,7 +39,7 @@ namespace Medicoweb.Hospital.Contracts
         PatientListing GetPatientsByName();
         PatientListing GetPatientBySurname();
         PatientListing GetPatientByPesel();
-        Task<SBDUser> GetPatientById(string id);
+        Task<MedicowebUser> GetPatientById(string id);
         Task<Doctor> GetDoctorById(string id);
         Task<Departament> GetDepartamentById(string id);
         Task<Specialization> GetSpecializationByIdAsync(string id);

@@ -1,15 +1,18 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import { HospitalService } from './hospital.service';
+import { HospitalService } from "./hospital.service";
 
-describe('HospitalService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [HospitalService]
+describe("HospitalService",
+  () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [HospitalService]
+      });
     });
-  });
 
-  it('should be created', inject([HospitalService], (service: HospitalService) => {
-    expect(service).toBeTruthy();
-  }));
-});
+    it("should be created",
+      inject([HospitalService],
+        (service: HospitalService) => {
+          expect(service).toBeTruthy();
+        }));
+  });

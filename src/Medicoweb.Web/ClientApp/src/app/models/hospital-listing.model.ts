@@ -1,8 +1,8 @@
-import { Hospital } from './hospital.model';
+import { Hospital } from "./hospital.model";
 
 export class HospitalListing {
   constructor(
-
-    public totalCount: number, 
-    public hospitals: Hospital[]) { }
+    public totalCount: number,
+    public hospitals: Hospital[]) {
+  }
 }

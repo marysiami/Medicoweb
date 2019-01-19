@@ -1,7 +1,8 @@
 import { Doctor } from "./doctor.model";
 
 export class DoctorListing {
-  constructor(    
+  constructor(
     public totalCount: number,
-    public doctors: Doctor[]) { }
+    public doctors: Doctor[]) {
+  }
 }

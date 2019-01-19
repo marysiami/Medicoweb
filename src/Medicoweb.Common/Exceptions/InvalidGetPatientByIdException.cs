@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Medicoweb.Common.Exceptions
 {
-  public class InvalidGetPatientByIdException : Exception
+    public class InvalidGetPatientByIdException : Exception
     {
         public InvalidGetPatientByIdException()
         {

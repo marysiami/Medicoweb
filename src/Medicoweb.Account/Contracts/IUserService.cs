@@ -5,7 +5,7 @@ namespace Medicoweb.Account.Contracts
 {
     public interface IUserService
     {
-        Task<SBDUser> GetUserByIdAsync(string id);
-        Task<SBDUser> GetUserByNameAsync(string userName);
+        Task<MedicowebUser> GetUserByIdAsync(string id);
+        Task<MedicowebUser> GetUserByNameAsync(string userName);
     }
 }

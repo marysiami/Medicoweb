@@ -5,5 +5,6 @@ export class SpecializationsFromDoctorListing {
     public doctorName: string,
     public doctorSurname: string,
     public totalCount: number,
-    public specializations: Specialization[]) { }
+    public specializations: Specialization[]) {
+  }
 }

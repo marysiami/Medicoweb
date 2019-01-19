@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Medicoweb.Common.Exceptions
 {
@@ -15,11 +13,13 @@ namespace Medicoweb.Common.Exceptions
         {
         }
 
-        public InvalidCreateSpecializationException(string message, Exception innerException) : base(message, innerException)
+        public InvalidCreateSpecializationException(string message, Exception innerException) : base(message,
+            innerException)
         {
         }
 
-        protected InvalidCreateSpecializationException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidCreateSpecializationException(SerializationInfo info, StreamingContext context) : base(info,
+            context)
         {
         }
     }

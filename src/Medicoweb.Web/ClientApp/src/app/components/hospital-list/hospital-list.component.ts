@@ -1,21 +1,21 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
-import { HospitalListing } from '../../models/hospital-listing.model';
-import { Hospital } from '../../models/hospital.model';
-import { HospitalService } from '../../services/hospital.service';
-import { AuthService } from './../../services/auth.service';
-import { CreateHospitalModalComponent } from './create-hospital-modal/create-hospital-modal.component';
+import { Component } from "@angular/core";
+import { MatDialog } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
+import { HospitalListing } from "../../models/hospital-listing.model";
+import { Hospital } from "../../models/hospital.model";
+import { HospitalService } from "../../services/hospital.service";
+import { AuthService } from "./../../services/auth.service";
+import { CreateHospitalModalComponent } from "./create-hospital-modal/create-hospital-modal.component";
 
 @Component({
-  selector: 'app-hospital-list',
-  templateUrl: './hospital-list.component.html',
-  styleUrls: ['./hospital-list.component.css']
+  selector: "app-hospital-list",
+  templateUrl: "./hospital-list.component.html",
+  styleUrls: ["./hospital-list.component.css"]
 })
-export class HospitalListComponent  {
-  hospitalListing: HospitalListing = new HospitalListing(0, []);
+export class HospitalListComponent {
+  hospitalListing = new HospitalListing(0, []);
   isLoggedIn: boolean;
-  displayedColumns: string[] = ['name', 'address', 'repliesCount'];
+  displayedColumns: string[] = ["name", "address", "repliesCount"];
   pageSize = 10;
   dataSource = new MatTableDataSource<Hospital>();
 
@@ -23,7 +23,8 @@ export class HospitalListComponent  {
     private authService: AuthService,
     private hospitalService: HospitalService,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -33,10 +34,11 @@ export class HospitalListComponent  {
   openCreateHospitalModal() {
     const dialogRef =
       this.dialog
-        .open(CreateHospitalModalComponent, {
-          height: 'auto',
-          width: '400px',
-        })
+        .open(CreateHospitalModalComponent,
+          {
+            height: "auto",
+            width: "400px",
+          })
         .afterClosed()
         .subscribe(result => this.getHospitals(0, this.pageSize));
   }
@@ -55,9 +57,9 @@ export class HospitalListComponent  {
         this.dataSource = new MatTableDataSource(result.hospitals);
       });
   }*/
- 
+
 
   pageChanged(pageEvent) {
     this.getHospitals(pageEvent.pageIndex, this.pageSize);
-  }  
+  }
 }

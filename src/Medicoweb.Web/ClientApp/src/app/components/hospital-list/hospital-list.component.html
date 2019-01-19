@@ -1,18 +1,19 @@
 <div *ngIf="isLoggedIn">
   <button mat-raised-button color="primary" (click)="openCreateHospitalModal()">Utwórz nowy szpital</button>
 </div>
-<div class="full-width container">  
+<div class="full-width container">
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Nazwa szpitala 
-        </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>
+        Nazwa szpitala
+      </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <a [routerLink]='["/hospital", element.id]'>{{element.name}}</a>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="address">
       <mat-header-cell *matHeaderCellDef> Adres szpitala </mat-header-cell>
-      
+
       <mat-cell *matCellDef="let element">
         <a [routerLink]='["/hospital", element.id]'>{{element.address}}</a>
       </mat-cell>

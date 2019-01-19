@@ -1,5 +1,6 @@
 export class CreateSpecialityRequest {
   constructor(
-    public Name: string    
-) { }
+    public Name: string
+  ) {
+  }
 }

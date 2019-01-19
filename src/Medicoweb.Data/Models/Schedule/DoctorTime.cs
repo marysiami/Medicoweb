@@ -9,8 +9,7 @@ namespace Medicoweb.Data.Models.Schedule
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
-        public bool IsCurrent {get;set;}
+        public bool IsCurrent { get; set; }
         public virtual Doctor Doctor { get; set; }
-
     }
 }

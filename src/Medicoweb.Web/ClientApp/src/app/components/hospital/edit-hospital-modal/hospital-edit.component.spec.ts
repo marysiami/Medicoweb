@@ -3,24 +3,24 @@
 import { HospitalEditComponent } from './hospital-edit.component';
 
 describe('HospitalEditComponent', () => {
-  let component: HospitalEditComponent;
-  let fixture: ComponentFixture<HospitalEditComponent>;
+ let component: HospitalEditComponent;
+ let fixture: ComponentFixture<HospitalEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HospitalEditComponent ]
-    })
-    .compileComponents();
-  }));
+ beforeEach(async(() => {
+   TestBed.configureTestingModule({
+     declarations: [ HospitalEditComponent ]
+   })
+   .compileComponents();
+ }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HospitalEditComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+ beforeEach(() => {
+   fixture = TestBed.createComponent(HospitalEditComponent);
+   component = fixture.componentInstance;
+   fixture.detectChanges();
+ });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+ it('should create', () => {
+   expect(component).toBeTruthy();
+ });
 });
 */

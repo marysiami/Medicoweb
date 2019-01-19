@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { AuthService } from './../../services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from "@angular/core";
+import { AuthService } from "./../../services/auth.service";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-patient-home',
-  templateUrl: './patient-home.component.html'
+  selector: "app-patient-home",
+  templateUrl: "./patient-home.component.html"
 })
 export class PatientHomeComponent {
 
@@ -15,21 +15,24 @@ export class PatientHomeComponent {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.isLoggedIn = this.authService.isLoggedIn()
-    this.patientId = this.route.snapshot.paramMap.get('id');
+    this.isLoggedIn = this.authService.isLoggedIn();
+    this.patientId = this.route.snapshot.paramMap.get("id");
   }
 
   openNewVisit() {
-    this.router.navigateByUrl('/newVisit');
+    this.router.navigateByUrl("/newVisit");
   }
+
   openMyPrescription() {
-    this.router.navigateByUrl('/prescriptions/'+this.patientId);
+    this.router.navigateByUrl(`/prescriptions/${this.patientId}`);
   }
+
   openMyVisit() {
-    this.router.navigateByUrl('/visits/' + this.patientId);
+    this.router.navigateByUrl(`/visits/${this.patientId}`);
   }
 
 }

@@ -6,6 +6,5 @@ namespace Medicoweb.Visit.Models
     {
         public List<Data.Models.Visit> Visits { get; set; }
         public int TotalCount { get; set; }
-        
     }
 }

@@ -1,15 +1,15 @@
 <div class="container">
-   <h2>Baza danych pacjentów</h2>
+  <h2>Baza danych pacjentów</h2>
   <div class="full-width container">
     <mat-table #table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Imię  </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Imię </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <a>{{element.name}}</a>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="surname">
-        <mat-header-cell *matHeaderCellDef> Nazwisko  </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Nazwisko </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <a>{{element.surname}}</a>
         </mat-cell>
@@ -22,7 +22,7 @@
       </ng-container>
       <ng-container matColumnDef="button">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">          
+        <mat-cell *matCellDef="let element">
           <button mat-raised-button color="primary" (click)="CreateDoctor(element.id)">Zrób lekarzem</button>
         </mat-cell>
       </ng-container>

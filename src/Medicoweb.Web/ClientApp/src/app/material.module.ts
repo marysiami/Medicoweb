@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
     MatCardModule,
     MatButtonModule,
@@ -16,7 +16,7 @@ import {
     MatSortModule,
     MatPaginatorModule,
   }
-  from '@angular/material';
+  from "@angular/material";
 
 @NgModule({
   imports: [
@@ -52,4 +52,5 @@ import {
     MatPaginatorModule
   ]
 })
-export class MaterialModule { }
+export class MaterialModule {
+}

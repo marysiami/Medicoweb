@@ -16,18 +16,18 @@ export class VisitComponent {
 
 
   //SZPITAL
-  hospitalListing: HospitalListing = new HospitalListing(0, []);
-  displayedColumnsHos: string[] = ['name','address'];
+  hospitalListing = new HospitalListing(0, []);
+  displayedColumnsHos: string[] = ["name", "address"];
   dataSourceHos = new MatTableDataSource<Hospital>();
 
   //Departament
-  departamentListing: DepartamentListing = new DepartamentListing("", 0, []);
-  displayedColumnsDep: string[] = ['name'];
+  departamentListing = new DepartamentListing("", 0, []);
+  displayedColumnsDep: string[] = ["name"];
   dataSourceDep = new MatTableDataSource<Departament>();
 
   //DOKTOR
-  doctorListing: DoctorListing = new DoctorListing(0, []);
-  displayedColumnsDoc: string[] = ['name','surname'];
+  doctorListing = new DoctorListing(0, []);
+  displayedColumnsDoc: string[] = ["name", "surname"];
   dataSourceDoc = new MatTableDataSource<Doctor>();
 
   constructor(
@@ -35,13 +35,13 @@ export class VisitComponent {
     private router: Router,
     private route: ActivatedRoute,
     private hospitalService: HospitalService,
-    
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.getHospitals();
-    
+
   }
 
   getHospitals(pageNumber = 0, postsPerPage = 10) {
@@ -52,22 +52,24 @@ export class VisitComponent {
       });
   }
 
-  getDepartaments(hospitalId,pageNumber = 0, postsPerPage = 10) {
+  getDepartaments(hospitalId, pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getDepartaments(hospitalId, pageNumber, postsPerPage)
       .subscribe(result => {
         this.departamentListing = result;
         this.dataSourceDep = new MatTableDataSource(result.departaments);
-       });
+      });
   }
-  getDoctors(departamentId,pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getDoctorsFromDep(departamentId,pageNumber, postsPerPage)
+
+  getDoctors(departamentId, pageNumber = 0, postsPerPage = 10) {
+    this.hospitalService.getDoctorsFromDep(departamentId, pageNumber, postsPerPage)
       .subscribe(result => {
         this.doctorListing = result;
         this.dataSourceDoc = new MatTableDataSource(result.doctors);
-      }); 
+      });
   }
+
   createVisit() {
-   
+
   }
 
 

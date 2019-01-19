@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { AuthService } from './../../services/auth.service';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { Router } from '@angular/router';
+import { Component } from "@angular/core";
+import { AuthService } from "./../../services/auth.service";
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
+import { Router } from "@angular/router";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -14,8 +14,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
+  selector: "app-register",
+  templateUrl: "./register.component.html",
 })
 export class RegisterComponent {
   isLinear = true;
@@ -27,46 +27,50 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
     this.registerForm = this.formBuilder.group({
       username: [
-        '',
+        "",
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]
       ],
 
       name: [
-        '',
+        "",
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]
       ],
       surname: [
-        '',
+        "",
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]
       ],
       pesel: [
-        '',
+        "",
         [Validators.required, Validators.minLength(9), Validators.maxLength(9)]
       ],
       password: [
-        '',
-        [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@.$!%*?&]{6,20}$/)]
+        "",
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@.$!%*?&]{6,20}$/)
+        ]
       ],
-  
+
     });
   }
 
   submit() {
     this.authService
       .register(
-        this.registerForm.controls.username.value,             
+        this.registerForm.controls.username.value,
         this.registerForm.controls.name.value,
         this.registerForm.controls.surname.value,
-        this.registerForm.controls.pesel.value,  
+        this.registerForm.controls.pesel.value,
         this.registerForm.controls.password.value
       )
       .subscribe(result => {
-        localStorage.setItem('token', result);
-        this.message = "";
-        this.router.navigateByUrl('');
-      }, error => {
-        console.log(error);
-        this.message = "Nieprawidłowe dane rejestracji"
-      });
+          localStorage.setItem("token", result);
+          this.message = "";
+          this.router.navigateByUrl("");
+        },
+        error => {
+          console.log(error);
+          this.message = "Nieprawidłowe dane rejestracji";
+        });
   }
 }

@@ -22,4 +22,3 @@ namespace Medicoweb.Common.Exceptions
         }
     }
 }
-    

@@ -9,6 +9,6 @@ namespace Medicoweb.Data.Models
         public string Name { get; set; }
         public Guid HospitalId { get; set; }
         public virtual Hospital Hospital { get; set; }
-        public virtual ICollection <DepartamentDoctor> DepartamentDoctors { get; set; }
+        public virtual ICollection<DepartamentDoctor> DepartamentDoctors { get; set; }
     }
 }

@@ -10,6 +10,6 @@ export class Doctor {
     public Specializations: Specialization[],
     public Departaments: Departament[],
     //co z czasem pracy?
-
-  ) { }
+  ) {
+  }
 }

@@ -9,13 +9,13 @@ namespace Medicoweb.Visit.Contracts
 {
     public interface IVisitService
     {
-        Task<Data.Models.Visit> CreateVisit(SBDUser patient, Doctor doctor, VisitTime visitTime);
+        Task<Data.Models.Visit> CreateVisit(MedicowebUser patient, Doctor doctor, VisitTime visitTime);
         Task<VisitListing> GetPatientVisits(string patientId, int skip = 0, int take = 10);
         Task<VisitListing> GetDoctorVisits(string doctorId, int skip = 0, int take = 10);
 
 
-        Task UpdateDrug(string id, string name,string company);
-        Task <Data.Models.Visit> GetVisitById(string id);
+        Task UpdateDrug(string id, string name, string company);
+        Task<Data.Models.Visit> GetVisitById(string id);
         Task<VisitTime> CreateVisitTime(TimeSpan start);
 
         Task<Prescription> CreatePrescriptionAsync(Data.Models.Visit visit);
@@ -26,10 +26,8 @@ namespace Medicoweb.Visit.Contracts
 
         Task<Prescription> GetPrescriptionById(string id);
         Task<PrescriptionListing> GetPatientPrescriptions(string patientId, int skip = 0, int take = 10);
-        Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription  prescription, Drug drug, int drugQuantity);
-      //  Task RemoveDrugFromPrescription(string visitId, string drugId);
 
-
-
+        Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Drug drug, int drugQuantity);
+        //  Task RemoveDrugFromPrescription(string visitId, string drugId);
     }
 }

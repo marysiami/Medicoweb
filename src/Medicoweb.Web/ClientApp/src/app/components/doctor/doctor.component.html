@@ -1,7 +1,7 @@
 <div class="container">
   <h2>{{departamentListing.doctorName}}</h2>
   <h2>{{departamentListing.doctorSurname}}</h2>
-  
+
   <div class="full-width container">
     <button mat-raised-button color="primary" (click)="openCreateDoctorDepModal()">Dodaj lekarzowi departament </button>
     <mat-table #table [dataSource]="dataSourceDep">

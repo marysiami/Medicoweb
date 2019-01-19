@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Medicoweb.Common.Exceptions
 {
-    public class InvalidCreateDepartamentException: Exception
+    public class InvalidCreateDepartamentException : Exception
 
     {
         public InvalidCreateDepartamentException()
@@ -14,11 +14,13 @@ namespace Medicoweb.Common.Exceptions
         {
         }
 
-        public InvalidCreateDepartamentException(string message, Exception innerException) : base(message, innerException)
+        public InvalidCreateDepartamentException(string message, Exception innerException) : base(message,
+            innerException)
         {
         }
 
-        protected InvalidCreateDepartamentException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidCreateDepartamentException(SerializationInfo info, StreamingContext context) : base(info,
+            context)
         {
         }
     }

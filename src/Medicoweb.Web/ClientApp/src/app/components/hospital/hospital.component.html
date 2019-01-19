@@ -4,20 +4,20 @@
     <a class="nav-item nav-link" [routerLink]='["/patients"]'>Pacjenci</a>
   </div>
   <h2>Szpital: {{departamentListing.hospitalName}}</h2>
-      <div class="full-width container">
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef> Nazwa departamentu </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <a [routerLink]='["/departament", element.id]'>{{element.name}}</a>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [length]="departamentListing.totalCount"
-                       [pageSize]="pageSize"
-                       (page)="pageChanged($event)">
-        </mat-paginator>
-      </div>
+  <div class="full-width container">
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nazwa departamentu </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a [routerLink]='["/departament", element.id]'>{{element.name}}</a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="departamentListing.totalCount"
+                   [pageSize]="pageSize"
+                   (page)="pageChanged($event)">
+    </mat-paginator>
   </div>
+</div>

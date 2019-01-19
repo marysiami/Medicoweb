@@ -102,7 +102,7 @@ namespace Medicoweb.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SBD.DATA.Models.Account.SBDUser", b =>
+            modelBuilder.Entity("SBD.DATA.Models.Account.MedicowebUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -298,7 +298,7 @@ namespace Medicoweb.Data.Migrations
                     b.ToTable("PrescriptionDrugs");
                 });
 
-            modelBuilder.Entity("SBD.DATA.Models.SBDRole", b =>
+            modelBuilder.Entity("SBD.DATA.Models.MedicowebRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -419,7 +419,7 @@ namespace Medicoweb.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.SBDRole")
+                    b.HasOne("SBD.DATA.Models.MedicowebRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -427,7 +427,7 @@ namespace Medicoweb.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser")
+                    b.HasOne("SBD.DATA.Models.Account.MedicowebUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -435,7 +435,7 @@ namespace Medicoweb.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser")
+                    b.HasOne("SBD.DATA.Models.Account.MedicowebUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -443,12 +443,12 @@ namespace Medicoweb.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.SBDRole")
+                    b.HasOne("SBD.DATA.Models.MedicowebRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser")
+                    b.HasOne("SBD.DATA.Models.Account.MedicowebUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -456,7 +456,7 @@ namespace Medicoweb.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser")
+                    b.HasOne("SBD.DATA.Models.Account.MedicowebUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -498,7 +498,7 @@ namespace Medicoweb.Data.Migrations
 
             modelBuilder.Entity("SBD.DATA.Models.Prescription", b =>
                 {
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser")
+                    b.HasOne("SBD.DATA.Models.Account.MedicowebUser")
                         .WithMany("Prescriptions")
                         .HasForeignKey("SBDUserId");
 
@@ -557,7 +557,7 @@ namespace Medicoweb.Data.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SBD.DATA.Models.Account.SBDUser", "Patient")
+                    b.HasOne("SBD.DATA.Models.Account.MedicowebUser", "Patient")
                         .WithMany("Visits")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade);

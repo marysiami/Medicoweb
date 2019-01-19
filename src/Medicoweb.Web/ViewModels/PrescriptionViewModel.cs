@@ -5,12 +5,6 @@ namespace Medicoweb.Web.ViewModels
 {
     public class PrescriptionViewModel
     {
-        public Guid Id { get; set; }
-        public string PatientName { get; set; }
-        public string PatientSurname { get; set; }
-        public string DoctorName { get; set; }
-        public string DoctorSurname { get; set; }
-
         public PrescriptionViewModel(Prescription model)
         {
             PatientName = model.Visit.Patient.Name;
@@ -19,6 +13,10 @@ namespace Medicoweb.Web.ViewModels
             DoctorSurname = model.Visit.Doctor.Surname;
         }
 
-        
+        public Guid Id { get; set; }
+        public string PatientName { get; set; }
+        public string PatientSurname { get; set; }
+        public string DoctorName { get; set; }
+        public string DoctorSurname { get; set; }
     }
 }

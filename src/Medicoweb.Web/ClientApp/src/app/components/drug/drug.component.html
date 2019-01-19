@@ -3,7 +3,7 @@
 </div>
 <h2>Baza danych leków</h2>
 <div class="full-width container">
-  <mat-table #table  [dataSource]="dataSource" matSort>
+  <mat-table #table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa leku </mat-header-cell>
       <mat-cell *matCellDef="let element">
@@ -11,7 +11,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="company">
-      <mat-header-cell  *matHeaderCellDef mat-sort-header> Firma </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Firma </mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{element.company}}
       </mat-cell>

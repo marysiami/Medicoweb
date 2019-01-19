@@ -1,8 +1,8 @@
 import { Specialization } from "./specialization.model";
 
 export class SpecializationListing {
-  constructor(   
+  constructor(
     public totalCount: number,
-    public specialization: Specialization[])
-  { }
+    public specialization: Specialization[]) {
+  }
 }

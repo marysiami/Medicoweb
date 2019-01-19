@@ -3,6 +3,7 @@ export class DepartamentHospital {
     public id: string,
     public name: string,
     public address: string,
-    public repliesCount: number,    
-    ) { }
+    public repliesCount: number,
+  ) {
+  }
 }

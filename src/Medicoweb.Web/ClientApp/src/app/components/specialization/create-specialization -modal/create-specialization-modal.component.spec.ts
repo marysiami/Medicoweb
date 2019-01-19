@@ -1,25 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateSpecializationModalComponent } from './create-specialization-modal.component';
+import { CreateSpecializationModalComponent } from "./create-specialization-modal.component";
 
-describe('CreateSpecializationModalComponent', () => {
-  let component: CreateSpecializationModalComponent;
-  let fixture: ComponentFixture<CreateSpecializationModalComponent>;
+describe("CreateSpecializationModalComponent",
+  () => {
+    let component: CreateSpecializationModalComponent;
+    let fixture: ComponentFixture<CreateSpecializationModalComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CreateSpecializationModalComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+          declarations: [CreateSpecializationModalComponent]
+        })
+        .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CreateSpecializationModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    beforeEach(() => {
+      fixture = TestBed.createComponent(CreateSpecializationModalComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it("should create",
+      () => {
+        expect(component).toBeTruthy();
+      });
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});

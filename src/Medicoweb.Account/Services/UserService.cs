@@ -7,26 +7,24 @@ namespace Medicoweb.Account.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<SBDUser> _userManager;
+        private readonly UserManager<MedicowebUser> _userManager;
 
         public UserService(
-            UserManager<SBDUser> userManager)
+            UserManager<MedicowebUser> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<SBDUser> GetUserByIdAsync(string id)
+        public async Task<MedicowebUser> GetUserByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             return user;
         }
 
-        public async Task<SBDUser> GetUserByNameAsync(string userName)
+        public async Task<MedicowebUser> GetUserByNameAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
             return user;
         }
-
-      
     }
 }

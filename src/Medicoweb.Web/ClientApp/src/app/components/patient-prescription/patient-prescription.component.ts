@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { AuthService } from './../../services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from "@angular/core";
+import { AuthService } from "./../../services/auth.service";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-patient-prescription',
-  templateUrl: './patient-prescription.component.html'
+  selector: "app-patient-prescription",
+  templateUrl: "./patient-prescription.component.html"
 })
 export class PatientPrescriptionComponent {
 
@@ -15,12 +15,13 @@ export class PatientPrescriptionComponent {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
-
-  ngOnInit() {
-    this.isLoggedIn = this.authService.isLoggedIn()
-    this.patientId = this.route.snapshot.paramMap.get('id');
+  ) {
   }
 
-  
+  ngOnInit() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    this.patientId = this.route.snapshot.paramMap.get("id");
+  }
+
+
 }

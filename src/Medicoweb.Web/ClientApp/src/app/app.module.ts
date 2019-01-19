@@ -1,41 +1,45 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule } from '@angular/router';
+import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
-import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { DepartamentComponent } from './components/departament/departament.component';
-import { DoctorListComponent } from './components/doctor-list/doctor-list.component';
-import { CreateDoctorDepartamentnModalComponent } from './components/doctor/create-doctorDepartament-modal/create-doctorDep-modal.component';
-import { CreateDoctorSpecializationModalComponent } from './components/doctor/create-doctorSpeciality-modal/create-doctorSpec-modal.component';
-import { DoctorComponent } from './components/doctor/doctor.component';
-import { CreateDrugModalComponent } from './components/drug/create-drug-modal/create-drug-modal.component';
-import { DrugComponent } from './components/drug/drug.component';
+import { AdminHomeComponent } from "./components/admin-home/admin-home.component";
+import { DepartamentComponent } from "./components/departament/departament.component";
+import { DoctorListComponent } from "./components/doctor-list/doctor-list.component";
+import { CreateDoctorDepartamentnModalComponent } from
+  "./components/doctor/create-doctorDepartament-modal/create-doctorDep-modal.component";
+import { CreateDoctorSpecializationModalComponent } from
+  "./components/doctor/create-doctorSpeciality-modal/create-doctorSpec-modal.component";
+import { DoctorComponent } from "./components/doctor/doctor.component";
+import { CreateDrugModalComponent } from "./components/drug/create-drug-modal/create-drug-modal.component";
+import { DrugComponent } from "./components/drug/drug.component";
 import { HomeComponent } from "./components/home/home.component";
-import { CreateHospitalModalComponent } from "./components/hospital-list/create-hospital-modal/create-hospital-modal.component";
-import { HospitalListComponent } from './components/hospital-list/hospital-list.component';
-import { CreateDepartamentModalComponent } from "./components/hospital/create-departament-modal/create-departament-modal.component";
+import { CreateHospitalModalComponent } from
+  "./components/hospital-list/create-hospital-modal/create-hospital-modal.component";
+import { HospitalListComponent } from "./components/hospital-list/hospital-list.component";
+import { CreateDepartamentModalComponent } from
+  "./components/hospital/create-departament-modal/create-departament-modal.component";
 import { HospitalComponent } from "./components/hospital/hospital.component";
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from "./components/login/login.component";
 import { NavMenuComponent } from "./components/nav-menu/nav-menu.component";
-import { PatientHomeComponent } from './components/patient-home/patient-home.component';
-import { PatientPrescriptionComponent } from './components/patient-prescription/patient-prescription.component';
-import { PatientVisitComponent } from './components/patient-visits/patient-visits.component';
-import { PatientListComponent } from './components/patient/patient-list.component';
-import { RegisterComponent } from './components/register/register.component';
-import { CreateSpecializationModalComponent } from './components/specialization/create-specialization -modal/create-specialization-modal.component';
-import { SpecializationComponent } from './components/specialization/specialization.component';
-import { VisitComponent } from './components/visit/visit.component';
-import { MaterialModule } from './material.module';
+import { PatientHomeComponent } from "./components/patient-home/patient-home.component";
+import { PatientPrescriptionComponent } from "./components/patient-prescription/patient-prescription.component";
+import { PatientVisitComponent } from "./components/patient-visits/patient-visits.component";
+import { PatientListComponent } from "./components/patient/patient-list.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { CreateSpecializationModalComponent } from
+  "./components/specialization/create-specialization -modal/create-specialization-modal.component";
+import { SpecializationComponent } from "./components/specialization/specialization.component";
+import { MaterialModule } from "./material.module";
 import { AuthService } from "./services/auth.service";
 import { HospitalService } from "./services/hospital.service";
 import { JwtUtil } from "./utils/jwt.util";
-import { EditDrugModalComponent } from './components/drug/edit-drug-modal/edit-drug-modal.component';
-import { EditSpecializationModalComponent } from './components/specialization/edit-specialization-modal/edit-specialization-modal.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { EditDrugModalComponent } from "./components/drug/edit-drug-modal/edit-drug-modal.component";
+import { EditSpecializationModalComponent } from
+  "./components/specialization/edit-specialization-modal/edit-specialization-modal.component";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 
 @NgModule({
@@ -85,7 +89,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
       { path: "doctors", component: DoctorListComponent },
       { path: "doctor/:id", component: DoctorComponent },
       { path: "drugs", component: DrugComponent }
-     // { path: "newVisit", component: VisitComponent },
+      // { path: "newVisit", component: VisitComponent },
       //{ path: "visits/:id", component: PatientVisitComponent },
       //{ path: "/prescriptions/:id", component: PatientPrescriptionComponent}
     ]),

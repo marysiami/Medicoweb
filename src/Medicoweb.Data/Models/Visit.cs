@@ -9,7 +9,7 @@ namespace Medicoweb.Data.Models
     {
         public Guid Id { get; set; }
         public Guid PatientId { get; set; }
-        public virtual SBDUser Patient { get; set; }
+        public virtual MedicowebUser Patient { get; set; }
         public Guid DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual VisitTime Date { get; set; }

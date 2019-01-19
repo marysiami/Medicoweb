@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 namespace Medicoweb.Common.Exceptions
 
 {
- 
     public class InvalidGetDoctorByIdException : Exception
     {
         public InvalidGetDoctorByIdException()
