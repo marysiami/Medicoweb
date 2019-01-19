@@ -7,9 +7,9 @@ namespace Medicoweb.Data.Services
 
     public class DataService : IDataService
     {
-        private readonly SBDDbContext _dbContext;
+        private readonly MedicowebDbContext _dbContext;
 
-        public DataService(SBDDbContext dbContext)
+        public DataService(MedicowebDbContext dbContext)
         {
             _dbContext = dbContext;
         }

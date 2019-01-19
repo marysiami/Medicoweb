@@ -31,7 +31,7 @@ namespace Medicoweb.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<SBDDbContext>(options =>
+            services.AddDbContext<MedicowebDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                    o => o.MigrationsAssembly("Medicoweb.Data")));
 
@@ -58,7 +58,7 @@ namespace Medicoweb.Web
         private static void ConfigureIdentity(IServiceCollection services)
         {
             services.AddIdentity<SBDUser, SBDRole>()
-                .AddEntityFrameworkStores<SBDDbContext>()
+                .AddEntityFrameworkStores<MedicowebDbContext>()
                 .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
@@ -157,7 +157,7 @@ namespace Medicoweb.Web
                      .GetRequiredService<IServiceScopeFactory>()
                      .CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<SBDDbContext>())
+                using (var context = serviceScope.ServiceProvider.GetService<MedicowebDbContext>())
                 {
                     context.Database.Migrate();
                 }

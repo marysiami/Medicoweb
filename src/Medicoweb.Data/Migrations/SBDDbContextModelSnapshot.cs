@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Medicoweb.Data.Migrations
 {
-    [DbContext(typeof(SBDDbContext))]
+    [DbContext(typeof(MedicowebDbContext))]
     partial class SBDDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

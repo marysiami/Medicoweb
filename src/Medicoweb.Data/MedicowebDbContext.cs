@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Medicoweb.Data
 {
-    public class SBDDbContext : IdentityDbContext<SBDUser, SBDRole, Guid>
+    public class MedicowebDbContext : IdentityDbContext<SBDUser, SBDRole, Guid>
     {
         public DbSet<Departament> Departaments { get; set; }
         public DbSet<DepartamentDoctor> DepartamentDoctors { get; set; }
@@ -24,7 +24,7 @@ namespace Medicoweb.Data
         public DbSet<VisitTime> VisitsTimes { get; set; }
         public DbSet<DoctorTime> DoctorsTimes { get; set; }
 
-        public SBDDbContext(DbContextOptions options) : base(options)
+        public MedicowebDbContext(DbContextOptions options) : base(options)
         {
 
         }

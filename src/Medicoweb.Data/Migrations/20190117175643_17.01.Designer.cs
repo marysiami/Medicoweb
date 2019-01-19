@@ -7,7 +7,7 @@ using System;
 
 namespace Medicoweb.Data.Migrations
 {
-    [DbContext(typeof(SBDDbContext))]
+    [DbContext(typeof(MedicowebDbContext))]
     [Migration("20190117175643_17.01")]
     partial class _1701
     {
