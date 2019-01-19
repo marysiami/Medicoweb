@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Medicoweb.Common\Medicoweb.Common.csproj" />
+  </ItemGroup>
+
 </Project>
