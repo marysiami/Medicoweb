@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<div>
+  <h2>Hospital Edit</h2>
+  <div>
+    <label>
+      Hospital Name:
+      <input [(ngModel)]="hospitalData.hospital_name" placeholder="Hospital Name"/>
+    </label><br>
+    <label>
+      Hospital Address
+      <input [(ngModel)]="hospitalData.hospital_desc" placeholder="Hospital Address"/>
+    </label><br>
+
+  </div>
+  <button (click)="updateHospital()">Update</button>
+</div>

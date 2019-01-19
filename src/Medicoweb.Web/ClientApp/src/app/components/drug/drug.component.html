@@ -1,0 +1,33 @@
+<div *ngIf="isLoggedIn">
+  <button mat-raised-button color="primary" (click)="openCreateDrugModal()">Utwórz nowy lek</button>
+</div>
+<h2>Baza danych leków</h2>
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa leku </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.name}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="company">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Firma </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.company}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="button">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="deleteDrug(element.id)">usuń</button>
+        <button mat-raised-button color="primary" (click)="openEditDrugModal(element.id)">edytuj</button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="drugListing.totalCount"
+                 [pageSize]="pageSize"
+                 (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

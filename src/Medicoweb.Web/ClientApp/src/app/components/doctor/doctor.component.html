@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>{{departamentListing.doctorName}}</h2>
+  <h2>{{departamentListing.doctorSurname}}</h2>
+
+  <div class="full-width container">
+    <button mat-raised-button color="primary" (click)="openCreateDoctorDepModal()">Dodaj lekarzowi departament </button>
+    <mat-table #table [dataSource]="dataSourceDep">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nazwa departamentu </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a>{{element.name}}</a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumnsDep"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsDep;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="departamentListing.totalCount"
+                   [pageSize]="pageSize"
+                   (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+  <div class="full-width container">
+    <button mat-raised-button color="primary" (click)="openCreateDoctorSpecModal()">Dodaj lekarzowi specjalizację</button>
+    <mat-table #table [dataSource]="dataSourceSpec">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nazwa specjalizacji </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a>{{element.name}}</a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumnsSpec"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsSpec;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="specializationListing.totalCount"
+                   [pageSize]="pageSize"
+                   (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+/* Products Component's private CSS styles */
+.hospitals {
+  list-style-type: none;
+  margin: 0 0 2em 0;
+  padding: 0;
+  width: 15em;
+}
+
+.hospitals li {
+  background-color: #EEE;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 1.6em;
+  margin: .5em;
+  padding: .3em 0;
+  position: relative;
+}
+
+.hospitals li:hover {
+  background-color: #DDD;
+  color: #607D8B;
+  left: .1em;
+}
+
+.hospitals a {
+  color: #888;
+  display: block;
+  position: relative;
+  text-decoration: none;
+  width: 250px;
+}
+
+.hospitals a:hover { color: #607D8B; }
+
+.hospitals .badge {
+  background-color: #607D8B;
+  border-radius: 4px 0 0 4px;
+  color: white;
+  display: inline-block;
+  font-size: small;
+  height: 1.8em;
+  left: -1px;
+  line-height: 1em;
+  margin-right: .8em;
+  min-width: 16px;
+  padding: 0.8em 0.7em 0 0.7em;
+  position: relative;
+  text-align: right;
+  top: -4px;
+}
+
+button {
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+  font-family: Arial;
+  padding: 5px 10px;
+}
+
+button:hover { background-color: #cfd8dc; }
+
+button.delete {
+  background-color: gray !important;
+  color: white;
+  left: 194px;
+  position: relative;
+  top: -32px;
+}

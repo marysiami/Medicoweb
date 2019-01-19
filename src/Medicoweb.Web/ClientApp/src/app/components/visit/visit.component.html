@@ -1,0 +1,55 @@
+<div *ngIf="isLoggedIn">
+<h2>Nowa wizyta</h2>
+
+<h3>Wybierz szpital</h3>
+
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSourceHospital">
+    <ng-container matColumnDef="nameHos">
+      <mat-header-cell *matHeaderCellDef>
+        Nazwa szpitala
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <label><input type="checkbox"> {{element.name}} {{element.address}}</label>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<h3>Wybierz oddział</h3>
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSourceDepartament">
+    <ng-container matColumnDef="nameDep">
+      <mat-header-cell *matHeaderCellDef>
+        Nazwa oddziału
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <label><input type="checkbox"> {{element.name}}</label>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<h3>Wybierz lekarza</h3>
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="nameDoc">
+      <mat-header-cell *matHeaderCellDef>
+        Nazwa szpitala
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <label><input type="checkbox"> {{element.name}} {{element.surname}}</label>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<h3>Ustal termin</h3>
+<h4>nowy termin</h4>
+<button>Umów wizytę</button>
