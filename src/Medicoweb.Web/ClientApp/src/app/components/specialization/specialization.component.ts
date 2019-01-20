@@ -24,8 +24,6 @@ export class SpecializationComponent {
   pageSize = 10;
   dataSource = new MatTableDataSource<Specialization>();
 
-  dataSourceSpec = new MatTableDataSource;
-
   constructor(
     private authService: AuthService,
     private hospitalService: HospitalService,

@@ -1,11 +1,12 @@
-import { Component } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { Component, ViewChild } from "@angular/core";
+import { MatDialog, MatSort } from "@angular/material";
 import { MatTableDataSource } from "@angular/material/table";
 import { HospitalListing } from "../../models/hospital-listing.model";
 import { Hospital } from "../../models/hospital.model";
 import { HospitalService } from "../../services/hospital.service";
 import { AuthService } from "./../../services/auth.service";
 import { CreateHospitalModalComponent } from "./create-hospital-modal/create-hospital-modal.component";
+import { EditHospitalModalComponent } from "./edit-hospital-modal/edit-hospital-modal.component";
 
 @Component({
   selector: "app-hospital-list",
@@ -13,9 +14,11 @@ import { CreateHospitalModalComponent } from "./create-hospital-modal/create-hos
   styleUrls: ["./hospital-list.component.css"]
 })
 export class HospitalListComponent {
+  @ViewChild(MatSort)
+  sort: MatSort;
   hospitalListing = new HospitalListing(0, []);
   isLoggedIn: boolean;
-  displayedColumns: string[] = ["name", "address", "repliesCount"];
+  displayedColumns: string[] = ["name", "address", "repliesCount","button"];
   pageSize = 10;
   dataSource = new MatTableDataSource<Hospital>();
 
@@ -30,7 +33,9 @@ export class HospitalListComponent {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.getHospitals();
   }
-
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
   openCreateHospitalModal() {
     const dialogRef =
       this.dialog
@@ -47,19 +52,33 @@ export class HospitalListComponent {
     this.hospitalService.getHospitals(pageNumber, postsPerPage)
       .subscribe(result => {
         this.hospitalListing = result;
-        this.dataSource = new MatTableDataSource(result.hospitals);
+       // this.dataSource = new MatTableDataSource(result.hospitals);
+        this.dataSource.data = result.hospitals;
       });
   }
-  /*getHospitalsByAddress(pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getHospitalsByAddress(pageNumber, postsPerPage)
-      .subscribe(result => {
-        this.hospitalListing = result;
-        this.dataSource = new MatTableDataSource(result.hospitals);
-      });
-  }*/
-
-
+  
   pageChanged(pageEvent) {
     this.getHospitals(pageEvent.pageIndex, this.pageSize);
+  }
+  deleteHospital(id) {
+    this.hospitalService.deleteHospital(id)
+      .subscribe(result => this.getHospitals(0, this.pageSize));
+  }
+
+  editHospital(id) {
+    const dialogRef =
+      this.dialog
+        .open(EditHospitalModalComponent,
+          {
+            height: "auto",
+            width: "400px",
+            data: id
+          })
+        .afterClosed()
+        .subscribe(result => {
+          if (result === "ok") {
+            this.getHospitals(0, this.pageSize);
+          }
+        });
   }
 }

@@ -72,7 +72,8 @@ namespace Medicoweb.Hospital.Services
             {
                 Name = patient.Name,
                 Surname = patient.Surname,
-                Pesel = patient.Pesel
+                Pesel = patient.Pesel,
+                Id = patient.Id
             };
             await _userManager.RemoveFromRoleAsync(patient, "Patient");
             await _userManager.AddToRoleAsync(patient, "Doctor");
@@ -109,12 +110,13 @@ namespace Medicoweb.Hospital.Services
             return newSpecialization;
         }
 
-        public void DeleteDepartament(Departament departament)
+        public async Task DeleteDepartament(Departament departament)
         {
             _dataService.GetSet<Departament>().Remove(departament);
+            await _dataService.SaveDbAsync();
         }
 
-        public async void DeleteSpecialization(Specialization specialization)
+        public async Task DeleteSpecialization(Specialization specialization)
         {
             _dataService.GetSet<Specialization>().Remove(specialization);
             await _dataService.SaveDbAsync();
@@ -137,9 +139,10 @@ namespace Medicoweb.Hospital.Services
             {
                 Name = doctor.Name,
                 Surname = doctor.Surname,
-                Departaments = doctor.DepartamentDoctors
+                Departaments = doctor.DepartamentDoctors               
                     .Skip(skip * take)
                     .Take(take)
+                    .Select(x => x.Departament)
                     .ToList()
             };
 
@@ -148,7 +151,13 @@ namespace Medicoweb.Hospital.Services
 
         public async Task<Doctor> GetDoctorById(string id)
         {
-            var model = await _dataService.GetSet<Doctor>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = await _dataService.GetSet<Doctor>()
+                .Include(x => x.DepartamentDoctors)
+                .ThenInclude(x => x.Departament)
+                .Include(x => x.SpecializationDoctor)
+                .ThenInclude(x => x.Specialization)
+                .FirstOrDefaultAsync(x => x.Id.ToString() == id);
+
             return model;
         }
 
@@ -196,7 +205,7 @@ namespace Medicoweb.Hospital.Services
         }
 
         public DepartamentListing
-            GetHospitalDepartamenst(Data.Models.Hospital.Hospital hospital, int skip = 0, int take = 10) //dziala
+            GetHospitalDepartaments(Data.Models.Hospital.Hospital hospital, int skip = 0, int take = 10) //dziala
         {
             var result = new DepartamentListing
             {
@@ -241,6 +250,7 @@ namespace Medicoweb.Hospital.Services
                 Specializations = doctor.SpecializationDoctor
                     .Skip(skip * take)
                     .Take(take)
+                    .Select(x => x.Specialization)
                     .ToList()
             };
 
@@ -386,6 +396,12 @@ namespace Medicoweb.Hospital.Services
             model.Name = name;
             model.Address = address;
             _dataService.GetSet<Data.Models.Hospital.Hospital>().Update(model);
+            await _dataService.SaveDbAsync();
+        }
+
+        public async Task DeleteHospitalAsync(Data.Models.Hospital.Hospital hospital)
+        {
+            _dataService.GetSet<Data.Models.Hospital.Hospital>().Remove(hospital);
             await _dataService.SaveDbAsync();
         }
     }

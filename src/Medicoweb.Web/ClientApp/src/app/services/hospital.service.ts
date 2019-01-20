@@ -21,6 +21,7 @@ import { DrugListing } from "../models/drug-listing.model";
 import { CreateDrugRequest } from "../models/Request/create-drug-request.model";
 import { Drug } from "../models/drug.model";
 import { Specialization } from "../models/specialization.model";
+import { Departament } from "../models/departament.model";
 
 
 @Injectable()
@@ -39,15 +40,6 @@ export class HospitalService extends BaseService {
     return this.http.get<HospitalListing>(url, { params: params, headers: this.headers });
   }
 
-  getHospitalsByAddress(page, postsPerPage = 10) {
-    //w controller ok
-    const url = this.baseUrl + "Hospital/GetHospitalsByAddress";
-    const params = new HttpParams()
-      .set("page", page)
-      .set("postsPerPage", postsPerPage.toString());
-
-    return this.http.get<HospitalListing>(url, { params: params, headers: this.headers });
-  }
 
   getHospital(id) {
     //controller ok
@@ -66,18 +58,20 @@ export class HospitalService extends BaseService {
     return this.http.post(url, body, { headers: this.headers });
   }
 
-  /*updateHospital(hospitalId:string, name: string, address: string) {
+  updateHospital(hospitalId:string, name: string, address: string) {
  
      let url = this.baseUrl + "Hospital/UpdateHospital";
-     let body = new UpdateHospitalRequest(hospitalId, name, address);
+     let body = new Hospital(hospitalId, name, address);
  
      return this.http.put(url, body, { headers: this.headers });
    }
    deleteHospital(hospitalId) {
-     let url = this.baseUrl + "Hospital/";
-    
-     return this.http.put(url, body, { headers: this.headers });
-   }*/
+     let url = this.baseUrl + "Hospital/DeleteHospital";    
+     const params = new HttpParams()
+       .set("id", hospitalId);
+
+     return this.http.delete(url, { params: params, headers: this.headers });
+   }
   getDepartaments(hospitalId, page, postsPerPage = 10) {
 
     const url = this.baseUrl + "Hospital/GetDepartamentsFromHospital";
@@ -98,6 +92,20 @@ export class HospitalService extends BaseService {
     return this.http.post(url, body, { headers: this.headers });
   }
 
+  updateDepartament(hospitalId: string, name: string) {
+
+    let url = this.baseUrl + "Hospital/UpdateDepartament";
+    let body = new Departament(hospitalId, name);
+
+    return this.http.put(url, body, { headers: this.headers });
+  }
+  deleteDepartament(id) {
+    let url = this.baseUrl + "Hospital/DeleteDepartament";
+    const params = new HttpParams()
+      .set("id", id);
+
+    return this.http.delete(url, { params: params, headers: this.headers });
+  }
 
   createSpecialzation(name: string) {
 
@@ -139,15 +147,6 @@ export class HospitalService extends BaseService {
     return this.http.get<SpecializationListing>(url, { params: params, headers: this.headers });
   }
 
-  getSpecialzationsByName(page, postsPerPage = 10) {
-    const url = this.baseUrl + "Hospital/GetSpecializationsByName";
-    const params = new HttpParams()
-      .set("page", page)
-      .set("postsPerPage", postsPerPage.toString());
-
-    return this.http.get<SpecializationListing>(url, { params: params, headers: this.headers });
-  }
-
   getDoctorsFromDep(departamentId, page, postsPerPage = 10) {
 
     const url = this.baseUrl + "Hospital/GetDoctorsFromDep";
@@ -172,24 +171,6 @@ export class HospitalService extends BaseService {
 
   getPatients() {
     const url = this.baseUrl + "Hospital/GetPatients";
-
-    return this.http.get<PatientListing>(url, { headers: this.headers });
-  }
-
-  getPatientsByName() {
-    const url = this.baseUrl + "Hospital/GetPatientsByName";
-
-    return this.http.get<PatientListing>(url, { headers: this.headers });
-  }
-
-  getPatientsBySurname() {
-    const url = this.baseUrl + "Hospital/GetPatientsBySurname";
-
-    return this.http.get<PatientListing>(url, { headers: this.headers });
-  }
-
-  getPatientsByPesel() {
-    const url = this.baseUrl + "Hospital/GetPatientsByPesel";
 
     return this.http.get<PatientListing>(url, { headers: this.headers });
   }
@@ -229,10 +210,10 @@ export class HospitalService extends BaseService {
     return this.http.post(url, body, { headers: this.headers });
   }
 
-  //kontruktor VISIT
+  //kontruktor drug
   getDrugs(page, postsPerPage = 10) {
 
-    const url = this.baseUrl + "Visit/GetDrugs";
+    const url = this.baseUrl + "drug/GetDrugs";
     const params = new HttpParams()
       .set("page", page)
       .set("postsPerPage", postsPerPage.toString());
@@ -241,14 +222,14 @@ export class HospitalService extends BaseService {
   }
 
   createDrug(name: string, company: string) {
-    const url = this.baseUrl + "Visit/CreateDrug";
+    const url = this.baseUrl + "drug/CreateDrug";
     const body = new CreateDrugRequest(name, company);
 
     return this.http.post(url, body, { headers: this.headers });
   }
 
   deleteDrug(drugId: string) {
-    const url = this.baseUrl + "visit/DeleteDrug";
+    const url = this.baseUrl + "drug/DeleteDrug";
     const params = new HttpParams()
       .set("id", drugId);
 
@@ -256,7 +237,7 @@ export class HospitalService extends BaseService {
   }
 
   updateDrug(drugId: string, drugName: string, drugCompany: string) {
-    const url = this.baseUrl + "visit/UpdateDrug";
+    const url = this.baseUrl + "drug/UpdateDrug";
     debugger;
     const body = new Drug(drugId, drugName, drugCompany);
 

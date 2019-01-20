@@ -1,15 +1,21 @@
 <div class="container">
   <div *ngIf="isLoggedIn">
     <button mat-raised-button color="primary" (click)="openCreateDepartamentModal()">Utwórz nowy departament</button>
-    <a class="nav-item nav-link" [routerLink]='["/patients"]'>Pacjenci</a>
   </div>
   <h2>Szpital: {{departamentListing.hospitalName}}</h2>
   <div class="full-width container">
-    <mat-table #table [dataSource]="dataSource">
+    <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Nazwa departamentu </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa departamentu </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <a [routerLink]='["/departament", element.id]'>{{element.name}}</a>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="button">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="deleteDepartament(element.id)">usuń</button>
+          <button mat-raised-button color="primary" (click)="editDepartament(element.id)">edytuj</button>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

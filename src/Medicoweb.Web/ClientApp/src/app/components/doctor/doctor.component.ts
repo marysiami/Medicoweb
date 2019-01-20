@@ -7,6 +7,7 @@ import { Specialization } from "../../models/specialization.model";
 import { SpecializationsFromDoctorListing } from "../../models/specializations-fromDoctor-listing.model";
 import { AuthService } from "../../services/auth.service";
 import { HospitalService } from "../../services/hospital.service";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-doctor",
@@ -17,15 +18,22 @@ export class DoctorComponent implements OnInit {
 
   departamentListing = new DepartamentsFromDoctorListing("", "", 0, []);
   specializationListing = new SpecializationsFromDoctorListing("", "", 0, []);
+  dataSourceDep = new MatTableDataSource<Departament>();
+  dataSourceSpec = new MatTableDataSource<Specialization>();
   isLoggedIn: boolean;
-  displayedColumnsDep: string[] = ["departament"];
-  displayedColumnsSpec: string[] = ["specialization"];
+  displayedColumnsDep: string[] = ["name"];
+  displayedColumnsSpec: string[] = ["name"];
   pageSize = 10;
   doctorId: string;
 
+  hospitalId: string;
 
-  dataSourceDep = new MatTableDataSource<Departament>();
-  dataSourceSpec = new MatTableDataSource<Specialization>();
+  
+  departaments = new FormControl();
+  departamentList = [];
+  specializations = new FormControl();
+  specializationList = [];
+  hospitalList = [];
 
   constructor(
     private authService: AuthService,
@@ -37,19 +45,50 @@ export class DoctorComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.doctorId = this.route.snapshot.paramMap.get("id");
     //this.getDepartamentFromDoctor();
     //this.getSpecializationsFromDoctor();
-    this.doctorId = this.route.snapshot.paramMap.get("id");
+    this.getHospitals(); 
+    this.getSpecializations();
   }
-  /*
-  getDepartamentFromDoctor(pageNumber = 0, postsPerPage = 10) {
-    console.log(this.doctorId);
-    this.hospitalService.getDepartamentsFromDoctor(this.doctorId,pageNumber, postsPerPage)
+
+  getHospitals(pageNumber = 0, postsPerPage = 10) {
+    this.hospitalService.getHospitals(pageNumber, postsPerPage)
+      .subscribe(result => {
+        this.hospitalList = result.hospitals;
+       });
+  }
+
+  getDepartaments(event) {
+    this.hospitalId = event.value.id;
+    this.hospitalService.getDepartaments(this.hospitalId, 0, 10).subscribe(result => {
+      this.departamentList = result.departaments;
+    });
+  }
+
+  getSpecializations() {
+    this.hospitalService.getSpecialzations(0, 10).subscribe(result => {
+      this.specializationList = result.specialization;
+    });
+  }
+
+  addDepartamentToDoctor() {
+    var depTable = [];
+    depTable = this.departaments.value;
+    console.log(depTable.map(x => x.id));  //mega zle
+    
+  }
+
+ /* getDepartamentFromDoctor(pageNumber = 0, postsPerPage = 10) {
+
+    this.hospitalService.getDepartamentsFromDoctor(this.doctorId, pageNumber, postsPerPage)
       .subscribe(result => {
         this.departamentListing = result;
+        console.log(result);
         this.dataSourceDep = new MatTableDataSource(result.departmanets);
       });
   }
+
   getSpecializationsFromDoctor(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getSpecializationsFromDoctor(this.doctorId, pageNumber, postsPerPage)
       .subscribe(result => {
@@ -57,11 +96,6 @@ export class DoctorComponent implements OnInit {
         this.dataSourceSpec = new MatTableDataSource(result.specializations);
       });
   }
-  openCreateDoctorDepModal() {
-    this.router.navigateByUrl('/depdoctor/this.doctorId'); //dziala?
-  }
-  openCreateDoctorSpecModal() {
-    this.router.navigateByUrl('/specdoctor/this.doctorId');
-  }*/
-
+  */
+  
 }

@@ -1,12 +1,14 @@
 import { Component, ViewChild } from "@angular/core";
-import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 import { DepartamentListing } from "../../models/departament-listing.model";
+import { Departament } from "../../models/departament.model";
 import { Hospital } from "../../models/hospital.model";
 import { AuthService } from "./../../services/auth.service";
 import { HospitalService } from "./../../services/hospital.service";
 import { CreateDepartamentModalComponent } from "./create-departament-modal/create-departament-modal.component";
-import { Departament } from "../../models/departament.model";
+import { EditDepartamentModalComponent } from "./edit-departament-modal/edit-departament-modal.component";
+
 
 @Component({
   selector: "app-hospital",
@@ -14,6 +16,9 @@ import { Departament } from "../../models/departament.model";
   styleUrls: ["./hospital.component.css"]
 })
 export class HospitalComponent {
+  @ViewChild(MatSort)
+  sort: MatSort;
+
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   message: string;
@@ -21,7 +26,7 @@ export class HospitalComponent {
   displayNewDepartamentButton: boolean;
   departamentListing = new DepartamentListing("", 0, []);
   hospitalId: string;
-  displayedColumns: string[] = ["name"];
+  displayedColumns: string[] = ["name","button"];
   pageSize = 10;
   hospitals: Hospital[];
   dataSource = new MatTableDataSource<Departament>();
@@ -39,13 +44,17 @@ export class HospitalComponent {
     this.hospitalId = this.route.snapshot.paramMap.get("id");
     this.getDepartaments();
   }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
 
   getDepartaments(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getDepartaments(this.hospitalId, pageNumber, postsPerPage)
       .subscribe(result => {
         this.departamentListing = result;
-        this.dataSource = new MatTableDataSource(result.departaments);
-        console.log(result);
+       // this.dataSource = new MatTableDataSource(result.departaments);
+        this.dataSource.data = result.departaments;
+        
       });
   }
 
@@ -77,6 +86,25 @@ export class HospitalComponent {
     const result = Math.floor((count + this.pageSize - 1) / (this.pageSize)) - 1;
     return result;
   }
+  deleteDepartament(id) {
+    this.hospitalService.deleteDepartament(id)
+      .subscribe(result => this.getDepartaments(0, this.pageSize));
+  }
 
-  //openPatientsList() <- DODAĆ 
+  editDepartament(id) {
+    const dialogRef =
+      this.dialog
+        .open(EditDepartamentModalComponent,
+          {
+            height: "auto",
+            width: "400px",
+            data: id
+          })
+        .afterClosed()
+        .subscribe(result => {
+          if (result === "ok") {
+            this.getDepartaments(0, this.pageSize);
+          }
+        });
+  }
 }

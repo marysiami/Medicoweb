@@ -4,10 +4,10 @@ namespace Medicoweb.Web.ViewModels
 {
     public class SpecializationsFromDoctorViewModel
     {
-        public SpecializationsFromDoctorViewModel(SpecializationDoctor x)
+        public SpecializationsFromDoctorViewModel(Specialization x)
         {
             Id = x.Id.ToString();
-            Name = x.Specialization.Name;
+            Name = x.Name;
         }
 
         public string Id { get; set; }

@@ -12,16 +12,17 @@ namespace Medicoweb.Hospital.Contracts
         Task<Data.Models.Hospital.Hospital> CreateHospital(string name, string address);
         Task<HospitalListing> GetHospitalsByName(int skip = 0, int take = 10);
         Task<HospitalListing> GetoHospitalsByAddressAsync(int skip = 0, int take = 10);
-        DepartamentListing GetHospitalDepartamenst(Data.Models.Hospital.Hospital hospital, int skip = 0, int take = 10);
+        DepartamentListing GetHospitalDepartaments(Data.Models.Hospital.Hospital hospital, int skip = 0, int take = 10);
         Task<Data.Models.Hospital.Hospital> GetHospital(string hospitalId);
         Task<Data.Models.Hospital.Hospital> GetHospitalByName(string name);
         Task<Departament> GetDepartamentByName(string name);
+        Task DeleteHospitalAsync(Data.Models.Hospital.Hospital hospital);
 
-        void DeleteDepartament(Departament departament);
+        Task DeleteDepartament(Departament departament);
         Task UpdateDepartament(string id, string name);
         Task UpdateHospital(string id, string name, string address);
         Task UpdateSpecialization(string id, string name);
-        void DeleteSpecialization(Specialization specialization);
+        Task DeleteSpecialization(Specialization specialization);
 
 
         Task<Specialization> CreateSpecialization(string name);

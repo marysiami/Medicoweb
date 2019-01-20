@@ -40,6 +40,8 @@ import { EditDrugModalComponent } from "./components/drug/edit-drug-modal/edit-d
 import { EditSpecializationModalComponent } from
   "./components/specialization/edit-specialization-modal/edit-specialization-modal.component";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { EditDepartamentModalComponent } from "./components/hospital/edit-departament-modal/edit-departament-modal.component";
+import { EditHospitalModalComponent } from "./components/hospital-list/edit-hospital-modal/edit-hospital-modal.component";
 
 
 @NgModule({
@@ -68,7 +70,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
     PatientVisitComponent,
     PatientPrescriptionComponent,
     EditDrugModalComponent,
-    EditSpecializationModalComponent
+    EditSpecializationModalComponent,
+    EditHospitalModalComponent,
+    EditDepartamentModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -113,7 +117,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
     CreateSpecializationModalComponent,
     CreateDrugModalComponent,
     EditDrugModalComponent,
-    EditSpecializationModalComponent
+    EditSpecializationModalComponent,
+    EditDepartamentModalComponent,
+    EditHospitalModalComponent
+
   ]
 })
 export class AppModule {

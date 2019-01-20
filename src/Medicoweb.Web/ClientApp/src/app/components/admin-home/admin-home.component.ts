@@ -33,6 +33,9 @@ export class AdminHomeComponent {
   openDrugs() {
     this.router.navigateByUrl("/drugs");
   }
-
+  openPatients() {
+    this.router.navigateByUrl("/patients");
+  }
+  
 
 }

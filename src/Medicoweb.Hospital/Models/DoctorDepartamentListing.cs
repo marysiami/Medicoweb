@@ -7,6 +7,6 @@ namespace Medicoweb.Hospital.Models
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public ICollection<DepartamentDoctor> Departaments { get; set; }
+        public ICollection<Departament> Departaments { get; set; }
     }
 }

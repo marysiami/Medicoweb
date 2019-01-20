@@ -33,15 +33,6 @@ namespace Medicoweb.Web.Controllers
             return Json(result);
         }
 
-        [HttpGet]
-        public async Task<JsonResult> GetHospitalsByAddress([FromQuery] int page, [FromQuery] int threadsPerPage = 10)
-        {
-            var model = await _hospitalService.GetoHospitalsByAddressAsync(page, threadsPerPage);
-
-            var result = new HospitalListingViewModel(model);
-
-            return Json(result);
-        }
 
         [HttpGet]
         public async Task<JsonResult> GetDepartamentsFromHospital([FromQuery] string hospitalId, [FromQuery] int page,
@@ -49,9 +40,9 @@ namespace Medicoweb.Web.Controllers
         {
             var hospital = await _hospitalService.GetHospital(hospitalId);
 
-            if (hospital != null) throw new InvalidDepartmanetIdException();
+            if (hospital == null) throw new InvalidDepartmanetIdException();
 
-            var model = _hospitalService.GetHospitalDepartamenst(hospital, page, postsPerPage);
+            var model = _hospitalService.GetHospitalDepartaments(hospital, page, postsPerPage);
 
             var result = new DepartamentListViewModel(model);
 
@@ -71,20 +62,31 @@ namespace Medicoweb.Web.Controllers
             return Json(result);
         }
 
-        // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task UpdateHospital([FromBody] UpdateHospitalRequestViewModel request)
         {
             await _hospitalService.UpdateHospital(request.Id, request.Name, request.Address);
         }
 
-        // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task DeleteHospital([FromQuery] string id)
+        {
+           var model =  await _hospitalService.GetHospital(id);
+            await _hospitalService.DeleteHospitalAsync(model);
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<JsonResult> CreateDepartament([FromBody] CreateDepartamentRequestViewModel request) //dziala
         {
             var test = await _hospitalService.GetDepartamentByName(request.Name);
-            if (test == null)
-                throw new InvalidCreateDepartamentException(); //gdy departament o takiej samej nazwie istnieje
+            if (test != null) 
+            {
+                if (request.HospitalId == test.HospitalId.ToString())
+                    throw new InvalidCreateDepartamentException(); //gdy departament o takiej samej nazwie istnieje
+            }
 
             var hospital = await _hospitalService.GetHospital(request.HospitalId);
             if (hospital == null) throw new InvalidPostThreadIdException();
@@ -97,10 +99,10 @@ namespace Medicoweb.Web.Controllers
 
         // [Authorize(Roles = "Admin")]
         [HttpDelete]
-        public async Task DeleteDepartament([FromBody] string id)
+        public async Task DeleteDepartament([FromQuery] string id)
         {
             var model = await _hospitalService.GetDepartamentById(id);
-            _hospitalService.DeleteDepartament(model);
+             await _hospitalService.DeleteDepartament(model);
         }
 
         // [Authorize(Roles = "Admin")]
@@ -115,17 +117,6 @@ namespace Medicoweb.Web.Controllers
             GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10) //dziala
         {
             var model = await _hospitalService.GetSpecializationsAsync(page, threadsPerPage);
-
-            var result = new SpecialityListingViewModel(model);
-
-            return Json(result);
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> GetSpecializationsByName([FromQuery] int page,
-            [FromQuery] int threadsPerPage = 10) //dziala
-        {
-            var model = await _hospitalService.GetSpecializationsByName(page, threadsPerPage);
 
             var result = new SpecialityListingViewModel(model);
 
@@ -153,7 +144,7 @@ namespace Medicoweb.Web.Controllers
         public async Task DeleteSpecialization([FromQuery] string id)
         {
             var model = await _hospitalService.GetSpecializationByIdAsync(id);
-            _hospitalService.DeleteSpecialization(model);
+            await _hospitalService.DeleteSpecialization(model);
         }
 
         // [Authorize(Roles = "Admin")]
@@ -180,7 +171,7 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetDoctors([FromBody] string departamentId, [FromQuery] int page,
+        public async Task<JsonResult> GetDoctors([FromQuery] string departamentId, [FromQuery] int page,
             [FromQuery] int postsPerPage = 10)
         {
             var departament = await _hospitalService.GetDepartamentById(departamentId);
@@ -222,39 +213,7 @@ namespace Medicoweb.Web.Controllers
             return Json(result);
         }
 
-        [Authorize]
-        [HttpGet]
-        public JsonResult GetPatientsByName()
-        {
-            var model = _hospitalService.GetPatientsByName();
-
-            var result = new PatientsListingViewModel(model);
-
-            return Json(result);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public JsonResult GetPatientsBySurname()
-        {
-            var model = _hospitalService.GetPatientBySurname();
-
-            var result = new PatientsListingViewModel(model);
-
-            return Json(result);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public JsonResult GetPatientsByPesel()
-        {
-            var model = _hospitalService.GetPatientByPesel();
-
-            var result = new PatientsListingViewModel(model);
-
-            return Json(result);
-        }
-
+       
         [Authorize]
         [HttpGet]
         public async Task<JsonResult> GetSpecializationFromDoctor([FromQuery] string doctorId, [FromQuery] int page,
