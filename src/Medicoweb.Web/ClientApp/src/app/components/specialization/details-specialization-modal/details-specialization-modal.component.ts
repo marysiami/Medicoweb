@@ -1,18 +1,18 @@
 import { Component, ViewChild } from "@angular/core";
-import { MatDialog, MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
-import { Departament } from "../../models/departament.model";
-import { DoctorFromDepListing } from "../../models/doctor-fromDep-listing";
-import { Doctor } from "../../models/doctor.model";
-import { AuthService } from "./../../services/auth.service";
-import { HospitalService } from "./../../services/hospital.service";
+import { DoctorsFromSpecialization } from "../../../models/doctors-fromSpecialization-listing.model";
+import { HospitalService } from "../../../services/hospital.service";
+import { Doctor } from "../../../models/doctor.model";
+import { AuthService } from "../../../services/auth.service";
+
 
 @Component({
-  selector: "app-departament",
-  templateUrl: "./departament.component.html",
-  styleUrls: ["./departament.component.css"]
+  selector: "app-details-specialization-modal",
+  templateUrl: "./details-specialization-modal.component.html",
+ 
 })
-export class DepartamentComponent {
+export class DetailsSpecializationModalComponent {
   @ViewChild(MatSort)
   sort: MatSort;
   @ViewChild(MatPaginator)
@@ -20,11 +20,10 @@ export class DepartamentComponent {
   message: string;
   isLoggedIn: boolean;
   displayNewDoctorButton: boolean;
-  doctorListing = new DoctorFromDepListing("", 0, []);
-  departamentId: string;
+  doctorListing = new DoctorsFromSpecialization("", 0, []);
+  specializationId: string;
   displayedColumns: string[] = ["name", "surname", "pesel", "button"];
   pageSize = 10;
-  departament: Departament[];
   dataSource = new MatTableDataSource<Doctor>();
 
   constructor(
@@ -40,20 +39,20 @@ export class DepartamentComponent {
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
-    this.departamentId = this.route.snapshot.paramMap.get("id");
+    this.specializationId = this.route.snapshot.paramMap.get("id");
     this.getDoctors();
-   
+
   }
 
   getDoctors(pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getDoctorsFromDep(this.departamentId, pageNumber, postsPerPage)
+    this.hospitalService.getDoctorsFromSpeciaization(this.specializationId, pageNumber, postsPerPage)
       .subscribe(result => {
         this.doctorListing = result;
         this.dataSource = new MatTableDataSource(result.doctors);
         this.dataSource.data = result.doctors;
 
       });
-    
+
   }
 
   pageChanged(pageEvent) {
@@ -65,8 +64,8 @@ export class DepartamentComponent {
     return result;
   }
 
-  deleteDepartamentFromDoctor(id) {
-    this.hospitalService.deleteDepartamentFromDoctor(id, this.departamentId).subscribe();
+  deleteDepartamentFromDoctor(id) {    
+    this.hospitalService.deleteSpecializationFromDoctor(id, this.specializationId).subscribe();
     this.getDoctors();
   }
 }

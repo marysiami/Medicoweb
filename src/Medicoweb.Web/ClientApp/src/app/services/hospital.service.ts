@@ -22,6 +22,7 @@ import { CreateDrugRequest } from "../models/Request/create-drug-request.model";
 import { Drug } from "../models/drug.model";
 import { Specialization } from "../models/specialization.model";
 import { Departament } from "../models/departament.model";
+import { DoctorsFromSpecialization } from "../models/doctors-fromSpecialization-listing.model";
 
 
 @Injectable()
@@ -157,6 +158,16 @@ export class HospitalService extends BaseService {
 
     return this.http.get<DoctorFromDepListing>(url, { params: params, headers: this.headers });
   }
+  getDoctorsFromSpeciaization(specializationId, page, postsPerPage = 10) {
+
+    const url = this.baseUrl + "Hospital/GetDoctorsFromSpecialization";
+    const params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString())
+      .set("specializationId", specializationId);
+
+    return this.http.get<DoctorsFromSpecialization>(url, { params: params, headers: this.headers });
+  }
 
   getDoctors(departamentId, page, postsPerPage = 10) {
 
@@ -192,22 +203,38 @@ export class HospitalService extends BaseService {
       .set("postsPerPage", postsPerPage.toString())
       .set("doctorId", doctorId);
 
-    return this.http.get<SpecializationsFromDoctorListing>(url, { params: params, headers: this.headers });
+    return this.http.get<DoctorsFromSpecialization>(url, { params: params, headers: this.headers });
   }
 
   addDepartamentToDoctor(departamentId: string, doctorId: string) {
-
-    const url = this.baseUrl + "Hospital/AddDoctorSpecialization";
+    const url = this.baseUrl + "Hospital/AddDoctorDepartament";
     const body = new AddDepToDoctorRequest(doctorId, departamentId);
-
+    
     return this.http.post(url, body, { headers: this.headers });
   }
 
-  addSpecializationToDoctor(doctorId: string, specializationId: string) {
-    const url = this.baseUrl + "Hospital/AddDoctorDepartament";
+  addSpecializationToDoctor(specializationId: string, doctorId: string) {
+    const url = this.baseUrl + "Hospital/AddDoctorSpecialization";
     const body = new AddSpecToDoctorRequest(doctorId, specializationId);
-
+    
     return this.http.post(url, body, { headers: this.headers });
+  }
+  deleteDepartamentFromDoctor(doctorId: string, departamentId: string) {
+    const url = this.baseUrl + "Hospital/DeleteDoctorDepartament";
+    const params = new HttpParams()
+      .set("doctorId", doctorId)
+      .set("departamentId",departamentId);
+
+    return this.http.delete(url, { params: params, headers: this.headers });    
+  }
+
+  deleteSpecializationFromDoctor(doctorId: string, specializationId: string) {
+    const url = this.baseUrl + "Hospital/DeleteDoctorSpecialization";
+    const params = new HttpParams()
+      .set("doctorId", doctorId)
+      .set("specializationId", specializationId);
+
+    return this.http.delete(url, { params: params, headers: this.headers });
   }
 
   //kontruktor drug

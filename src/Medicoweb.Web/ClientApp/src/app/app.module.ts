@@ -42,6 +42,7 @@ import { EditSpecializationModalComponent } from
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { EditDepartamentModalComponent } from "./components/hospital/edit-departament-modal/edit-departament-modal.component";
 import { EditHospitalModalComponent } from "./components/hospital-list/edit-hospital-modal/edit-hospital-modal.component";
+import { DetailsSpecializationModalComponent } from "./components/specialization/details-specialization-modal/details-specialization-modal.component";
 
 
 @NgModule({
@@ -60,9 +61,7 @@ import { EditHospitalModalComponent } from "./components/hospital-list/edit-hosp
     SpecializationComponent,
     PatientListComponent,
     DoctorListComponent,
-    CreateSpecializationModalComponent,
-    CreateDoctorSpecializationModalComponent,
-    CreateDoctorDepartamentnModalComponent,
+    CreateSpecializationModalComponent,   
     AdminHomeComponent,
     PatientHomeComponent,
     DrugComponent,
@@ -72,7 +71,8 @@ import { EditHospitalModalComponent } from "./components/hospital-list/edit-hosp
     EditDrugModalComponent,
     EditSpecializationModalComponent,
     EditHospitalModalComponent,
-    EditDepartamentModalComponent
+    EditDepartamentModalComponent,
+    DetailsSpecializationModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -86,9 +86,7 @@ import { EditHospitalModalComponent } from "./components/hospital-list/edit-hosp
       { path: "hospital/:id", component: HospitalComponent },
       { path: "departament/:id", component: DepartamentComponent },
       { path: "specialization", component: SpecializationComponent },
-      { path: "specialization/:id", component: SpecializationComponent },
-      { path: "depdoctor/:id", component: CreateDoctorDepartamentnModalComponent },
-      { path: "specdoctor/:id", component: CreateDoctorSpecializationModalComponent },
+      { path: "specialization/:id", component: DetailsSpecializationModalComponent },     
       { path: "patients", component: PatientListComponent },
       { path: "doctors", component: DoctorListComponent },
       { path: "doctor/:id", component: DoctorComponent },
@@ -119,8 +117,8 @@ import { EditHospitalModalComponent } from "./components/hospital-list/edit-hosp
     EditDrugModalComponent,
     EditSpecializationModalComponent,
     EditDepartamentModalComponent,
-    EditHospitalModalComponent
-
+    EditHospitalModalComponent,
+    DetailsSpecializationModalComponent
   ]
 })
 export class AppModule {

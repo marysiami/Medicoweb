@@ -1,14 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Medicoweb.Account.Contracts;
+﻿using Medicoweb.Account.Contracts;
 using Medicoweb.Data.Contracts;
-using Medicoweb.Data.Models;
 using Medicoweb.Data.Models.Account;
 using Medicoweb.Data.Models.Hospital;
 using Medicoweb.Hospital.Contracts;
 using Medicoweb.Hospital.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Medicoweb.Hospital.Services
 {
@@ -25,7 +24,7 @@ namespace Medicoweb.Hospital.Services
             _userManager = userManager;
         }
 
-        public async Task<Doctor> AddDoctorDepartament(Doctor doctor, Departament departament)
+        public async Task<Doctor> AddDoctorDepartament(Doctor doctor, Departament departament) //działa
         {
             var DoctorDepartament = new DepartamentDoctor
             {
@@ -35,11 +34,12 @@ namespace Medicoweb.Hospital.Services
                 DepartamentId = departament.Id
             };
             await _dataService.GetSet<DepartamentDoctor>().AddAsync(DoctorDepartament);
+            await _dataService.SaveDbAsync();
 
-            return doctor; // zwrocic viewmodel?
+            return doctor; 
         }
 
-        public async Task<Doctor> AddDoctorSpecialization(Doctor doctor, Specialization specialization)
+        public async Task<Doctor> AddDoctorSpecialization(Doctor doctor, Specialization specialization) //działa
         {
             var SpecDoc = new SpecializationDoctor
             {
@@ -49,8 +49,8 @@ namespace Medicoweb.Hospital.Services
                 SpecializationId = specialization.Id
             };
             await _dataService.GetSet<SpecializationDoctor>().AddAsync(SpecDoc);
-
-            return doctor; // zwrocic viewmodel?
+               await _dataService.SaveDbAsync();
+            return doctor; 
         }
 
         public async Task<Departament> CreateDepartamentAsync(string name, Data.Models.Hospital.Hospital hospital) //działa
@@ -121,7 +121,16 @@ namespace Medicoweb.Hospital.Services
             _dataService.GetSet<Specialization>().Remove(specialization);
             await _dataService.SaveDbAsync();
         }
+        public async Task DeleteDepartamentDoctor(Doctor doctor, Departament departament)
+        {
+            var model =  _dataService.GetSet<DepartamentDoctor>()
+                .FirstOrDefault(x => x.DepartamentId == departament.Id && x.DoctorId == doctor.Id);             
 
+
+            _dataService.GetSet<DepartamentDoctor>().Remove(model);
+            await _dataService.SaveDbAsync();
+        }
+       
         public async Task<Departament> GetDepartamentById(string id)
         {
             var model = await _dataService.GetSet<Departament>()
@@ -403,6 +412,31 @@ namespace Medicoweb.Hospital.Services
         {
             _dataService.GetSet<Data.Models.Hospital.Hospital>().Remove(hospital);
             await _dataService.SaveDbAsync();
+        }
+
+        public async Task DeleteSpecialiazationDoctorAsync(Doctor doctor, Specialization specialization)
+        {
+            var model = _dataService.GetSet<SpecializationDoctor>()
+                .FirstOrDefault(x => x.SpecializationId == specialization.Id && x.DoctorId == doctor.Id);
+
+            _dataService.GetSet<SpecializationDoctor>().Remove(model);
+            await _dataService.SaveDbAsync();
+        }
+
+        public DoctorFromSpecListing GetDoctorsFromSpecialization(Specialization specialization, int skip = 0, int take = 10)
+        {
+            var result = new DoctorFromSpecListing
+            {
+                TotalCount = specialization.SpecializationDoctor.Count(),
+                SpecializationName = specialization.Name,                
+                Doctors = _dataService.GetSet<SpecializationDoctor>()
+                    .Where(x=>x.Specialization == specialization)                
+                    .Select(x => x.Doctor)
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
+            };
+            return result;
         }
     }
 }

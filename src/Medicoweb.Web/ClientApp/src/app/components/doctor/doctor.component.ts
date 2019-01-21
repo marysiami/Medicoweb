@@ -1,13 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatTableDataSource } from "@angular/material";
+import { FormControl } from "@angular/forms";
+import { MatDialog } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Departament } from "../../models/departament.model";
-import { DepartamentsFromDoctorListing } from "../../models/departaments-fromDoctor-listing.model";
-import { Specialization } from "../../models/specialization.model";
-import { SpecializationsFromDoctorListing } from "../../models/specializations-fromDoctor-listing.model";
 import { AuthService } from "../../services/auth.service";
 import { HospitalService } from "../../services/hospital.service";
-import { FormControl } from "@angular/forms";
+import { DepartamentsFromDoctorListing } from "../../models/departaments-fromDoctor-listing.model";
 
 @Component({
   selector: "app-doctor",
@@ -15,41 +12,32 @@ import { FormControl } from "@angular/forms";
   styleUrls: ["./doctor.component.css"]
 })
 export class DoctorComponent implements OnInit {
-
-  departamentListing = new DepartamentsFromDoctorListing("", "", 0, []);
-  specializationListing = new SpecializationsFromDoctorListing("", "", 0, []);
-  dataSourceDep = new MatTableDataSource<Departament>();
-  dataSourceSpec = new MatTableDataSource<Specialization>();
   isLoggedIn: boolean;
-  displayedColumnsDep: string[] = ["name"];
-  displayedColumnsSpec: string[] = ["name"];
-  pageSize = 10;
   doctorId: string;
-
-  hospitalId: string;
-
-  
+  hospitalId: string;  
   departaments = new FormControl();
   departamentList = [];
   specializations = new FormControl();
   specializationList = [];
   hospitalList = [];
+  departamentListing = new DepartamentsFromDoctorListing("", "", 0, []);
 
   constructor(
     private authService: AuthService,
-    private hospitalService: HospitalService,
-    private dialog: MatDialog,
+    private hospitalService: HospitalService,  
     private route: ActivatedRoute,
     private router: Router) {
   }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
-    this.doctorId = this.route.snapshot.paramMap.get("id");
-    //this.getDepartamentFromDoctor();
-    //this.getSpecializationsFromDoctor();
+    this.doctorId = this.route.snapshot.paramMap.get("id"); 
     this.getHospitals(); 
     this.getSpecializations();
+    this.hospitalService.getDepartamentsFromDoctor(this.doctorId, 0, 10)
+      .subscribe(result => {
+        this.departamentListing = result;
+      });
   }
 
   getHospitals(pageNumber = 0, postsPerPage = 10) {
@@ -72,30 +60,21 @@ export class DoctorComponent implements OnInit {
     });
   }
 
-  addDepartamentToDoctor() {
-    var depTable = [];
-    depTable = this.departaments.value;
-    console.log(depTable.map(x => x.id));  //mega zle
-    
+  addDepartamentToDoctor(event) {
+    var tab = [];
+    tab = event.map(x => x.id);
+    for (var id in tab) {
+      this.hospitalService.addDepartamentToDoctor(tab[id], this.doctorId).subscribe();
+    }
   }
-
- /* getDepartamentFromDoctor(pageNumber = 0, postsPerPage = 10) {
-
-    this.hospitalService.getDepartamentsFromDoctor(this.doctorId, pageNumber, postsPerPage)
-      .subscribe(result => {
-        this.departamentListing = result;
-        console.log(result);
-        this.dataSourceDep = new MatTableDataSource(result.departmanets);
-      });
+  addSpecializationToDoctor(event) {
+    var tab = [];
+    tab = event.map(x => x.id);
+    for (var id in tab) {
+      this.hospitalService.addSpecializationToDoctor(tab[id], this.doctorId).subscribe();
+    }
   }
-
-  getSpecializationsFromDoctor(pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getSpecializationsFromDoctor(this.doctorId, pageNumber, postsPerPage)
-      .subscribe(result => {
-        this.specializationListing = result;
-        this.dataSourceSpec = new MatTableDataSource(result.specializations);
-      });
+  openPatientsList() {
+  this.router.navigateByUrl("/patients");   
   }
-  */
-  
 }

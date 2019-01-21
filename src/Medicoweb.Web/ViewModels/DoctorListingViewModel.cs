@@ -14,5 +14,6 @@ namespace Medicoweb.Web.ViewModels
 
         public int TotalCount { get; set; }
         public List<DoctorViewModel> Doctors { get; set; }
+        public string SpecializationName { get; set; }
     }
 }

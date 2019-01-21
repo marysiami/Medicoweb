@@ -36,6 +36,9 @@ namespace Medicoweb.Hospital.Contracts
         Task<Doctor> AddDoctorDepartament(Doctor doctor, Departament departament);
         Task<Doctor> AddDoctorSpecialization(Doctor doctor, Specialization specialization);
         DoctorListing GetDoctorsFromDepartament(Departament departament, int skip = 0, int take = 10);
+        DoctorFromSpecListing GetDoctorsFromSpecialization(Specialization specialization, int skip = 0, int take = 10);
+        Task DeleteDepartamentDoctor(Doctor doctor, Departament departament);
+        Task DeleteSpecialiazationDoctorAsync(Doctor doctor, Specialization specialization);
 
         PatientListing GetPatients();
         PatientListing GetPatientsByName();

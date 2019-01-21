@@ -4,29 +4,35 @@
     <br />
     <h3>Szpital</h3>
     <mat-form-field>
-      <mat-select placeholder="Szpital" (selectionChange)="getDepartaments($event)" >
+      <mat-select placeholder="Szpital" (selectionChange)="getDepartaments($event)">
         <mat-option>None</mat-option>
-        <mat-option *ngFor="let hospital of hospitalList" [value]="hospital"  >{{hospital.name}}</mat-option>
+        <mat-option *ngFor="let hospital of hospitalList" [value]="hospital">{{hospital.name}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <div *ngIf="hospitalId">
       <h3>Oddziały</h3>
-      <mat-form-field  >
-        <mat-select (change)="addDepartamentToDoctor()" placeholder="Oddział" [formControl]="departaments" multiple >
+      <mat-form-field>
+        <mat-select placeholder="Oddział" [formControl]="departaments" [(ngModel)]="selectDepartament" multiple>
           <mat-option *ngFor="let departament of departamentList" [value]="departament">{{departament.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>  
+      <button mat-raised-button color="primary" (click)="addDepartamentToDoctor(selectDepartament)">Zapisz</button>
+    </div>
+
 
     <h3>Specjalizacje</h3>
     <mat-form-field>
-      <mat-select placeholder="Specjalizacja" [formControl]="specializations" multiple>
+      <mat-select placeholder="Specjalizacja" [formControl]="specializations" [(ngModel)]="selectSpecialization" multiple>
         <mat-option *ngFor="let specialization of specializationList" [value]="specialization">{{specialization.name}}</mat-option>
       </mat-select>
     </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addSpecializationToDoctor(selectSpecialization)">Zapisz</button>
+
+    <br />
+    <br />
+    <button mat-raised-button color="primary" (click)="openPatientsList()">Zapisz zmiany</button>
 
   </div>
-
 
 </div>
