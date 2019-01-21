@@ -149,13 +149,12 @@ export class HospitalService extends BaseService {
   }
 
   getDoctorsFromDep(departamentId, page, postsPerPage = 10) {
-
-    const url = this.baseUrl + "Hospital/GetDoctorsFromDep";
+    const url = this.baseUrl + "Hospital/GetDoctors";
     const params = new HttpParams()
       .set("page", page)
       .set("postsPerPage", postsPerPage.toString())
       .set("departamentId", departamentId);
-
+   
     return this.http.get<DoctorFromDepListing>(url, { params: params, headers: this.headers });
   }
   getDoctorsFromSpeciaization(specializationId, page, postsPerPage = 10) {

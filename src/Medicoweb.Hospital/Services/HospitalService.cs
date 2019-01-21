@@ -268,7 +268,7 @@ namespace Medicoweb.Hospital.Services
 
         public async Task<Specialization> GetSpecializationByIdAsync(string id)
         {
-            var model = await _dataService.GetSet<Specialization>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = await _dataService.GetSet<Specialization>().Include(x=>x.SpecializationDoctor).FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 

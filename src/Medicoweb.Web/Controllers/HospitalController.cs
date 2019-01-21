@@ -49,6 +49,7 @@ namespace Medicoweb.Web.Controllers
             return Json(result);
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<JsonResult> CreateHospital([FromBody] CreateHospitalRequestViewModel request) //dziala
@@ -113,8 +114,7 @@ namespace Medicoweb.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult>
-            GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10) //dziala
+        public async Task<JsonResult>  GetSpecializations([FromQuery] int page, [FromQuery] int threadsPerPage = 10) //dziala
         {
             var model = await _hospitalService.GetSpecializationsAsync(page, threadsPerPage);
 
@@ -156,7 +156,7 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<JsonResult> CreateDoctor([FromBody] CreateDoctorRequestViewModel request) //powinno byc ok
+        public async Task<JsonResult> CreateDoctor([FromBody] CreateDoctorRequestViewModel request) //dziala
         {
             var patient = await _hospitalService.GetPatientById(request.PatientId);
 
@@ -180,31 +180,15 @@ namespace Medicoweb.Web.Controllers
 
             var model = _hospitalService.GetDoctorsFromDepartament(departament, page, postsPerPage);
 
-            //    var result = new DepartamentListViewModel(model);
-
-            return Json(model);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public async Task<JsonResult> GetDoctorsFromDep([FromQuery] string departamentId, [FromQuery] int page,
-            [FromQuery] int postsPerPage = 10) 
-        {
-            var departament = await _hospitalService.GetDepartamentById(departamentId);
-
-            if (departament == null) throw new InvalidDepartmanetIdException();
-
-            var model = _hospitalService.GetDoctorsFromDepartament(departament, page, postsPerPage);
-
-
-            var result = new DoctorListingViewModel(model);
+            var result = new DepartamentDoctorsListViewModel(model);
 
             return Json(result);
         }
+
         
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetDoctorsFromSpecialization([FromQuery] string specializationId, [FromQuery] int page,[FromQuery] int postsPerPage = 10) 
+        public async Task<JsonResult> GetDoctorsFromSpecialization([FromQuery] string specializationId, [FromQuery] int page,[FromQuery] int postsPerPage = 10) //działa
         {
             var specialization = await _hospitalService.GetSpecializationByIdAsync(specializationId);
 

@@ -43,4 +43,12 @@ export class AuthService extends BaseService {
     }
     return false;
   }
+  getRole() {
+    const token = localStorage.getItem("token");
+    if (token != null) {
+      const decodedToken = this.jwtUtil.decode(localStorage.getItem("token"));
+      var tokenRole = decodedToken.role;
+    }
+    return tokenRole;
+  }
 }

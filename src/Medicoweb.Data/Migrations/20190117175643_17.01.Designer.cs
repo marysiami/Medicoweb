@@ -187,6 +187,8 @@ namespace Medicoweb.Data.Migrations
 
                     b.HasIndex("DoctorId");
 
+                    b.HasIndex("DepartamentId");
+
                     b.ToTable("DepartamentDoctors");
                 });
 
@@ -393,6 +395,8 @@ namespace Medicoweb.Data.Migrations
                     b.HasKey("SpecializationId", "DoctorId");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("SpecializationId");
 
                     b.ToTable("SpecializationDoctors");
                 });
