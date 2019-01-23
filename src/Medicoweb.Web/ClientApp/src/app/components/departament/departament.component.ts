@@ -48,7 +48,7 @@ export class DepartamentComponent {
   getDoctors(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getDoctorsFromDep(this.departamentId, pageNumber, postsPerPage)
       .subscribe(result => {
-      debugger;
+     
         this.doctorListing = result;
         this.dataSource = new MatTableDataSource(result.doctors);
         this.dataSource.data = result.doctors;

@@ -8,28 +8,32 @@ import { DepartamentListing } from "../../models/departament-listing.model";
 import { Doctor } from "../../models/doctor.model";
 import { DoctorListing } from "../../models/doctor-listing.model";
 import { HospitalService } from "../../services/hospital.service";
+import { FormControl } from "@angular/forms";
+import { Component } from "@angular/core";
+import { toTypeScript } from "@angular/compiler";
 
+@Component({
+  selector: "app-visit",
+  templateUrl: "./visit.component.html",
+  
+})
 export class VisitComponent {
 
   isLoggedIn: boolean;
+
   patientId: string;
+  departamentId: string;
+  hospitalId: string;
+  doctorId: string;
+  date: string;
+ 
+  departamentList = [];  
+  hospitalList = [];
+  doctorList = [];
+  dateList = [];
 
 
-  //SZPITAL
-  hospitalListing = new HospitalListing(0, []);
-  displayedColumnsHos: string[] = ["name", "address"];
-  dataSourceHos = new MatTableDataSource<Hospital>();
-
-  //Departament
-  departamentListing = new DepartamentListing("", 0, []);
-  displayedColumnsDep: string[] = ["name"];
-  dataSourceDep = new MatTableDataSource<Departament>();
-
-  //DOKTOR
-  doctorListing = new DoctorListing(0, []);
-  displayedColumnsDoc: string[] = ["name", "surname"];
-  dataSourceDoc = new MatTableDataSource<Doctor>();
-
+  
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -39,37 +43,58 @@ export class VisitComponent {
   }
 
   ngOnInit() {
+
     this.isLoggedIn = this.authService.isLoggedIn();
     this.getHospitals();
+    this.patientId = this.route.snapshot.paramMap.get("id");
 
   }
 
   getHospitals(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getHospitals(pageNumber, postsPerPage)
       .subscribe(result => {
-        this.hospitalListing = result;
-        this.dataSourceHos = new MatTableDataSource(result.hospitals);
+        this.hospitalList = result.hospitals;
       });
   }
 
-  getDepartaments(hospitalId, pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getDepartaments(hospitalId, pageNumber, postsPerPage)
+  getDepartaments(event) {
+    this.hospitalId = event.value.id;
+    this.hospitalService.getDepartaments(this.hospitalId, 0, 10).subscribe(result => {
+      this.departamentList = result.departaments;
+    });
+  }
+  
+  getDoctor(event) {
+    this.departamentId = event.value.id
+    this.hospitalService.getDoctorsFromDep(this.departamentId, 0, 10)
       .subscribe(result => {
-        this.departamentListing = result;
-        this.dataSourceDep = new MatTableDataSource(result.departaments);
+        this.doctorList = result.doctors;       
       });
   }
 
-  getDoctors(departamentId, pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getDoctorsFromDep(departamentId, pageNumber, postsPerPage)
-      .subscribe(result => {
-        this.doctorListing = result;
-        this.dataSourceDoc = new MatTableDataSource(result.doctors);
-      });
+  getDays(event) {
+    this.doctorId = event.value.id;
   }
 
+  getHours(event) {
+    this.date = 'ok';
+    var dateSr = event.value.toDateString();    
+    this.hospitalService.getHoursFromDay(dateSr).subscribe(result => {
+      this.dateList = result; 
+    });
+  }
+
+  myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 && day !== 6;
+  }
+
+  saveTime(event) {
+    this.date = event.value;
+  }
   createVisit() {
-
+    this.hospitalService.createVisit(this.hospitalId, this.doctorId, this.patientId, this.date).subscribe();
+    this.router.navigateByUrl("");
   }
 
 

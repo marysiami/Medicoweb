@@ -1,1 +1,19 @@
-<app-admin-home></app-admin-home>
+<div *ngIf="isLoggedIn">
+  <div *ngIf="admin">
+    <h2>Panel Administratora</h2>
+    <button mat-raised-button color="primary" (click)="openHospital()">Szpital</button>
+    <button mat-raised-button color="primary" (click)="openSpecialization()">Specjalizacja</button>
+    <button mat-raised-button color="primary" (click)="openDrugs()">Leki</button>
+    <button mat-raised-button color="primary" (click)="openPatients()">Pacjenci</button>
+  </div>
+  <div *ngIf="patient">
+    <h2>Panel Pacjenta</h2>
+    <button mat-raised-button color="primary" (click)="openNewVisit()">Nowa Wizyta</button>
+    <button mat-raised-button color="primary" (click)="openMyVisit()">Moje wizyty</button>
+    <button mat-raised-button color="primary" (click)="openMyPrescription()">Moje recepty</button>
+  </div>
+  <div *ngIf="doctor">
+    <h2>Panel Doktora</h2>    
+    <button mat-raised-button color="primary" (click)="openMyVisitDoctor()">Moje wizyty</button>    
+  </div>
+</div>

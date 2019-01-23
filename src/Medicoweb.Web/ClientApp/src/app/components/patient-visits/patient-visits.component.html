@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Twoje wizyty</h2>
+  <div class="full-width container">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Szpital">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Szpital</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.hospitalName}} {{element.hospitalAddress}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Lekarz">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Lekarz </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.doctorName}} {{element.doctorSurname}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Pacjent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Pacjent </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.patientName}} {{element.patientSurname}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Data">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Data wizyty </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.dateStart}}
+        </mat-cell>
+      </ng-container>      
+      <ng-container matColumnDef="Button">       
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div *ngIf="idDoctor">
+            <button mat-raised-button color="primary" (click)="addPrescription(element.id)">załącz recepte</button>
+          </div>
+        </mat-cell> 
+      </ng-container>        
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>  
+</div>

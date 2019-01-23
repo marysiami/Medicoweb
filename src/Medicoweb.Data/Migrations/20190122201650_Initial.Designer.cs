@@ -4,14 +4,16 @@ using Medicoweb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Medicoweb.Data.Migrations
 {
     [DbContext(typeof(MedicowebDbContext))]
-    partial class SBDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190122201650_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,6 +256,25 @@ namespace Medicoweb.Data.Migrations
                     b.ToTable("SpecializationDoctors");
                 });
 
+            modelBuilder.Entity("Medicoweb.Data.Models.Schedule.VisitTime", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("EndTime");
+
+                    b.Property<DateTime>("StartTime");
+
+                    b.Property<Guid>("VisitId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VisitId")
+                        .IsUnique();
+
+                    b.ToTable("VisitsTimes");
+                });
+
             modelBuilder.Entity("Medicoweb.Data.Models.Visit.Prescription", b =>
                 {
                     b.Property<Guid>("Id")
@@ -279,13 +300,9 @@ namespace Medicoweb.Data.Migrations
 
                     b.Property<Guid>("DoctorId");
 
-                    b.Property<DateTime>("End");
-
                     b.Property<Guid>("HospitalId");
 
                     b.Property<Guid>("PatientId");
-
-                    b.Property<DateTime>("Start");
 
                     b.HasKey("Id");
 
@@ -438,6 +455,14 @@ namespace Medicoweb.Data.Migrations
                     b.HasOne("Medicoweb.Data.Models.Hospital.Specialization", "Specialization")
                         .WithMany("SpecializationDoctor")
                         .HasForeignKey("SpecializationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Medicoweb.Data.Models.Schedule.VisitTime", b =>
+                {
+                    b.HasOne("Medicoweb.Data.Models.Visit.Visit", "Visit")
+                        .WithOne("Date")
+                        .HasForeignKey("Medicoweb.Data.Models.Schedule.VisitTime", "VisitId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

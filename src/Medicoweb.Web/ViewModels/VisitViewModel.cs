@@ -11,7 +11,9 @@ namespace Medicoweb.Web.ViewModels
             DoctorSurname = visit.Doctor.Surname;
             PatientName = visit.Patient.Name;
             PatientSurname = visit.Patient.Surname;
-            DateStart = visit.Date.StartTime;
+            DateStart = visit.Start;
+            HospitalName = visit.Hospital.Name;
+            HospitalAddress = visit.Hospital.Address;
         }
 
         public string Id { get; set; }
@@ -19,7 +21,9 @@ namespace Medicoweb.Web.ViewModels
         public string DoctorSurname { get; set; }
         public string PatientName { get; set; }
         public string PatientSurname { get; set; }
+        public string HospitalName { get; set; }
+        public string HospitalAddress { get; set; }
 
-        public TimeSpan DateStart { get; set; }
+        public DateTime DateStart { get; set; }
     }
 }

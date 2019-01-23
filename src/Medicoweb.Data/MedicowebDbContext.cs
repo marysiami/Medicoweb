@@ -1,7 +1,6 @@
 ﻿using Medicoweb.Data.Models.Account;
 using Medicoweb.Data.Models.Drug;
 using Medicoweb.Data.Models.Hospital;
-using Medicoweb.Data.Models.Schedule;
 using Medicoweb.Data.Models.Visit;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +26,8 @@ namespace Medicoweb.Data
         public DbSet<PrescriptionDrug> PrescriptionDrugs { get; set; }
         public DbSet<Specialization> Specialization { get; set; }
         public DbSet<Visit> Visits { get; set; }
-        public DbSet<VisitTime> VisitsTimes { get; set; }
-        public DbSet<DoctorTime> DoctorsTimes { get; set; }
+
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,15 +53,7 @@ namespace Medicoweb.Data
                 ConcurrencyStamp = "4d6100b7-05cb-45da-a6f3-cce42c4f9930"
             });
 
-            modelBuilder.Entity<Visit>()
-                .HasOne(a => a.Date)
-                .WithOne(b => b.Visit)
-                .HasForeignKey<VisitTime>(b => b.VisitId);
-
-            modelBuilder.Entity<Doctor>()
-                .HasOne(a => a.TimeOfWork)
-                .WithOne(b => b.Doctor)
-                .HasForeignKey<DoctorTime>(b => b.DoctorId);
+                   
 
             modelBuilder.Entity<DepartamentDoctor>().HasKey(bc => new {bc.DepartamentId, bc.DoctorId});
             modelBuilder.Entity<DepartamentDoctor>()

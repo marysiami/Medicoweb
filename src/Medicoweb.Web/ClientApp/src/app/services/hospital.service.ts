@@ -23,6 +23,10 @@ import { Drug } from "../models/drug.model";
 import { Specialization } from "../models/specialization.model";
 import { Departament } from "../models/departament.model";
 import { DoctorsFromSpecialization } from "../models/doctors-fromSpecialization-listing.model";
+import { CreateDoctorDepartamentnModalComponent } from "../components/doctor/create-doctorDepartament-modal/create-doctorDep-modal.component";
+import { VisitTimeListing } from "../models/visit-time-list";
+import { VisitListing } from "../models/visit-listing.model";
+import { CreateVisitRequest } from "../models/Request/create-visit-request.model";
 
 
 @Injectable()
@@ -270,4 +274,33 @@ export class HospitalService extends BaseService {
     return this.http.put(url, body, { headers: this.headers });
   }
 
+  //kontruktor visit
+  getHoursFromDay(date: Date) {
+    
+    const url = this.baseUrl + "visit/GetHoursFromDay";
+    const params = new HttpParams()
+      .set("date", date.toString());
+
+    return this.http.get<Date[]>(url, { params: params, headers: this.headers }); //zmienic <>
+  }
+  getVisitsFromPatient(id: string) {
+    const url = this.baseUrl + "visit/GetPatientVisits";
+    const params = new HttpParams()
+      .set("id", id);
+    
+    return this.http.get<VisitListing>(url, { params: params, headers: this.headers });
+  }
+  getVisitsFromDoctor(id: string) {
+    const url = this.baseUrl + "visit/GetDoctorVisits";
+    const params = new HttpParams()
+      .set("id", id);
+
+    return this.http.get<VisitListing>(url, { params: params, headers: this.headers });
+  }
+  createVisit(hospitalId: string, doctorId: string, patientId: string, date: string) {
+    const url = this.baseUrl + "visit/CreateVisit";
+    const body = new CreateVisitRequest(hospitalId,doctorId,patientId,date);
+  
+    return this.http.post(url, body, { headers: this.headers });
+  }
 }

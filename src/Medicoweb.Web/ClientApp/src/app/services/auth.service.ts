@@ -43,12 +43,16 @@ export class AuthService extends BaseService {
     }
     return false;
   }
-  getRole() {
-    const token = localStorage.getItem("token");
-    if (token != null) {
-      const decodedToken = this.jwtUtil.decode(localStorage.getItem("token"));
-      var tokenRole = decodedToken.role;
-    }
-    return tokenRole;
+
+  isInRole(roleName) {
+    let decodedToken = this.jwtUtil.decode(localStorage.getItem('token'));
+       
+    return decodedToken.role.toLowerCase() === roleName.toLowerCase();
+  }
+
+  getUserId() {
+    let decodedToken = this.jwtUtil.decode(localStorage.getItem('token'));
+
+    return decodedToken.jti;
   }
 }

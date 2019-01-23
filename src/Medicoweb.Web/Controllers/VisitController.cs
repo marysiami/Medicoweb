@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Medicoweb.Hospital.Contracts;
 using Medicoweb.Visit.Contracts;
 using Medicoweb.Web.ViewModels;
@@ -26,9 +27,10 @@ namespace Medicoweb.Web.Controllers
         public async Task<JsonResult> CreateVisit([FromBody] CreateVisitRequestViewModel request)
         {
             var doctor = await _hospitalService.GetDoctorById(request.DoctorId);
-            var patient = await _hospitalService.GetPatientById(request.SBDUserId);
-            var visitTime = await _visitService.CreateVisitTime(request.VisitStart);
-            var visit = await _visitService.CreateVisit(patient, doctor, visitTime);
+            var patient = await _hospitalService.GetPatientById(request.PatientId);
+            DateTime enteredDate = DateTime.Parse(request.Date);            
+            var hospital = await _hospitalService.GetHospital(request.HospitalId);
+            var visit = await _visitService.CreateVisit(patient, doctor, enteredDate,hospital);
 
             var result = new VisitViewModel(visit);
 
@@ -37,10 +39,9 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetPatientVisits([FromBody] string patientId, [FromQuery] int page,
-            [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetPatientVisits([FromQuery] string id)
         {
-            var model = await _visitService.GetPatientVisits(patientId, page, threadsPerPage);
+            var model = await _visitService.GetPatientVisits(id);
             var result = new VisitListingViewModel(model);
 
             return Json(result);
@@ -48,13 +49,21 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetDoctorVisits([FromBody] string doctorId, [FromQuery] int page,
-            [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetDoctorVisits([FromQuery] string id)
         {
-            var model = await _visitService.GetDoctorVisits(doctorId, page, threadsPerPage);
+            var model = await _visitService.GetDoctorVisits(id);
             var result = new VisitListingViewModel(model);
 
             return Json(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public JsonResult GetHoursFromDay([FromQuery] string date)
+        {
+            DateTime enteredDate = DateTime.Parse(date);
+            var hours = _visitService.GetHoursFromDay(enteredDate);
+            return Json(hours);
         }
 
         //do anulacji vizyty
@@ -80,6 +89,9 @@ namespace Medicoweb.Web.Controllers
             var result = new PrescriptionListingViewModel(model);
 
             return Json(result);
-        }  
+        }
+
+        
+         
     }
 }

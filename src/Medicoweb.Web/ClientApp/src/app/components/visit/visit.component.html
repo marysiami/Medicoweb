@@ -1,55 +1,59 @@
-<div *ngIf="isLoggedIn">
-<h2>Nowa wizyta</h2>
+<div class="container">
+ <h2>Nowa wizyta</h2>
+ <div class="full-width container">
+   <br />
+   <h3>Wybierz szpital</h3>
+   <mat-form-field>
+     <mat-select placeholder="Szpital" (selectionChange)="getDepartaments($event)">
+       <mat-option>None</mat-option>
+       <mat-option *ngFor="let hospital of hospitalList" [value]="hospital">{{hospital.name}}</mat-option>
+     </mat-select>
+   </mat-form-field>
 
-<h3>Wybierz szpital</h3>
+   <div *ngIf="hospitalId">
+     <h3>Wybierz oddział</h3>
+     <mat-form-field>
+       <mat-select placeholder="Oddział" (selectionChange)="getDoctor($event)">
+         <mat-option>None</mat-option>
+         <mat-option *ngFor="let departament of departamentList" [value]="departament">{{departament.name}}</mat-option>
+       </mat-select>
+     </mat-form-field>
+   </div>
 
-<div class="full-width container">
-  <mat-table #table [dataSource]="dataSourceHospital">
-    <ng-container matColumnDef="nameHos">
-      <mat-header-cell *matHeaderCellDef>
-        Nazwa szpitala
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <label><input type="checkbox"> {{element.name}} {{element.address}}</label>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
 
-<h3>Wybierz oddział</h3>
-<div class="full-width container">
-  <mat-table #table [dataSource]="dataSourceDepartament">
-    <ng-container matColumnDef="nameDep">
-      <mat-header-cell *matHeaderCellDef>
-        Nazwa oddziału
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <label><input type="checkbox"> {{element.name}}</label>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
+   <div *ngIf="departamentId">
+     <h3>Wybierz lekarza</h3>
+     <mat-form-field>
+       <mat-select placeholder="Lekarz" (selectionChange)="getDays($event)">
+         <mat-option>None</mat-option>
+         <mat-option *ngFor="let doctor of doctorList" [value]="doctor">{{doctor.name }}{{doctor.surname}}</mat-option>
+       </mat-select>
+     </mat-form-field>
+   </div>
 
-<h3>Wybierz lekarza</h3>
-<div class="full-width container">
-  <mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="nameDoc">
-      <mat-header-cell *matHeaderCellDef>
-        Nazwa szpitala
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <label><input type="checkbox"> {{element.name}} {{element.surname}}</label>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
+   <div *ngIf="doctorId">
+     <h3>Wybierz datę</h3>
+     <mat-form-field class="example-full-width">
+       <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Choose a date" required (dateChange)="getHours($event)">
+       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+   </div>
+   <div *ngIf="date">
+     <h3>Wybierz czas </h3>
+       <mat-form-field>
+         <mat-select placeholder="Czas" (selectionChange)="saveTime($event)">
+           <mat-option>None</mat-option>
+           <mat-option *ngFor="let time of dateList" [value]="time">{{time}}</mat-option>
+         </mat-select>
+       </mat-form-field>     
+   </div>
 
-<h3>Ustal termin</h3>
-<h4>nowy termin</h4>
-<button>Umów wizytę</button>
+   <br />
+   <br />
+
+   <button mat-raised-button color="primary" (click)="createVisit()">Zapisz zmiany</button>
+
+ </div>
+
+ </div>
