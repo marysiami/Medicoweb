@@ -22,7 +22,7 @@ export class EditSpecializationModalComponent {
     this.newPostForm = this.formBuilder.group({
       name: [
         "",
-        [Validators.required]
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/), Validators.minLength(1)]
       ]
     });
   }

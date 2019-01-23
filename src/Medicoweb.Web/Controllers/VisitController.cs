@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Medicoweb.Drug.Contracts;
 using Medicoweb.Hospital.Contracts;
 using Medicoweb.Visit.Contracts;
 using Medicoweb.Web.ViewModels;
@@ -14,12 +15,14 @@ namespace Medicoweb.Web.Controllers
         private readonly IHospitalService _hospitalService;
         private readonly IVisitService _visitService;
         private readonly IPrescriptionService _prescriptionService;
+        private readonly IDrugService _drugService;
 
-        public VisitController(IVisitService visitService, IHospitalService hospitalService, IPrescriptionService prescriptionService)
+        public VisitController(IVisitService visitService, IHospitalService hospitalService, IPrescriptionService prescriptionService, IDrugService drugService)
         {
             _visitService = visitService;
             _hospitalService = hospitalService;
             _prescriptionService = prescriptionService;
+            _drugService = drugService;
         }
 
         [Authorize]
@@ -28,9 +31,9 @@ namespace Medicoweb.Web.Controllers
         {
             var doctor = await _hospitalService.GetDoctorById(request.DoctorId);
             var patient = await _hospitalService.GetPatientById(request.PatientId);
-            DateTime enteredDate = DateTime.Parse(request.Date);            
+            DateTime enteredDate = DateTime.Parse(request.Date);
             var hospital = await _hospitalService.GetHospital(request.HospitalId);
-            var visit = await _visitService.CreateVisit(patient, doctor, enteredDate,hospital);
+            var visit = await _visitService.CreateVisit(patient, doctor, enteredDate, hospital);
 
             var result = new VisitViewModel(visit);
 
@@ -66,32 +69,58 @@ namespace Medicoweb.Web.Controllers
             return Json(hours);
         }
 
-        //do anulacji vizyty
-
 
         [Authorize]
         [HttpPost]
-        public async Task<JsonResult> CreatePrescription([FromBody] CreatePrescriptionRequestViewModel request)
+        public async Task<JsonResult> CreatePrescription([FromBody]  CreatePrescriptionRequestViewModel request) //ok
         {
             var visit = await _visitService.GetVisitById(request.VisitId);
             var model = await _prescriptionService.CreatePrescriptionAsync(visit);
             var result = new PrescriptionViewModel(model);
+            return Json(result);
+           
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetDrugsFromPrescripion([FromQuery] string perscriptionId)
+        {
+            var prescription = await _prescriptionService.GetPrescriptionById(perscriptionId);
+            var model = await _prescriptionService.GetDrugsFromPrescription(prescription); //drugListing
+            var result = new DrugsFromPrescriptionListingViewModel(model); ///ok??
+            return Json(result);
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetPatientPrescriptions([FromQuery] string patientId)
+        {
+            var model = await _prescriptionService.GetPatientPrescriptions(patientId);
+            var result = new PrescriptionListingViewModel(model);
 
             return Json(result);
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<JsonResult> GetPatientPrescriptions([FromBody] string patientId, [FromQuery] int page,
-            [FromQuery] int threadsPerPage = 10)
+        public async Task<JsonResult> GetPrescriptionsFromVisit([FromQuery] string visitId)//ok
         {
-            var model = await _prescriptionService.GetPatientPrescriptions(patientId, page, threadsPerPage);
+            var visit = await _visitService.GetVisitById(visitId);
+            var model = _prescriptionService.GetPrescriptionsFromVisit(visit);
             var result = new PrescriptionListingViewModel(model);
-
             return Json(result);
         }
 
-        
-         
+        [Authorize]
+        [HttpPost]
+        public async Task AddDrugToPrescription([FromBody] AddDrugToPrescriptionRequestViewModel request)
+        {
+            var drug =  await _drugService.GetDrugById(request.DrugId);
+            var model = _prescriptionService.AddDrugToPrescription(request.PrescriptionId, drug, request.DrugQuantity);
+
+        }
+
     }
 }

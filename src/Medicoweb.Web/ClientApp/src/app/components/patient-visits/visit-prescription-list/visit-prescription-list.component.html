@@ -1,0 +1,29 @@
+<div class="container">
+  <button mat-raised-button color="primary" (click) ="addPrescription()">załącz recepte</button>
+  <h2>Recepty </h2>
+  <div class="full-width container">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Prescription">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID Recepty</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.id}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Doctor">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Lekarz wystawiający recepte</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.doctorName}} {{element.doctorSurname}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Pacient">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Pacjent</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.patientName}} {{element.patientSurname}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

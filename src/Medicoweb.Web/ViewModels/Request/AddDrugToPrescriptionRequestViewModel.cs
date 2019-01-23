@@ -2,8 +2,9 @@
 {
     public class AddDrugToPrescriptionRequestViewModel
     {
-        public string PrescriptionId { get; set; }
+    
         public string DrugId { get; set; }
-        public int QuantityDrug { get; set; }
+        public int DrugQuantity { get; set; }
+        public string PrescriptionId { get; set; }
     }
 }

@@ -2,31 +2,31 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
 import { DepartamentListing } from "../models/departament-listing.model";
+import { Departament } from "../models/departament.model";
 import { DepartamentsFromDoctorListing } from "../models/departaments-fromDoctor-listing.model";
 import { DoctorFromDepListing } from "../models/doctor-fromDep-listing";
 import { DoctorListing } from "../models/doctor-listing.model";
+import { DoctorsFromSpecialization } from "../models/doctors-fromSpecialization-listing.model";
+import { DrugListing } from "../models/drug-listing.model";
+import { Drug } from "../models/drug.model";
 import { HospitalListing } from "../models/hospital-listing.model";
 import { Hospital } from "../models/hospital.model";
 import { PatientListing } from "../models/patient-listing.model";
+import { PrescriptionListing } from "../models/prescription-listing.model";
+import { AddDrugToPrescription } from "../models/Request/Add-drug-toPrescription.model";
 import { AddDepToDoctorRequest } from "../models/Request/AddDepToDoctorRequest";
 import { AddSpecToDoctorRequest } from "../models/Request/AddSpecToDoctorRequest";
 import { CreateDepartamentRequest } from "../models/Request/create-departament-request.model";
 import { CreateDoctorRequest } from "../models/Request/create-doctor-request.model";
+import { CreateDrugRequest } from "../models/Request/create-drug-request.model";
 import { CreateHospitalRequest } from "../models/request/create-hospital-request.model";
 import { CreateSpecialityRequest } from "../models/Request/create-speciality-request.model";
-import { SpecializationListing } from "../models/specialization-listing.model";
-import { SpecializationsFromDoctorListing } from "../models/specializations-fromDoctor-listing.model";
-import { BaseService } from "./base.service";
-import { DrugListing } from "../models/drug-listing.model";
-import { CreateDrugRequest } from "../models/Request/create-drug-request.model";
-import { Drug } from "../models/drug.model";
-import { Specialization } from "../models/specialization.model";
-import { Departament } from "../models/departament.model";
-import { DoctorsFromSpecialization } from "../models/doctors-fromSpecialization-listing.model";
-import { CreateDoctorDepartamentnModalComponent } from "../components/doctor/create-doctorDepartament-modal/create-doctorDep-modal.component";
-import { VisitTimeListing } from "../models/visit-time-list";
-import { VisitListing } from "../models/visit-listing.model";
 import { CreateVisitRequest } from "../models/Request/create-visit-request.model";
+import { SpecializationListing } from "../models/specialization-listing.model";
+import { Specialization } from "../models/specialization.model";
+import { VisitListing } from "../models/visit-listing.model";
+import { BaseService } from "./base.service";
+import { CreatePrescriptionRequest } from "../models/Request/create-prescription-request";
 
 
 @Injectable()
@@ -281,7 +281,7 @@ export class HospitalService extends BaseService {
     const params = new HttpParams()
       .set("date", date.toString());
 
-    return this.http.get<Date[]>(url, { params: params, headers: this.headers }); //zmienic <>
+    return this.http.get<Date[]>(url, { params: params, headers: this.headers }); 
   }
   getVisitsFromPatient(id: string) {
     const url = this.baseUrl + "visit/GetPatientVisits";
@@ -301,6 +301,27 @@ export class HospitalService extends BaseService {
     const url = this.baseUrl + "visit/CreateVisit";
     const body = new CreateVisitRequest(hospitalId,doctorId,patientId,date);
   
+    return this.http.post(url, body, { headers: this.headers });
+  }
+
+  createPrescription(visitId: string) {
+    const url = this.baseUrl + "visit/CreatePrescription";
+    const body = new CreatePrescriptionRequest(visitId);
+  
+    return this.http.post(url, body, { headers: this.headers });
+  }
+
+  getPrescriptionsFromVisit(visitId: string) {
+    const url = this.baseUrl + "visit/GetPrescriptionsFromVisit";
+    const params = new HttpParams()
+      .set("visitId", visitId);
+
+    return this.http.get<PrescriptionListing>(url, { params: params, headers: this.headers });
+  }
+  addDrugToPrescription(drugId: string, drugQuantity: number, prescriptionId: string) {
+    const url = this.baseUrl + "visit/AddDrugToPrescription";
+    const body = new AddDrugToPrescription(drugId, drugQuantity, prescriptionId);
+    debugger;
     return this.http.post(url, body, { headers: this.headers });
   }
 }

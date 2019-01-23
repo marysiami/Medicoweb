@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Nowa recepta</h2>
+  <div class="full-width container">
+    <br />
+    <h3>Wybierz lek</h3>
+    <mat-form-field>
+      <mat-select placeholder="Lek" (selectionChange)="getDrug($event)">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let drug of drugList" [value]="drug">{{drug.name}} {{drug.company}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+        
+      <h3>Ilość</h3>    
+      <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Wpisz ilość leku" [formControl]="commentFC" (change)="test()"></textarea>
+        <mat-error *ngIf="commentFC.hasError('required')">
+          Ilość jest wymagana
+        </mat-error>
+        <mat-error *ngIf="commentFC.hasError('pattern')">
+          Wpisz liczbę
+        </mat-error>
+      </mat-form-field>
+     
+    <br />
+    <br />   
+    <button mat-raised-button color="primary" (click) ="addDrugToPrescription()" >Dodaj lek do recepty</button>
+    <button mat-raised-button color="primary" (click) ="goBackToList()" >Zakończ</button>
+
+  </div>
+
+</div>

@@ -1,9 +1,6 @@
-﻿using Medicoweb.Data.Models;
+﻿using Medicoweb.Data.Models.Drug;
 using Medicoweb.Data.Models.Visit;
 using Medicoweb.Visit.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Medicoweb.Visit.Contracts
@@ -12,6 +9,9 @@ namespace Medicoweb.Visit.Contracts
     {
         Task<Prescription> CreatePrescriptionAsync(Data.Models.Visit.Visit visit);
         Task<Prescription> GetPrescriptionById(string id);
-        Task<PrescriptionListing> GetPatientPrescriptions(string patientId, int skip = 0, int take = 10);
+        Task<PrescriptionListing> GetPatientPrescriptions(string patientId);
+        Task AddDrugToPrescription(string prescriptionId, Drug drug, int drugQuantity);      
+        Task<DrugListingFromPrescription> GetDrugsFromPrescription(Prescription prescription);
+        PrescriptionListing GetPrescriptionsFromVisit(Data.Models.Visit.Visit visit);
     }
 }

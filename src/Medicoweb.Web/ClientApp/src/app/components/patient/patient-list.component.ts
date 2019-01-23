@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { Component, ViewChild } from "@angular/core";
+import { MatDialog, MatSort } from "@angular/material";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { PatientListing } from "../../models/patient-listing.model";
@@ -14,11 +14,15 @@ import { AuthService } from "./../../services/auth.service";
 
 })
 export class PatientListComponent {
+  @ViewChild(MatSort)
+  sort: MatSort;
+
   patientListing = new PatientListing(0, []);
   isLoggedIn: boolean;
   displayedColumns: string[] = ["name", "surname", "pesel", "button"];
   pageSize = 10;
   dataSource = new MatTableDataSource<Patient>();
+
 
   constructor(
     private authService: AuthService,
@@ -27,17 +31,21 @@ export class PatientListComponent {
     private router: Router
   ) {
   }
-
+ 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.getPatients();
+  }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   getPatients(pageNumber = 0, postsPerPage = 10) {
     this.hospitalService.getPatients()
       .subscribe(result => {
         this.patientListing = result;
-        this.dataSource = new MatTableDataSource(result.patients);
+       // this.dataSource = new MatTableDataSource(result.patients);
+        this.dataSource.data = result.patients;
       });
   }
 

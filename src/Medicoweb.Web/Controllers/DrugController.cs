@@ -56,14 +56,11 @@ namespace Medicoweb.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<JsonResult> AddDrugToPrescription([FromQuery] AddDrugToPrescriptionRequestViewModel request)
+        public async Task AddDrugToPrescription([FromBody] AddDrugToPrescriptionRequestViewModel request)
         {
-            var prescription = await _prescriptionService .GetPrescriptionById(request.PrescriptionId);
-            var drug = await _drugService.GetDrugById(request.DrugId);
-            var model = await _drugService.AddDrugToPrescriptionAsync(prescription, drug, request.QuantityDrug);
-            var result = new DrugsFromPrescriptionViewModel(model); //czy działa?
-
-            return Json(result);
+             var drug = await _drugService.GetDrugById(request.DrugId);
+             await _prescriptionService.AddDrugToPrescription(request.PrescriptionId, drug, request.DrugQuantity);
+           
         }
 
     }

@@ -12,8 +12,7 @@ namespace Medicoweb.Drug.Contracts
         DrugListing GetDrugs(int skip = 0, int take = 10);
         Task DeleteDrug(string id);
         Task UpdateDrug(string id, string name, string company);
-        Task<PrescriptionDrug> AddDrugToPrescriptionAsync(Prescription prescription, Data.Models.Drug.Drug drug, int drugQuantity);
-        //  Task RemoveDrugFromPrescription(string visitId, string drugId);
+       
     }
 }
 

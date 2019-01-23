@@ -34,6 +34,7 @@ export class PatientVisitComponent {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.userId = this.route.snapshot.paramMap.get("id");
     this.getVisits(this.userId);
+    
   }
 
   ngAfterViewInit() {
@@ -53,18 +54,13 @@ export class PatientVisitComponent {
       this.isDoctor = true;
       this.hospitalService.getVisitsFromDoctor(id).subscribe(result => {
         this.visitListing = result;
-        this.dataSource.data = result.visits;
-        
+        this.dataSource.data = result.visits;       
       }
-      );
-    }
+      );}
   }
 
-  addPrescription(id) {
+  addPrescription(visitId) {    
+    this.router.navigateByUrl("prescriptions/"+visitId);//do listy recept tej wizyty
   }
-
-
     
-
-  
 }

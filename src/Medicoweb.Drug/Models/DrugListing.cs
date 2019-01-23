@@ -4,7 +4,7 @@ namespace Medicoweb.Drug.Models
 {
     public class DrugListing
     {
-        public List<Medicoweb.Data.Models.Drug.Drug> Drugs { get; set; }
+        public List<Data.Models.Drug.Drug> Drugs { get; set; }
         public int TotalCount { get; set; }
     }
 }

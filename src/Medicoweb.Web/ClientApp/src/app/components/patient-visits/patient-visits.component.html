@@ -29,9 +29,9 @@
       <ng-container matColumnDef="Button">       
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <div *ngIf="idDoctor">
+          
             <button mat-raised-button color="primary" (click)="addPrescription(element.id)">załącz recepte</button>
-          </div>
+        
         </mat-cell> 
       </ng-container>        
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

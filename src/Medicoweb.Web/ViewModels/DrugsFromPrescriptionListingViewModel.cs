@@ -1,4 +1,4 @@
-﻿using Medicoweb.Drug.Models;
+﻿using Medicoweb.Visit.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +6,8 @@ namespace Medicoweb.Web.ViewModels
 {
     public class DrugsFromPrescriptionListingViewModel
     {
-        public DrugsFromPrescriptionListingViewModel(DrugsFromPrescriptionListing model)
+       
+        public DrugsFromPrescriptionListingViewModel(DrugListingFromPrescription model)
         {
             TotalCount = model.TotalCount;
             Drugs = model.Drugs.Select(x => new DrugsFromPrescriptionViewModel(x)).ToList();

@@ -38,6 +38,8 @@ import { JwtUtil } from "./utils/jwt.util";
 import { VisitComponent } from "./components/visit/visit.component";
 import { Component } from '@angular/core';
 import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
+import { CreatePrescriptionComponent } from "./components/patient-visits/create-presccription/create-prescription.component";
+import { VisitPrescriptionListComponent } from "./components/patient-visits/visit-prescription-list/visit-prescription-list.component";
 
 
 @NgModule({
@@ -66,8 +68,10 @@ import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
     EditHospitalModalComponent,
     EditDepartamentModalComponent,
     VisitComponent,
-    DetailsSpecializationModalComponent
-    
+    DetailsSpecializationModalComponent,
+    CreatePrescriptionComponent,
+    VisitPrescriptionListComponent 
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -86,7 +90,9 @@ import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
       { path: "drugs", component: DrugComponent },
       { path: "newVisit/:id", component: VisitComponent },
       { path: "visits/:id", component: PatientVisitComponent },
-      //{ path: "/prescriptions/:id", component: PatientPrescriptionComponent}
+      { path: "patientprescriptions/:id", component: PatientPrescriptionComponent },
+      { path: "newprescription/:id", component: CreatePrescriptionComponent },
+      { path: "prescriptions/:id", component: VisitPrescriptionListComponent }
     ]),
     HttpClientModule,
     HttpModule,

@@ -13,8 +13,6 @@ namespace Medicoweb.Visit.Contracts
         Task<VisitListing> GetPatientVisits(string patientId);
         Task<VisitListing> GetDoctorVisits(string doctorId);        
         Task<Data.Models.Visit.Visit> GetVisitById(string id); 
-
-
         List<DateTime> GetHoursFromDay(DateTime date);
     }
 }

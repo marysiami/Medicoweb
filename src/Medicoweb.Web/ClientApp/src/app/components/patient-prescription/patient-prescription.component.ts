@@ -10,6 +10,7 @@ export class PatientPrescriptionComponent {
 
   isLoggedIn: boolean;
   patientId: string;
+  visitId: string;
 
   constructor(
     private authService: AuthService,
@@ -22,6 +23,8 @@ export class PatientPrescriptionComponent {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.patientId = this.route.snapshot.paramMap.get("id");
   }
+
+ 
 
 
 }

@@ -94,18 +94,7 @@ namespace Medicoweb.Visit.Services
 
        
 
-        public async Task<PrescriptionListing> GetPatientPrescriptions(string patientId)
-        {
-            var patient = await _hospitalService.GetPatientById(patientId);
-            var model = new PrescriptionListing
-            {
-                Prescriptions = _dataService.GetSet<Data.Models.Visit.Prescription>()
-                .Where(x => x.Visit.PatientId.ToString() == patientId).Include(x=>x.PrescriptionDrug)//ThenInclude(x=>x.Drug)
-                .ToList()
-            };
-            return model;
-        }
-
+    
 
         public async Task<VisitListing> GetPatientVisits(string patientId)
         {
@@ -125,7 +114,11 @@ namespace Medicoweb.Visit.Services
 
         public Task<Data.Models.Visit.Visit> GetVisitById(string id)
         {
-            var model = _dataService.GetSet<Data.Models.Visit.Visit>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = _dataService.GetSet<Data.Models.Visit.Visit>()
+                .Include(x => x.Doctor)
+                .Include(x => x.Patient)
+                .Include(x => x.Hospital)
+                .FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
         }
 
