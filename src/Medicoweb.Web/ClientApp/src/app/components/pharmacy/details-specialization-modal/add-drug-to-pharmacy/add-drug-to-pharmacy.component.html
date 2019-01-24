@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>Dodaj Lek do apteki</h2>
+  <div class="full-width container">
+    <br />
+    <h3>Wybierz lek</h3>
+    <mat-form-field>
+      <mat-select placeholder="Lek" (selectionChange)="getDrug($event)">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let drug of drugList" [value]="drug">{{drug.name}} {{drug.company}}</mat-option>
+      </mat-select>
+    </mat-form-field>    
+    <br />
+    <br />
+    <button mat-raised-button color="primary" (click)="submit()">Dodaj</button>
+
+  </div>
+
+</div>

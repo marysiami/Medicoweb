@@ -45,6 +45,7 @@ import { CreatePharmacyModalComponent } from "./components/pharmacy/create-pharm
 import { DetailsPharmacyModalComponent } from "./components/pharmacy/details-specialization-modal/details-pharmacy-modal.component";
 import { PharmacyComponent } from "./components/pharmacy/pharmacy.component";
 import { EditPharmacyModalComponent } from "./components/pharmacy/edit-pharmacy-modal/edit-pharmacy-modal.component";
+import { AddDrugToPharmacyModalComponent } from "./components/pharmacy/details-specialization-modal/add-drug-to-pharmacy/add-drug-to-pharmacy.component";
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { EditPharmacyModalComponent } from "./components/pharmacy/edit-pharmacy-
     DetailsPharmacyModalComponent,
     CreatePharmacyModalComponent,
     PharmacyComponent,
-    EditPharmacyModalComponent
+    EditPharmacyModalComponent,
+    AddDrugToPharmacyModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -134,7 +136,8 @@ import { EditPharmacyModalComponent } from "./components/pharmacy/edit-pharmacy-
     EditHospitalModalComponent,
     DetailsSpecializationModalComponent,
     CreatePharmacyModalComponent,
-    EditPharmacyModalComponent
+    EditPharmacyModalComponent,
+    AddDrugToPharmacyModalComponent
   ]
 })
 export class AppModule {

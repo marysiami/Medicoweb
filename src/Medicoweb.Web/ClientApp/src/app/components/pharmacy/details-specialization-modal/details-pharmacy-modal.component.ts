@@ -7,6 +7,7 @@ import { Doctor } from "../../../models/doctor.model";
 import { AuthService } from "../../../services/auth.service";
 import { Drug } from "../../../models/drug.model";
 import { DrugFromPharmacy } from "../../../models/drug-pharmacy.model";
+import { AddDrugToPharmacyModalComponent } from "./add-drug-to-pharmacy/add-drug-to-pharmacy.component";
 
 
 @Component({
@@ -23,7 +24,7 @@ export class DetailsPharmacyModalComponent {
   isLoggedIn: boolean;
   displayNewDoctorButton: boolean;
   drugsListing = new DrugFromPharmacy("", 0, []);
-  specializationId: string;
+  pharmacyId: string;
   displayedColumns: string[] = ["name", "company", "button"];
   pageSize = 10;
   dataSource = new MatTableDataSource<Drug>();
@@ -41,13 +42,13 @@ export class DetailsPharmacyModalComponent {
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
-    this.specializationId = this.route.snapshot.paramMap.get("id");
+    this.pharmacyId = this.route.snapshot.paramMap.get("id");
     this.getDrugs();
 
   }
 
   getDrugs(pageNumber = 0, postsPerPage = 10) {
-    this.hospitalService.getDrugsFromPharmacy(this.specializationId, pageNumber, postsPerPage)
+    this.hospitalService.getDrugsFromPharmacy(this.pharmacyId, pageNumber, postsPerPage)
       .subscribe(result => {
         this.drugsListing = result;
         this.dataSource = new MatTableDataSource(result.drugs);
@@ -67,7 +68,22 @@ export class DetailsPharmacyModalComponent {
   }
 
   deleteDrugFromPharmacy(id) {    
-    this.hospitalService.deleteDrugFromPharmacy(id, this.specializationId).subscribe();
-    this.getDrugs();
+    this.hospitalService.deleteDrugFromPharmacy(id, this.pharmacyId).subscribe(result => {
+      this.getDrugs(0, this.pageSize);
+    });
+  }
+  addDrugToPharmacy() {
+    const dialogRef =
+      this.dialog
+        .open(AddDrugToPharmacyModalComponent,
+          {
+            height: "auto",
+            width: "400px",
+            data: this.pharmacyId
+          })
+        .afterClosed()
+        .subscribe(result => {         
+            this.getDrugs(0, this.pageSize);          
+        });
   }
 }
