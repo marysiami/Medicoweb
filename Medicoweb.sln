@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicoweb.Hospital", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicoweb.Visit", "src\Medicoweb.Visit\Medicoweb.Visit.csproj", "{525CD529-80BA-489A-AE56-8E7CABDC78EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medicoweb.Drug", "src\Medicoweb.Drug\Medicoweb.Drug.csproj", "{6D674C42-1F23-4C4A-BBC3-F3F9CC0DDDE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicoweb.Drug", "src\Medicoweb.Drug\Medicoweb.Drug.csproj", "{6D674C42-1F23-4C4A-BBC3-F3F9CC0DDDE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medicoweb.Pharmacy", "src\Medicoweb.Pharmacy\Medicoweb.Pharmacy.csproj", "{EBA15BD7-962D-4D43-BB93-2A0960D9C31F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{6D674C42-1F23-4C4A-BBC3-F3F9CC0DDDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D674C42-1F23-4C4A-BBC3-F3F9CC0DDDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D674C42-1F23-4C4A-BBC3-F3F9CC0DDDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA15BD7-962D-4D43-BB93-2A0960D9C31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBA15BD7-962D-4D43-BB93-2A0960D9C31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBA15BD7-962D-4D43-BB93-2A0960D9C31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBA15BD7-962D-4D43-BB93-2A0960D9C31F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

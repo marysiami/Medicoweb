@@ -1,0 +1,30 @@
+<div *ngIf="isLoggedIn">
+  <button mat-raised-button color="primary" (click)="openCreatePharmacyModal()">Utwórz nową aptekę</button>
+</div>
+<h2>Baza danych Aptek</h2>
+<div class="full-width container">
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa apteki </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a [routerLink]='["/pharmacy", element.id]'> {{element.name}}</a>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Adres apteki </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+         {{element.address}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="button">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="deletePharmacy(element.id)">usuń</button>
+        <button mat-raised-button color="primary" (click)="editPharmacy(element.id)">edytuj</button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  
+</div>

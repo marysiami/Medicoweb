@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Services\wwwroot\favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\wwwroot\favicon.ico">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Medicoweb.Common\Medicoweb.Common.csproj" />
     <ProjectReference Include="..\Medicoweb.Data\Medicoweb.Data.csproj" />
     <ProjectReference Include="..\Medicoweb.Hospital\Medicoweb.Hospital.csproj" />

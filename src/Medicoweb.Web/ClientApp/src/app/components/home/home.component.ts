@@ -70,7 +70,9 @@ export class HomeComponent {
   openMyVisitDoctor() {
     this.router.navigateByUrl(`/visits/${this.id}`);
   }
-
+  openPharmacy() {
+    this.router.navigateByUrl(`/pharmacies`);
+  }
 
   
   

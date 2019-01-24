@@ -26,6 +26,7 @@ namespace Medicoweb.Visit.Services
         {
             var model = new Prescription
             {
+                
                 Visit = visit,
                 VisitId = visit.Id              
                 
@@ -42,7 +43,9 @@ namespace Medicoweb.Visit.Services
             var model = new PrescriptionDrug
             {
                 DrugId = drug.Id,
+                Drug = drug,
                 PrescriptionId = prescription.Id,
+                Prescription = prescription,
                 DrugQuantity = drugQuantity
             };
             await _dataService.GetSet<PrescriptionDrug>().AddAsync(model);
@@ -52,7 +55,13 @@ namespace Medicoweb.Visit.Services
     
         public Task<Prescription> GetPrescriptionById(string id)
         {
-            var model = _dataService.GetSet<Prescription>().FirstOrDefaultAsync(x => x.Id.ToString() == id);
+            var model = _dataService.GetSet<Prescription>()
+                .Include(x=>x.PrescriptionDrug)
+                .Include(x=>x.Visit)
+                .ThenInclude(x=>x.Doctor)
+                .Include(x=>x.Visit)
+                .ThenInclude(x=>x.Patient)
+                .FirstOrDefaultAsync(x => x.Id.ToString() == id);
             return model;
 
         }

@@ -12,7 +12,10 @@ namespace Medicoweb.Drug.Contracts
         DrugListing GetDrugs(int skip = 0, int take = 10);
         Task DeleteDrug(string id);
         Task UpdateDrug(string id, string name, string company);
-       
+        DrugFromPharmacyListing GetDrugsFromPharmacy(Pharmacy pharmacy, int skip = 0, int take = 10);
+        Task RemoveDrugFromPharmacy(Pharmacy pharmacy, Data.Models.Drug.Drug drug);
+
+
     }
 }
 

@@ -118,9 +118,18 @@ namespace Medicoweb.Web.Controllers
         public async Task AddDrugToPrescription([FromBody] AddDrugToPrescriptionRequestViewModel request)
         {
             var drug =  await _drugService.GetDrugById(request.DrugId);
-            var model = _prescriptionService.AddDrugToPrescription(request.PrescriptionId, drug, request.DrugQuantity);
-
+            await _prescriptionService.AddDrugToPrescription(request.PrescriptionId, drug, request.DrugQuantity);
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetPrescription([FromQuery] string prescriptionId)
+        {
+            var model =  await _prescriptionService.GetPrescriptionById(prescriptionId);
+            var result = new PrescriptionViewModel(model);
+            return Json(result);
+        }
+        
 
     }
 }

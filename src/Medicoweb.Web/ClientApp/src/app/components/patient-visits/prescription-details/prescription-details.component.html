@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-card-title>
+    Twoja recepta
+  <br />ID: {{prescriptionId}} </mat-card-title>
+  <mat-card-content>
+    Lekarz: {{doctorName}} {{doctorSurname}}
+    <br />
+    Pacjent: {{patientName}} {{patientSurname}}
+
+    <br />
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Lek">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa leku </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Firma">
+        <mat-header-cell *matHeaderCellDef> Firma</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.company}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Ilość">
+        <mat-header-cell *matHeaderCellDef>Ilość </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.quantity}}
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    </mat-card-content>
+</mat-card>

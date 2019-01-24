@@ -5,6 +5,7 @@ using Medicoweb.Data;
 using Medicoweb.Data.Models.Account;
 using Medicoweb.Drug;
 using Medicoweb.Hospital;
+using Medicoweb.Pharmacy;
 using Medicoweb.Visit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -109,6 +110,7 @@ namespace Medicoweb.Web
             services.RegisterHospitalModule();
             services.RegisterVisitModule();
             services.RegisterDrugModule();
+            services.RegisterPharmacyModule();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

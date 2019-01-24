@@ -12,7 +12,7 @@ import { EditSpecializationModalComponent } from "./edit-specialization-modal/ed
 @Component({
   selector: "app-specialization",
   templateUrl: "./specialization.component.html",
-  styleUrls: ["./specialization.component.css"]
+  
 })
 export class SpecializationComponent {
 

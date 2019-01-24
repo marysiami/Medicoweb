@@ -5,9 +5,10 @@ import { toTypeScript } from "@angular/compiler";
 import { AuthService } from "../../../services/auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HospitalService } from "../../../services/hospital.service";
+import { Prescription } from "../../../models/prescription.model";
 
 @Component({
-  selector: "app-visit",
+  selector: "app-create-prescription",
   templateUrl: "./create-prescription.component.html",
 
 })
@@ -19,6 +20,7 @@ export class CreatePrescriptionComponent {
   drugId: string;
   drugQuantity: number;
   prescriptionId: string;
+ 
 
   commentFC = new FormControl('', [
     Validators.required,
@@ -46,7 +48,7 @@ export class CreatePrescriptionComponent {
       .subscribe(result => {
         this.drugList = result.drugs;
       });
-
+    
   }
   getDrug(event) {
     
@@ -54,16 +56,18 @@ export class CreatePrescriptionComponent {
   }
   createPrescription() {
     this.hospitalService.createPrescription(this.visitId).subscribe(result => {
-      //  this.prescriptionId = result.constructor.id;
-      console.log(result.id); 
+      this.prescriptionId = result.id;     
     });
   }
 
   addDrugToPrescription() {
- //   this.hospitalService.addDrugToPrescription(this.drugId, this.commentFC.value, this.prescriptionId).subscribe();
+    this.hospitalService.addDrugToPrescription(this.drugId, this.commentFC.value, this.prescriptionId).subscribe();
   }
   goBackToList() {
     this.router.navigateByUrl("prescriptions/" + this.visitId);
+  }
+  PrescriptionDetails() {
+    this.router.navigateByUrl("prescriptionsdetails/" + this.prescriptionId);
   }
  
 

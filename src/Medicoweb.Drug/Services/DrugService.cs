@@ -77,6 +77,30 @@ namespace Medicoweb.Drug.Services
             return model;
         }
 
+        public DrugFromPharmacyListing GetDrugsFromPharmacy(Pharmacy pharmacy, int skip = 0, int take = 10)
+        {
+            var model = new DrugFromPharmacyListing
+            {
+                PharmacyName = pharmacy.Name,
+                TotalCount = _dataService.GetSet<PharmacyDrug>()             
+                    .Where(x => x.Pharmacy == pharmacy).Count(),
+                Drugs = _dataService.GetSet<PharmacyDrug>()
+                    .Include(x => x.Drug)
+                    .Where(x=>x.Pharmacy == pharmacy)
+                    .Skip(skip * take)
+                    .Take(take)
+                    .ToList()
+            };
+            return model;
+        }
+
+        public async Task RemoveDrugFromPharmacy(Pharmacy pharmacy, Data.Models.Drug.Drug drug)
+        {
+            var model = _dataService.GetSet<PharmacyDrug>().Where(x => x.Pharmacy == pharmacy).FirstOrDefault(x => x.Drug == drug);
+            _dataService.GetSet<PharmacyDrug>().Remove(model);
+           await  _dataService.SaveDbAsync();
+        }
+
         public  async Task UpdateDrug(string id, string name, string company)
         {
 

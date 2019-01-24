@@ -40,6 +40,11 @@ import { Component } from '@angular/core';
 import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
 import { CreatePrescriptionComponent } from "./components/patient-visits/create-presccription/create-prescription.component";
 import { VisitPrescriptionListComponent } from "./components/patient-visits/visit-prescription-list/visit-prescription-list.component";
+import { PrescriptionDetailsComponent } from "./components/patient-visits/prescription-details/prescription-details.component";
+import { CreatePharmacyModalComponent } from "./components/pharmacy/create-pharmacy-modal/create-pharmacy-modal.component";
+import { DetailsPharmacyModalComponent } from "./components/pharmacy/details-specialization-modal/details-pharmacy-modal.component";
+import { PharmacyComponent } from "./components/pharmacy/pharmacy.component";
+import { EditPharmacyModalComponent } from "./components/pharmacy/edit-pharmacy-modal/edit-pharmacy-modal.component";
 
 
 @NgModule({
@@ -70,8 +75,12 @@ import { VisitPrescriptionListComponent } from "./components/patient-visits/visi
     VisitComponent,
     DetailsSpecializationModalComponent,
     CreatePrescriptionComponent,
-    VisitPrescriptionListComponent 
-
+    VisitPrescriptionListComponent,
+    PrescriptionDetailsComponent,
+    DetailsPharmacyModalComponent,
+    CreatePharmacyModalComponent,
+    PharmacyComponent,
+    EditPharmacyModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -83,7 +92,7 @@ import { VisitPrescriptionListComponent } from "./components/patient-visits/visi
       { path: "hospital/:id", component: HospitalComponent },
       { path: "departament/:id", component: DepartamentComponent },
       { path: "specialization", component: SpecializationComponent },
-      { path: "specialization/:id", component: DetailsSpecializationModalComponent },     
+      { path: "specialization/:id", component: DetailsSpecializationModalComponent },
       { path: "patients", component: PatientListComponent },
       { path: "doctors", component: DoctorListComponent },
       { path: "doctor/:id", component: DoctorComponent },
@@ -92,7 +101,11 @@ import { VisitPrescriptionListComponent } from "./components/patient-visits/visi
       { path: "visits/:id", component: PatientVisitComponent },
       { path: "patientprescriptions/:id", component: PatientPrescriptionComponent },
       { path: "newprescription/:id", component: CreatePrescriptionComponent },
-      { path: "prescriptions/:id", component: VisitPrescriptionListComponent }
+      { path: "prescriptions/:id", component: VisitPrescriptionListComponent },
+      { path: "prescriptiondetails/:id", component: PrescriptionDetailsComponent },
+      { path: "pharmacies", component: PharmacyComponent },
+      { path: "pharmacy/:id", component: DetailsPharmacyModalComponent },
+
     ]),
     HttpClientModule,
     HttpModule,
@@ -119,7 +132,9 @@ import { VisitPrescriptionListComponent } from "./components/patient-visits/visi
     EditSpecializationModalComponent,
     EditDepartamentModalComponent,
     EditHospitalModalComponent,
-    DetailsSpecializationModalComponent
+    DetailsSpecializationModalComponent,
+    CreatePharmacyModalComponent,
+    EditPharmacyModalComponent
   ]
 })
 export class AppModule {

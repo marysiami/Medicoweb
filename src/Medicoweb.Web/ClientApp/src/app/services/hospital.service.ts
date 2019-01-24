@@ -27,6 +27,12 @@ import { Specialization } from "../models/specialization.model";
 import { VisitListing } from "../models/visit-listing.model";
 import { BaseService } from "./base.service";
 import { CreatePrescriptionRequest } from "../models/Request/create-prescription-request";
+import { Prescription } from "../models/prescription.model";
+import { CreatePharmacyRequest } from "../models/Request/create-pharmacy-request.model";
+import { DrugFromPharmacy } from "../models/drug-pharmacy.model";
+import { Pharmacy } from "../models/Pharmacy.model";
+import { AddDrugToPharmacy } from "../models/Request/AddDrugToPharmacy.model";
+import { PharmacyListing } from "../models/pharmacy-listing.model";
 
 
 @Injectable()
@@ -307,8 +313,8 @@ export class HospitalService extends BaseService {
   createPrescription(visitId: string) {
     const url = this.baseUrl + "visit/CreatePrescription";
     const body = new CreatePrescriptionRequest(visitId);
-  
-    return this.http.post(url, body, { headers: this.headers });
+
+    return this.http.post < Prescription>(url, body, { headers: this.headers });
   }
 
   getPrescriptionsFromVisit(visitId: string) {
@@ -321,7 +327,69 @@ export class HospitalService extends BaseService {
   addDrugToPrescription(drugId: string, drugQuantity: number, prescriptionId: string) {
     const url = this.baseUrl + "visit/AddDrugToPrescription";
     const body = new AddDrugToPrescription(drugId, drugQuantity, prescriptionId);
-    debugger;
+   
     return this.http.post(url, body, { headers: this.headers });
+  }
+  getPrescripion(prescriptionId: string) {
+    const url = this.baseUrl + "visit/GetPrescription";
+    const params = new HttpParams()
+      .set("prescriptionId", prescriptionId);
+
+    return this.http.get<Prescription>(url, { params: params, headers: this.headers });
+  }
+  //kontroller Pharmacy
+
+  createPharmacy(name: string, address: string) {
+    const url = this.baseUrl + "Pharmacy/CreatePharmacy";
+    const body = new CreatePharmacyRequest(name,address);
+
+    return this.http.post(url, body, { headers: this.headers });
+  }
+
+  getDrugsFromPharmacy(pharmacyId: string, page, postsPerPage = 10) {
+    const url = this.baseUrl + "Pharmacy/GetDrugsFromPharmacy";
+    const params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString())
+      .set("pharmacyId", pharmacyId);
+
+    return this.http.get<DrugFromPharmacy>(url, { params: params, headers: this.headers });
+  }
+
+  deleteDrugFromPharmacy(drugId: string, pharmacyId: string) {
+    const url = this.baseUrl + "Pharmacy/DeleteDrugFromPharmacy";
+    const params = new HttpParams()
+      .set("drugId", drugId)
+      .set("pharmacyId", pharmacyId);
+
+    return this.http.delete(url, { params: params, headers: this.headers });    
+  }
+
+  updatePharmacy(pharmacyId: string, name: string, address: string) {
+    const url = this.baseUrl + "Pharmacy/UpdatePharmacy";
+    const body = new Pharmacy(pharmacyId, name, address);
+
+    return this.http.put(url, body, { headers: this.headers });
+  }
+  addDrugToPharmacy(drugId: string, pharmacyId: string) {
+    const url = this.baseUrl + "Pharmacy/AddDrugToPharmacy";
+    const body = new AddDrugToPharmacy(drugId,pharmacyId);
+
+    return this.http.post(url, body, { headers: this.headers });
+  }
+  getPharmacies(page, postsPerPage = 10) {
+    const url = this.baseUrl + "Pharmacy/GetPharmacies";
+    const params = new HttpParams()
+      .set("page", page)
+      .set("postsPerPage", postsPerPage.toString());
+
+    return this.http.get<PharmacyListing>(url, { params: params, headers: this.headers });
+  }
+  deletePharmacy(pharmacyId: string) {
+    const url = this.baseUrl + "Pharmacy/DeletePharmacy";
+    const params = new HttpParams()
+     .set("pharmacyId", pharmacyId);
+
+    return this.http.delete(url, { params: params, headers: this.headers });    
   }
 }

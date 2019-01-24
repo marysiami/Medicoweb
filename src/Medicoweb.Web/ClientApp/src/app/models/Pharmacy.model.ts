@@ -1,7 +1,9 @@
-export class Drug {
+export class Pharmacy {
   constructor(
     public id: string,
     public name: string,
-    public company: string) {
+    public address: string,
+   
+  ) {
   }
 }

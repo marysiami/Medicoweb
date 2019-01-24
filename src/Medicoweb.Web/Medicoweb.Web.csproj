@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Medicoweb.Drug\Medicoweb.Drug.csproj" />
     <ProjectReference Include="..\Medicoweb.Hospital\Medicoweb.Hospital.csproj" />
     <ProjectReference Include="..\Medicoweb.Account\Medicoweb.Account.csproj" />
+    <ProjectReference Include="..\Medicoweb.Pharmacy\Medicoweb.Pharmacy.csproj" />
     <ProjectReference Include="..\Medicoweb.Visit\Medicoweb.Visit.csproj" />
   </ItemGroup>
 

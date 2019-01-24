@@ -6,7 +6,7 @@
       <ng-container matColumnDef="Prescription">
         <mat-header-cell *matHeaderCellDef mat-sort-header>ID Recepty</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{element.id}}
+          <a [routerLink]='["/prescriptiondetails", element.id]'> {{element.id}}</a>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="Doctor">
@@ -18,7 +18,7 @@
       <ng-container matColumnDef="Pacient">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Pacjent</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{element.patientName}} {{element.patientSurname}}
+         {{element.patientName}} {{element.patientSurname}}
         </mat-cell>
       </ng-container>
 
